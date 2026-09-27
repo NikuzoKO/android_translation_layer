@@ -1646,8 +1646,12 @@ public class View implements Drawable.Callback {
 
 	/** Helper function to be called from GTKs LayoutManager via JNI */
 	private void layoutInternal(int width, int height) {
-		// if the layout is triggered from a native widget, we might not have measured yet
-		if (!(parent instanceof ViewGroup) && (width != getMeasuredWidth() || height != getMeasuredHeight())) {
+		// if the layout is triggered from a native widget, we might not have measured yet.
+		// A fillViewport ScrollView is a GtkScrolledWindow which stretches its child to
+		// the viewport without measuring it again, so remeasure the child here as well.
+		boolean native_parent = !(parent instanceof ViewGroup)
+		    || (parent instanceof android.widget.ScrollView && ((android.widget.ScrollView)parent).isFillViewport());
+		if (native_parent && (width != getMeasuredWidth() || height != getMeasuredHeight())) {
 			requestLayout();
 			measure(width | MeasureSpec.EXACTLY, height | MeasureSpec.EXACTLY);
 		}

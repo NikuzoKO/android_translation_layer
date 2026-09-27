@@ -190,7 +190,46 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onPostResume() {
 		Slog.i(TAG, "- onPostResume - yay!");
+		if (System.getenv("ATL_DUMP_VIEWS") != null) {
+			// debugging aid: log the laid out view tree a few seconds after resume
+			new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					View decor = getWindow().getDecorView();
+					Slog.i(TAG, "ATL_DUMP_VIEWS " + getClass().getName());
+					dumpViewTree(decor, 0);
+				}
+			}, 8000);
+		}
 		return;
+	}
+
+	private void dumpViewTree(View view, int depth) {
+		if (view == null)
+			return;
+		String id = "";
+		if (view.getId() > 0) {
+			try {
+				id = " @" + getResources().getResourceEntryName(view.getId());
+			} catch (Exception e) {
+				id = " #" + Integer.toHexString(view.getId());
+			}
+		}
+		StringBuilder line = new StringBuilder("ATL_DUMP_VIEWS ");
+		for (int i = 0; i < depth; i++)
+			line.append("  ");
+		line.append(view.getClass().getName()).append(id)
+		    .append(" [").append(view.getLeft()).append(",").append(view.getTop())
+		    .append(" ").append(view.getWidth()).append("x").append(view.getHeight())
+		    .append("] vis=").append(view.getVisibility());
+		if (view instanceof android.widget.TextView)
+			line.append(" text=\"").append(((android.widget.TextView)view).getText()).append("\"");
+		Slog.i(TAG, line.toString());
+		if (view instanceof ViewGroup) {
+			ViewGroup group = (ViewGroup)view;
+			for (int i = 0; i < group.getChildCount(); i++)
+				dumpViewTree(group.getChildAt(i), depth + 1);
+		}
 	}
 
 	protected void onPause() {
