@@ -26,7 +26,8 @@ public class TelephonyManager {
 	}
 
 	public int getPhoneType() {
-		return 0; // PHONE_TYPE_NONE
+		// PHONE_TYPE_GSM on a phone, PHONE_TYPE_NONE otherwise
+		return System.getenv("ATL_HAS_TELEPHONY") != null ? 1 : 0;
 	}
 
 	public String getNetworkCountryIso() { return ""; }

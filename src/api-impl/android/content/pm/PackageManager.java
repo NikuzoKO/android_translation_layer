@@ -2193,6 +2193,12 @@ public class PackageManager {
 				return System.getenv("ATL_IS_TELEVISION") != null;
 			case FEATURE_WATCH:
 				return System.getenv("ATL_IS_WATCH") != null;
+			case FEATURE_TELEPHONY:
+			case "android.hardware.telephony.gsm":
+			case "android.hardware.telephony.radio.access":
+			case "android.hardware.telephony.messaging":
+			case "android.hardware.telephony.subscription":
+				return System.getenv("ATL_HAS_TELEPHONY") != null;
 			default:
 				Slog.e(TAG, "!!!!!!! hasSystemFeature: case >" + name + "< is not implemented yet");
 				return false;
