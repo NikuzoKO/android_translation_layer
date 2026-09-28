@@ -146,6 +146,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onCreate(Bundle savedInstanceState) {
 		Slog.i(TAG, "- onCreate - yay!");
+		Application.dispatchActivityCreated(this, savedInstanceState);
 
 		for (Fragment fragment : fragments) {
 			fragment.onCreate(savedInstanceState);
@@ -161,6 +162,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onStart() {
 		Slog.i(TAG, "- onStart - yay!");
+		Application.dispatchActivityStarted(this);
 		window.set_widget_as_root(window.native_window, window.getDecorView().widget);
 		window.setTitle(title);
 
@@ -179,6 +181,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onResume() {
 		Slog.i(TAG, "- onResume - yay!");
+		Application.dispatchActivityResumed(this);
 
 		for (Fragment fragment : fragments) {
 			fragment.onResume();
@@ -234,6 +237,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onPause() {
 		Slog.i(TAG, "- onPause - yay!");
+		Application.dispatchActivityPaused(this);
 
 		for (Fragment fragment : fragments) {
 			fragment.onPause();
@@ -245,6 +249,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onStop() {
 		Slog.i(TAG, "- onStop - yay!");
+		Application.dispatchActivityStopped(this);
 
 		for (Fragment fragment : fragments) {
 			fragment.onStop();
@@ -255,6 +260,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onDestroy() {
 		Slog.i(TAG, "- onDestroy - yay!");
+		Application.dispatchActivityDestroyed(this);
 
 		for (Fragment fragment : fragments) {
 			fragment.onDestroy();
@@ -271,6 +277,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
+		Application.dispatchActivitySaveInstanceState(this, outState);
 	}
 
 	public void onConfigurationChanged(Configuration newConfig) {

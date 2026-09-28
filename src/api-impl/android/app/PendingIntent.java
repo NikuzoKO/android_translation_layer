@@ -57,7 +57,29 @@ public class PendingIntent implements Parcelable {
 		     + new String[] {"activity", "service", "broadcast"}[type] + "]";
 	}
 
-	public void cancel() {}
+	public void cancel() {
+		AlarmManager.cancelAlarms(this);
+	}
+
+	/* Android treats PendingIntents for the same (type, requestCode, intent filter) as the same token */
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof PendingIntent))
+			return false;
+		PendingIntent other = (PendingIntent)obj;
+		return type == other.type && requestCode == other.requestCode
+		    && (intent == null ? other.intent == null : other.intent != null && intent.filterEquals(other.intent));
+	}
+
+	@Override
+	public int hashCode() {
+		int h = type * 31 + requestCode;
+		if (intent != null && intent.getAction() != null)
+			h = h * 31 + intent.getAction().hashCode();
+		if (intent != null && intent.getComponent() != null)
+			h = h * 31 + intent.getComponent().hashCode();
+		return h;
+	}
 
 	public class CanceledException extends Exception {
 	}

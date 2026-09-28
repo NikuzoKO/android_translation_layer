@@ -107,9 +107,53 @@ public class Application extends ContextWrapper {
 	}
 	public void unregisterComponentCallbacks(ComponentCallbacks callback) {
 	}*/
+	private static final java.util.ArrayList<ActivityLifecycleCallbacks> activity_lifecycle_callbacks = new java.util.ArrayList<ActivityLifecycleCallbacks>();
+
 	public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+		synchronized (activity_lifecycle_callbacks) {
+			activity_lifecycle_callbacks.add(callback);
+		}
 	}
 	public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+		synchronized (activity_lifecycle_callbacks) {
+			activity_lifecycle_callbacks.remove(callback);
+		}
+	}
+
+	private static ActivityLifecycleCallbacks[] activityLifecycleCallbacks() {
+		synchronized (activity_lifecycle_callbacks) {
+			return activity_lifecycle_callbacks.toArray(new ActivityLifecycleCallbacks[0]);
+		}
+	}
+
+	/* called from Activity's lifecycle methods, like AOSP's dispatchActivity*() */
+	static void dispatchActivityCreated(Activity activity, Bundle savedInstanceState) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivityCreated(activity, savedInstanceState);
+	}
+	static void dispatchActivityStarted(Activity activity) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivityStarted(activity);
+	}
+	static void dispatchActivityResumed(Activity activity) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivityResumed(activity);
+	}
+	static void dispatchActivityPaused(Activity activity) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivityPaused(activity);
+	}
+	static void dispatchActivityStopped(Activity activity) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivityStopped(activity);
+	}
+	static void dispatchActivitySaveInstanceState(Activity activity, Bundle outState) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivitySaveInstanceState(activity, outState);
+	}
+	static void dispatchActivityDestroyed(Activity activity) {
+		for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks())
+			callback.onActivityDestroyed(activity);
 	}
 	public void registerOnProvideAssistDataListener(OnProvideAssistDataListener callback) {
 	}
