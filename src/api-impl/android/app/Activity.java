@@ -260,6 +260,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	protected void onDestroy() {
 		Slog.i(TAG, "- onDestroy - yay!");
+		deliverResult(); // however we got here, the caller gets its result (once)
 		Application.dispatchActivityDestroyed(this);
 
 		for (Fragment fragment : fragments) {
