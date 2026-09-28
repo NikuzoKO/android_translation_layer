@@ -83,12 +83,18 @@ public class Dialog implements Window.Callback, DialogInterface {
 		return window.findViewById(id);
 	}
 
+	private boolean created = false;
+
 	public void show() {
 		System.out.println("showing the Dialog " + this);
 		Runnable action = new Runnable() {
 			@Override
 			public void run() {
-				onCreate(null);
+				// like AOSP's dispatchOnCreate: a dialog is created once, even if shown again
+				if (!created) {
+					created = true;
+					onCreate(null);
+				}
 				// Read the size of the main window. Floating dialogs should be smaller as specified in the windowMinWidth* attributes.
 				// Non-floating are typically constructed with MATCH_PARENT layout params and thus get the exact size of the main window.
 				// Most non-floating dialogs are technically dialogs, but are expected to behave more like full size activities.
