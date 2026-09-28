@@ -388,10 +388,23 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		startActivityForResult(intent, requestCode, null);
 	}
 
+	/* Like Android: remember the result and deliver it once, when this activity finishes
+	 * (RESULT_CANCELED if setResult was never called). */
+	private int pendingResultCode = 0; // RESULT_CANCELED
+	private Intent pendingResultData = null;
+
 	public void setResult(int resultCode, Intent data) {
-		if (resultActivity != null) {
-			resultActivity.onActivityResult(resultRequestCode, resultCode, data);
-		}
+		pendingResultCode = resultCode;
+		pendingResultData = data;
+	}
+
+	private void deliverResult() {
+		Activity target = resultActivity;
+		if (target == null)
+			return;
+		resultActivity = null; // deliver once
+		Slog.i(TAG, "delivering result " + pendingResultCode + " for request " + resultRequestCode + " to " + target);
+		target.onActivityResult(resultRequestCode, pendingResultCode, pendingResultData);
 	}
 
 	public void setResult(int resultCode) {
@@ -437,6 +450,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 			@Override
 			public void run() {
+				deliverResult();
 				if (window != null && window.native_window != 0) {
 					nativeFinish(getWindow().native_window);
 					window.native_window = 0;
