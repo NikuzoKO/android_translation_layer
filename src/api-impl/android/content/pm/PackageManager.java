@@ -1884,6 +1884,14 @@ public class PackageManager {
 					return PERMISSION_GRANTED;
 				else
 					return PERMISSION_DENIED;
+			// contacts/accounts are empty in ATL; some flows (WhatsApp's backup restore) loop until granted
+			case "android.permission.READ_CONTACTS":
+			case "android.permission.WRITE_CONTACTS":
+			case "android.permission.GET_ACCOUNTS":
+				if (System.getenv("ATL_UGLY_ENABLE_CONTACTS") != null)
+					return PERMISSION_GRANTED;
+				else
+					return PERMISSION_DENIED;
 			case "android.permission.RECORD_AUDIO":
 				if (System.getenv("ATL_UGLY_ENABLE_MICROPHONE") != null)
 					return PERMISSION_GRANTED;
