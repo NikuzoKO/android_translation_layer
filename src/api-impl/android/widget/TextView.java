@@ -539,4 +539,58 @@ public class TextView extends View {
 		}
 		return alignment;
 	}
+
+	public android.content.res.ColorStateList getHintTextColors() { return ((Object)this) instanceof android.content.res.ColorStateList ? (android.content.res.ColorStateList)(Object)this : null; } // ATL-autostub
+	public android.graphics.drawable.Drawable getTextCursorDrawable() { return ((Object)this) instanceof android.graphics.drawable.Drawable ? (android.graphics.drawable.Drawable)(Object)this : null; } // ATL-autostub
+	public android.os.Parcelable onSaveInstanceState() { return ((Object)this) instanceof android.os.Parcelable ? (android.os.Parcelable)(Object)this : null; } // ATL-autostub
+	public android.view.ActionMode.Callback getCustomInsertionActionModeCallback() { return ((Object)this) instanceof android.view.ActionMode.Callback ? (android.view.ActionMode.Callback)(Object)this : null; } // ATL-autostub
+	public android.view.ActionMode.Callback getCustomSelectionActionModeCallback() { return ((Object)this) instanceof android.view.ActionMode.Callback ? (android.view.ActionMode.Callback)(Object)this : null; } // ATL-autostub
+	public boolean getShowSoftInputOnFocus() { return false; } // ATL-autostub
+	public boolean isHorizontallyScrollable() { return false; } // ATL-autostub
+	public boolean onKeyPreIme(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onKeyUp(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onPrivateIMECommand(java.lang.String arg0, android.os.Bundle arg1) { return false; } // ATL-autostub
+	public boolean setFontVariationSettings(java.lang.String arg0) { return false; } // ATL-autostub
+	public float getShadowDx() { return 0f; } // ATL-autostub
+	public float getShadowDy() { return 0f; } // ATL-autostub
+	public float getShadowRadius() { return 0f; } // ATL-autostub
+	public float getTextScaleX() { return 0f; } // ATL-autostub
+	public int getAutoSizeMaxTextSize() { return 0; } // ATL-autostub
+	public int getAutoSizeMinTextSize() { return 0; } // ATL-autostub
+	public int getAutoSizeTextType() { return 0; } // ATL-autostub
+	public int getCurrentHintTextColor() { return 0; } // ATL-autostub
+	public int getHighlightColor() { return 0; } // ATL-autostub
+	public int getImeActionId() { return 0; } // ATL-autostub
+	public int getLineBounds(int arg0, android.graphics.Rect arg1) { return 0; } // ATL-autostub
+	public int getOffsetForPosition(float arg0, float arg1) { return 0; } // ATL-autostub
+	public int getShadowColor() { return 0; } // ATL-autostub
+	public int[] getAutoSizeTextAvailableSizes() { return null; } // ATL-autostub
+	public void beginBatchEdit() {} // ATL-autostub
+	public void drawableStateChanged() {} // ATL-autostub
+	public void endBatchEdit() {} // ATL-autostub
+	protected void onFocusChanged(boolean arg0, int arg1, android.graphics.Rect arg2) {} // ATL-autostub
+	public void onRestoreInstanceState(android.os.Parcelable arg0) {} // ATL-autostub
+	public void onRtlPropertiesChanged(int arg0) {} // ATL-autostub
+	public void onSelectionChanged(int arg0, int arg1) {} // ATL-autostub
+	public void onTextChanged(java.lang.CharSequence arg0, int arg1, int arg2, int arg3) {} // ATL-autostub
+	public void setAutoSizeTextTypeUniformWithConfiguration(int arg0, int arg1, int arg2, int arg3) {} // ATL-autostub
+	public void setAutoSizeTextTypeWithDefaults(int arg0) {} // ATL-autostub
+	public void setCompoundDrawableTintMode(android.graphics.PorterDuff.Mode arg0) {} // ATL-autostub
+	public void setFirstBaselineToTopHeight(int arg0) {} // ATL-autostub
+	public void setImeActionLabel(java.lang.CharSequence arg0, int arg1) {} // ATL-autostub
+	public void setImportantForContentCapture(int arg0) {} // ATL-autostub
+	public void setLastBaselineToBottomHeight(int arg0) {} // ATL-autostub
+	public void setLineHeight(int arg0) {} // ATL-autostub
+	public void setLineHeight(int arg0, float arg1) {} // ATL-autostub
+	public void setMaxEms(int arg0) {} // ATL-autostub
+	public void setMinEms(int arg0) {} // ATL-autostub
+	public void setOutlineAmbientShadowColor(int arg0) {} // ATL-autostub
+	public void setOutlineSpotShadowColor(int arg0) {} // ATL-autostub
+	public void setPrivateImeOptions(java.lang.String arg0) {} // ATL-autostub
+	public void setText(int arg0, android.widget.TextView.BufferType arg1) {} // ATL-autostub
+	public void setTextCursorDrawable(android.graphics.drawable.Drawable arg0) {} // ATL-autostub
+	public void setTextLocale(java.util.Locale arg0) {} // ATL-autostub
+	public void setTextLocales(android.os.LocaleList arg0) {} // ATL-autostub
+	public void setTextScaleX(float arg0) {} // ATL-autostub
+	public void setUseBoundsForWidth(boolean arg0) {} // ATL-autostub
 }

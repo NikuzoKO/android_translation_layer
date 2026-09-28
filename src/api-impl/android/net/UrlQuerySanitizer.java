@@ -10,4 +10,6 @@ public class UrlQuerySanitizer {
 	public Set<String> getParameterSet() {
 		return Collections.emptySet();
 	}
+
+	public java.lang.String getValue(java.lang.String arg0) { return null; } // ATL-autostub
 }

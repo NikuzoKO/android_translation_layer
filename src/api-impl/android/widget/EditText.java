@@ -74,4 +74,10 @@ public class EditText extends TextView {
 	}
 
 	public void selectAll() {}
+
+	public android.graphics.drawable.Drawable getTextCursorDrawable() { return ((Object)this) instanceof android.graphics.drawable.Drawable ? (android.graphics.drawable.Drawable)(Object)this : null; } // ATL-autostub
+	public boolean isSingleLine() { return false; } // ATL-autostub
+	public boolean onTextContextMenuItem(int arg0) { return false; } // ATL-autostub
+	public int getAutofillType() { return 0; } // ATL-autostub
+	public void setImeHintLocales(android.os.LocaleList arg0) {} // ATL-autostub
 }

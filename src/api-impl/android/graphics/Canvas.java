@@ -618,4 +618,42 @@ public class Canvas {
 	public boolean quickReject(float left, float top, float right, float bottom, EdgeType edgeType) {
 		return false;
 	}
+
+	public boolean clipOutPath(android.graphics.Path arg0) { return false; } // ATL-autostub
+	public boolean clipOutRect(android.graphics.Rect arg0) { return false; } // ATL-autostub
+	public boolean clipOutRect(android.graphics.RectF arg0) { return false; } // ATL-autostub
+	public boolean clipOutRect(float arg0, float arg1, float arg2, float arg3) { return false; } // ATL-autostub
+	public boolean clipOutRect(int arg0, int arg1, int arg2, int arg3) { return false; } // ATL-autostub
+	public boolean isOpaque() { return false; } // ATL-autostub
+	public boolean quickReject(android.graphics.Path arg0) { return false; } // ATL-autostub
+	public boolean quickReject(android.graphics.Path arg0, android.graphics.Canvas.EdgeType arg1) { return false; } // ATL-autostub
+	public boolean quickReject(android.graphics.RectF arg0) { return false; } // ATL-autostub
+	public boolean quickReject(android.graphics.RectF arg0, android.graphics.Canvas.EdgeType arg1) { return false; } // ATL-autostub
+	public boolean quickReject(float arg0, float arg1, float arg2, float arg3) { return false; } // ATL-autostub
+	public int getDensity() { return 0; } // ATL-autostub
+	public int getMaximumBitmapHeight() { return 0; } // ATL-autostub
+	public int getMaximumBitmapWidth() { return 0; } // ATL-autostub
+	public int saveLayer(float arg0, float arg1, float arg2, float arg3, android.graphics.Paint arg4, int arg5) { return 0; } // ATL-autostub
+	public int saveLayerAlpha(android.graphics.RectF arg0, int arg1) { return 0; } // ATL-autostub
+	public int saveLayerAlpha(android.graphics.RectF arg0, int arg1, int arg2) { return 0; } // ATL-autostub
+	public int saveLayerAlpha(float arg0, float arg1, float arg2, float arg3, int arg4) { return 0; } // ATL-autostub
+	public int saveLayerAlpha(float arg0, float arg1, float arg2, float arg3, int arg4, int arg5) { return 0; } // ATL-autostub
+	public void disableZ() {} // ATL-autostub
+	public void drawBitmapMesh(android.graphics.Bitmap arg0, int arg1, int arg2, float[] arg3, int arg4, int[] arg5, int arg6, android.graphics.Paint arg7) {} // ATL-autostub
+	public void drawColor(int arg0, android.graphics.BlendMode arg1) {} // ATL-autostub
+	public void drawColor(long arg0) {} // ATL-autostub
+	public void drawColor(long arg0, android.graphics.BlendMode arg1) {} // ATL-autostub
+	public void drawDoubleRoundRect(android.graphics.RectF arg0, float arg1, float arg2, android.graphics.RectF arg3, float arg4, float arg5, android.graphics.Paint arg6) {} // ATL-autostub
+	public void drawDoubleRoundRect(android.graphics.RectF arg0, float[] arg1, android.graphics.RectF arg2, float[] arg3, android.graphics.Paint arg4) {} // ATL-autostub
+	public void drawPicture(android.graphics.Picture arg0, android.graphics.Rect arg1) {} // ATL-autostub
+	public void drawPicture(android.graphics.Picture arg0, android.graphics.RectF arg1) {} // ATL-autostub
+	public void drawPosText(char[] arg0, int arg1, int arg2, float[] arg3, android.graphics.Paint arg4) {} // ATL-autostub
+	public void drawPosText(java.lang.String arg0, float[] arg1, android.graphics.Paint arg2) {} // ATL-autostub
+	public void drawRGB(int arg0, int arg1, int arg2) {} // ATL-autostub
+	public void drawTextOnPath(char[] arg0, int arg1, int arg2, android.graphics.Path arg3, float arg4, float arg5, android.graphics.Paint arg6) {} // ATL-autostub
+	public void drawTextRun(char[] arg0, int arg1, int arg2, int arg3, int arg4, float arg5, float arg6, boolean arg7, android.graphics.Paint arg8) {} // ATL-autostub
+	public void drawTextRun(java.lang.CharSequence arg0, int arg1, int arg2, int arg3, int arg4, float arg5, float arg6, boolean arg7, android.graphics.Paint arg8) {} // ATL-autostub
+	public void enableZ() {} // ATL-autostub
+	public void setDensity(int arg0) {} // ATL-autostub
+	public void skew(float arg0, float arg1) {} // ATL-autostub
 }

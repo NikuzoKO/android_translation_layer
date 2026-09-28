@@ -21,4 +21,8 @@ public class ImageSpan extends DynamicDrawableSpan {
 	public Drawable getDrawable() {
 		return drawable;
 	}
+
+	public ImageSpan(android.content.Context arg0, android.graphics.Bitmap arg1) {} // ATL-autostub
+	public ImageSpan(android.content.Context arg0, android.graphics.Bitmap arg1, int arg2) {} // ATL-autostub
+	public ImageSpan(android.content.Context arg0, int arg1) {} // ATL-autostub
 }

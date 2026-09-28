@@ -42,7 +42,10 @@ public final class PowerManager {
 				}
 			}).start();
 		}
-	}
+	
+	public void release(int arg0) {} // ATL-autostub
+	public void setWorkSource(android.os.WorkSource arg0) {} // ATL-autostub
+}
 
 	public WakeLock newWakeLock(int levelAndFlags, String tag) {
 		return new WakeLock();
@@ -76,4 +79,6 @@ public final class PowerManager {
 	public boolean isInteractive() {
 		return true;
 	}
+
+	public int getCurrentThermalStatus() { return 0; } // ATL-autostub
 }

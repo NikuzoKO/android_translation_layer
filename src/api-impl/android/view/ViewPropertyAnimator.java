@@ -169,4 +169,8 @@ public class ViewPropertyAnimator {
 	public ViewPropertyAnimator withLayer() {
 		return this;
 	}
+
+	public android.view.ViewPropertyAnimator setUpdateListener(android.animation.ValueAnimator.AnimatorUpdateListener arg0) { return ((Object)this) instanceof android.view.ViewPropertyAnimator ? (android.view.ViewPropertyAnimator)(Object)this : null; } // ATL-autostub
+	public android.view.ViewPropertyAnimator translationYBy(float arg0) { return ((Object)this) instanceof android.view.ViewPropertyAnimator ? (android.view.ViewPropertyAnimator)(Object)this : null; } // ATL-autostub
+	public long getDuration() { return 0L; } // ATL-autostub
 }

@@ -42,4 +42,6 @@ public class CheckBox extends CompoundButton {
 
 	@Override
 	public native void native_setText(long widget, String text);
+
+	public void setStateDescription(java.lang.CharSequence arg0) {} // ATL-autostub
 }

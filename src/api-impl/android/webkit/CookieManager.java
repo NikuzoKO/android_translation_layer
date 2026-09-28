@@ -47,4 +47,6 @@ public class CookieManager {
 	public void setAcceptThirdPartyCookies(WebView webView, boolean accept) {}
 
 	public static void setAcceptFileSchemeCookies(boolean accept) {}
+
+	public void setCookie(java.lang.String arg0, java.lang.String arg1, android.webkit.ValueCallback arg2) {} // ATL-autostub
 }

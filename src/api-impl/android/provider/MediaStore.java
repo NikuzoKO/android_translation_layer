@@ -16,7 +16,10 @@ public class MediaStore {
 
 			public static final Uri EXTERNAL_CONTENT_URI = Uri.parse("content://media/external/images/media");
 			public static final Uri INTERNAL_CONTENT_URI = Uri.parse("content://media/internal/images/media");
-		}
+		
+	public static android.database.Cursor query(android.content.ContentResolver arg0, android.net.Uri arg1, java.lang.String[] arg2, java.lang.String arg3, java.lang.String[] arg4, java.lang.String arg5) { return null; } // ATL-autostub
+	public static android.net.Uri getContentUri(java.lang.String arg0) { return null; } // ATL-autostub
+}
 
 		public static class Thumbnails {
 
@@ -28,7 +31,9 @@ public class MediaStore {
 				ParcelFileDescriptor fd = contentResolver.openFileDescriptor(Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(String.valueOf(imageId)).build(), "r");
 				return BitmapFactory.decodeFileDescriptor(fd.getFileDescriptor(), null, options);
 			}
-		}
+		
+	public static void cancelThumbnailRequest(android.content.ContentResolver arg0, long arg1, long arg2) {} // ATL-autostub
+}
 	}
 
 	public static class Video {
@@ -66,4 +71,7 @@ public class MediaStore {
 			return Uri.parse("content://media/files/" + type);
 		}
 	}
+
+	public static android.net.Uri getMediaScannerUri() { return null; } // ATL-autostub
+	public static int getPickImagesMaxLimit() { return 0; } // ATL-autostub
 }

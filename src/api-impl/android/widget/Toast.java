@@ -38,4 +38,10 @@ public class Toast {
 	}
 
 	public void setView(View view) {}
+
+	public android.view.View getView() { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+	public void cancel() {} // ATL-autostub
+	public void setDuration(int arg0) {} // ATL-autostub
+	public void setGravity(int arg0, int arg1, int arg2) {} // ATL-autostub
+	public void setText(int arg0) {} // ATL-autostub
 }

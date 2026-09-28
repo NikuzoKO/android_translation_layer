@@ -58,4 +58,13 @@ public class Button extends TextView {
 		compoundDrawableLeft = left;
 		native_setCompoundDrawables(widget, left != null ? left.paintable : 0);
 	}
+
+	public int getAutoSizeMaxTextSize() { return 0; } // ATL-autostub
+	public int getAutoSizeMinTextSize() { return 0; } // ATL-autostub
+	public int getAutoSizeTextType() { return 0; } // ATL-autostub
+	public int[] getAutoSizeTextAvailableSizes() { return null; } // ATL-autostub
+	public void setAllowClickWhenDisabled(boolean arg0) {} // ATL-autostub
+	public void setAutoSizeTextTypeUniformWithConfiguration(int arg0, int arg1, int arg2, int arg3) {} // ATL-autostub
+	public void setAutoSizeTextTypeWithDefaults(int arg0) {} // ATL-autostub
+	public void setFocusedByDefault(boolean arg0) {} // ATL-autostub
 }

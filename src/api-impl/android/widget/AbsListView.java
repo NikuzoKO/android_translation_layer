@@ -6183,4 +6183,10 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 			}
 		}
 	}
+
+	public android.os.Parcelable onSaveInstanceState() { return ((Object)this) instanceof android.os.Parcelable ? (android.os.Parcelable)(Object)this : null; } // ATL-autostub
+	public boolean isSelectedChildViewEnabled() { return false; } // ATL-autostub
+	public void drawableStateChanged() {} // ATL-autostub
+	public void onRestoreInstanceState(android.os.Parcelable arg0) {} // ATL-autostub
+	public void setSelectedChildViewEnabled(boolean arg0) {} // ATL-autostub
 }

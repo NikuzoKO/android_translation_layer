@@ -125,4 +125,11 @@ public class ContextWrapper extends Context {
 	public ATLLoadedApp get_atl_loaded_app() {
 		return this.baseContext.get_atl_loaded_app();
 	}
+
+	public void sendBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, int arg1, java.lang.String arg2, java.lang.String arg3, android.content.BroadcastReceiver arg4, android.os.Handler arg5, java.lang.String arg6, android.os.Bundle arg7, android.os.Bundle arg8) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2, android.content.BroadcastReceiver arg3, android.os.Handler arg4, int arg5, java.lang.String arg6, android.os.Bundle arg7) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, java.lang.String arg2, android.content.BroadcastReceiver arg3, android.os.Handler arg4, int arg5, java.lang.String arg6, android.os.Bundle arg7) {} // ATL-autostub
 }

@@ -43,4 +43,11 @@ public class MediaMetadataRetriever {
 	public Bitmap getFrameAtTime() {
 		return null;
 	}
+
+	public android.graphics.Bitmap getFrameAtIndex(int arg0) { return ((Object)this) instanceof android.graphics.Bitmap ? (android.graphics.Bitmap)(Object)this : null; } // ATL-autostub
+	public android.graphics.Bitmap getFrameAtTime(long arg0, int arg1) { return ((Object)this) instanceof android.graphics.Bitmap ? (android.graphics.Bitmap)(Object)this : null; } // ATL-autostub
+	public android.graphics.Bitmap getScaledFrameAtTime(long arg0, int arg1, int arg2, int arg3) { return ((Object)this) instanceof android.graphics.Bitmap ? (android.graphics.Bitmap)(Object)this : null; } // ATL-autostub
+	public void setDataSource(java.io.FileDescriptor arg0) {} // ATL-autostub
+	public void setDataSource(java.io.FileDescriptor arg0, long arg1, long arg2) {} // ATL-autostub
+	public void setDataSource(java.lang.String arg0, java.util.Map arg1) {} // ATL-autostub
 }

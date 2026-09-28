@@ -22,4 +22,8 @@ public class TextDirectionHeuristics {
 			return false;
 		}
 	};
+
+	public static android.text.TextDirectionHeuristic ANYRTL_LTR; // ATL-autostub
+	public static android.text.TextDirectionHeuristic FIRSTSTRONG_RTL; // ATL-autostub
+	public static android.text.TextDirectionHeuristic LOCALE; // ATL-autostub
 }

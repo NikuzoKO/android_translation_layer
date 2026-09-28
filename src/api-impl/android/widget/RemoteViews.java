@@ -37,4 +37,14 @@ public class RemoteViews {
 	public void addView(int viewId, RemoteViews child) {}
 
 	public void setViewPadding(int viewId, int left, int top, int right, int bottom) {}
+
+	public void setBoolean(int arg0, java.lang.String arg1, boolean arg2) {} // ATL-autostub
+	public void setEmptyView(int arg0, int arg1) {} // ATL-autostub
+	public void setFloat(int arg0, java.lang.String arg1, float arg2) {} // ATL-autostub
+	public void setInt(int arg0, java.lang.String arg1, int arg2) {} // ATL-autostub
+	public void setLong(int arg0, java.lang.String arg1, long arg2) {} // ATL-autostub
+	public void setOnClickFillInIntent(int arg0, android.content.Intent arg1) {} // ATL-autostub
+	public void setPendingIntentTemplate(int arg0, android.app.PendingIntent arg1) {} // ATL-autostub
+	public void setRemoteAdapter(int arg0, int arg1, android.content.Intent arg2) {} // ATL-autostub
+	public void setTextColor(int arg0, int arg1) {} // ATL-autostub
 }

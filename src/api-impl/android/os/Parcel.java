@@ -975,4 +975,7 @@ public class Parcel {
 		this.pos = offset;
 		this.size = offset + length;
 	}
+
+	public java.lang.Object readParcelable(java.lang.ClassLoader arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public void readMap(java.util.Map arg0, java.lang.ClassLoader arg1, java.lang.Class arg2, java.lang.Class arg3) {} // ATL-autostub
 }

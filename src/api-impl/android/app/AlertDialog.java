@@ -155,5 +155,9 @@ public class AlertDialog extends Dialog implements DialogInterface {
 			dialog.show();
 			return dialog;
 		}
-	}
+	
+	public android.app.AlertDialog.Builder setOnDismissListener(android.content.DialogInterface.OnDismissListener arg0) { return ((Object)this) instanceof android.app.AlertDialog.Builder ? (android.app.AlertDialog.Builder)(Object)this : null; } // ATL-autostub
+}
+
+	public boolean onKeyDown(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
 }

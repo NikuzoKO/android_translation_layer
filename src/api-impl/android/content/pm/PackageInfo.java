@@ -253,4 +253,6 @@ public class PackageInfo implements Parcelable {
 	}
 
 	public SigningInfo signingInfo = new SigningInfo();
+
+	public boolean isApex; // ATL-autostub
 }

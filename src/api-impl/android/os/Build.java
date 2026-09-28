@@ -279,7 +279,10 @@ public class Build {
 					return UNKNOWN;
 			}
 		}
-	}
+	
+	public static int MEDIA_PERFORMANCE_CLASS; // ATL-autostub
+	public static int SDK_INT_FULL; // ATL-autostub
+}
 
 	/**
 	 * Enumeration of the currently known SDK version codes.  These are the
@@ -1056,4 +1059,11 @@ public class Build {
 	private static long getLong(String property) {
 		return SystemProperties.getLong(property, -1);
 	}
+
+	public static java.lang.String SOC_MANUFACTURER; // ATL-autostub
+	public static java.lang.String SOC_MODEL; // ATL-autostub
+	public static java.lang.String getSerial() { return null; } // ATL-autostub
+	public static java.lang.String[] SUPPORTED_32_BIT_ABIS; // ATL-autostub
+	public static java.lang.String[] SUPPORTED_64_BIT_ABIS; // ATL-autostub
+	public static java.util.List getFingerprintedPartitions() { return null; } // ATL-autostub
 }

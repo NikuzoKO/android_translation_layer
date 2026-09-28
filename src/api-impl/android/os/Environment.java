@@ -811,4 +811,6 @@ public class Environment {
 	 */
 	public static boolean isExternalStorageManager() { return true; }
 	public static boolean isExternalStorageManager(File path) { return true; }
+
+	public static java.lang.String DIRECTORY_SCREENSHOTS; // ATL-autostub
 }

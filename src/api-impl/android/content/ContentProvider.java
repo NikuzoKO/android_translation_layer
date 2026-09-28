@@ -77,4 +77,17 @@ public abstract class ContentProvider {
 	public String getCallingPackage() {
 		return ATLLoadedApp.getPrimaryApplication().pkg.packageName;
 	}
+
+	public android.content.res.AssetFileDescriptor openTypedAssetFile(android.net.Uri arg0, java.lang.String arg1, android.os.Bundle arg2) { return ((Object)this) instanceof android.content.res.AssetFileDescriptor ? (android.content.res.AssetFileDescriptor)(Object)this : null; } // ATL-autostub
+	public android.database.Cursor query(android.net.Uri arg0, java.lang.String[] arg1, android.os.Bundle arg2, android.os.CancellationSignal arg3) { return ((Object)this) instanceof android.database.Cursor ? (android.database.Cursor)(Object)this : null; } // ATL-autostub
+	public android.database.Cursor query(android.net.Uri arg0, java.lang.String[] arg1, java.lang.String arg2, java.lang.String[] arg3, java.lang.String arg4, android.os.CancellationSignal arg5) { return ((Object)this) instanceof android.database.Cursor ? (android.database.Cursor)(Object)this : null; } // ATL-autostub
+	public android.os.Bundle call(java.lang.String arg0, java.lang.String arg1, android.os.Bundle arg2) { return ((Object)this) instanceof android.os.Bundle ? (android.os.Bundle)(Object)this : null; } // ATL-autostub
+	public android.os.ParcelFileDescriptor openFile(android.net.Uri arg0, java.lang.String arg1, android.os.CancellationSignal arg2) { return ((Object)this) instanceof android.os.ParcelFileDescriptor ? (android.os.ParcelFileDescriptor)(Object)this : null; } // ATL-autostub
+	public boolean isTemporary() { return false; } // ATL-autostub
+	public int bulkInsert(android.net.Uri arg0, android.content.ContentValues[] arg1) { return 0; } // ATL-autostub
+	public java.lang.String[] getStreamTypes(android.net.Uri arg0, java.lang.String arg1) { return null; } // ATL-autostub
+	public void onConfigurationChanged(android.content.res.Configuration arg0) {} // ATL-autostub
+	public void onLowMemory() {} // ATL-autostub
+	public void onTrimMemory(int arg0) {} // ATL-autostub
+	public void shutdown() {} // ATL-autostub
 }

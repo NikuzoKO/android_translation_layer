@@ -1173,4 +1173,12 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
 			return new Bundle[size];
 		}
 	};
+
+	public android.os.Bundle deepCopy() { return ((Object)this) instanceof android.os.Bundle ? (android.os.Bundle)(Object)this : null; } // ATL-autostub
+	public android.util.SparseArray getSparseParcelableArray(java.lang.String arg0, java.lang.Class arg1) { return ((Object)this) instanceof android.util.SparseArray ? (android.util.SparseArray)(Object)this : null; } // ATL-autostub
+	public java.io.Serializable getSerializable(java.lang.String arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public java.lang.Object getParcelable(java.lang.String arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public java.util.ArrayList getParcelableArrayList(java.lang.String arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public void putSize(java.lang.String arg0, android.util.Size arg1) {} // ATL-autostub
+	public void putSizeF(java.lang.String arg0, android.util.SizeF arg1) {} // ATL-autostub
 }

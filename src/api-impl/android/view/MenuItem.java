@@ -81,4 +81,17 @@ public interface MenuItem {
 	public boolean isActionViewExpanded();
 
 	public MenuItem setIntent(Intent intent);
+
+	public default android.content.Intent getIntent() { return ((Object)this) instanceof android.content.Intent ? (android.content.Intent)(Object)this : null; } // ATL-autostub
+	public default android.content.res.ColorStateList getIconTintList() { return ((Object)this) instanceof android.content.res.ColorStateList ? (android.content.res.ColorStateList)(Object)this : null; } // ATL-autostub
+	public default android.view.ContextMenu.ContextMenuInfo getMenuInfo() { return ((Object)this) instanceof android.view.ContextMenu.ContextMenuInfo ? (android.view.ContextMenu.ContextMenuInfo)(Object)this : null; } // ATL-autostub
+	public default android.view.MenuItem setAlphabeticShortcut(char arg0, int arg1) { return ((Object)this) instanceof android.view.MenuItem ? (android.view.MenuItem)(Object)this : null; } // ATL-autostub
+	public default android.view.MenuItem setContentDescription(java.lang.CharSequence arg0) { return ((Object)this) instanceof android.view.MenuItem ? (android.view.MenuItem)(Object)this : null; } // ATL-autostub
+	public default android.view.MenuItem setIconTintList(android.content.res.ColorStateList arg0) { return ((Object)this) instanceof android.view.MenuItem ? (android.view.MenuItem)(Object)this : null; } // ATL-autostub
+	public default android.view.MenuItem setIconTintMode(android.graphics.PorterDuff.Mode arg0) { return ((Object)this) instanceof android.view.MenuItem ? (android.view.MenuItem)(Object)this : null; } // ATL-autostub
+	public default android.view.MenuItem setNumericShortcut(char arg0, int arg1) { return ((Object)this) instanceof android.view.MenuItem ? (android.view.MenuItem)(Object)this : null; } // ATL-autostub
+	public default android.view.MenuItem setTooltipText(java.lang.CharSequence arg0) { return ((Object)this) instanceof android.view.MenuItem ? (android.view.MenuItem)(Object)this : null; } // ATL-autostub
+	public default boolean collapseActionView() { return false; } // ATL-autostub
+	public default char getAlphabeticShortcut() { return '\0'; } // ATL-autostub
+	public default char getNumericShortcut() { return '\0'; } // ATL-autostub
 }

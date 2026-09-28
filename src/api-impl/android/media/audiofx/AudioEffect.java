@@ -12,4 +12,6 @@ public class AudioEffect {
 	public boolean getEnabled() { return false; }
 
 	public int setEnabled(boolean enable) { return SUCCESS; }
+
+	public void release() {} // ATL-autostub
 }

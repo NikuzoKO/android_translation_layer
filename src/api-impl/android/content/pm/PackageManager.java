@@ -3627,4 +3627,7 @@ public class PackageManager {
 	public PackageInstaller getPackageInstaller() {
 		return new PackageInstaller();
 	}
+
+	public boolean isDeviceUpgrading() { return false; } // ATL-autostub
+	public java.util.List getInstalledModules(int arg0) { return null; } // ATL-autostub
 }

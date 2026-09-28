@@ -9,4 +9,6 @@ public class ScaleDrawable extends Drawable {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'draw'");
 	}
+
+	public ScaleDrawable(android.graphics.drawable.Drawable arg0, int arg1, float arg2, float arg3) {} // ATL-autostub
 }

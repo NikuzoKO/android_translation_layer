@@ -19,4 +19,7 @@ public abstract class IntentService extends Service {
 	}
 
 	protected abstract void onHandleIntent(Intent intent);
+
+	public void onTimeout(int arg0, int arg1) {} // ATL-autostub
+	public void startForeground(int arg0, android.app.Notification arg1, int arg2) {} // ATL-autostub
 }

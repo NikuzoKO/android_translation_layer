@@ -200,7 +200,14 @@ public class Notification implements Parcelable {
 		public Notification build() {
 			return notification;
 		}
-	}
+	
+	public android.app.Notification.Builder addPerson(java.lang.String arg0) { return ((Object)this) instanceof android.app.Notification.Builder ? (android.app.Notification.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.Notification.Builder setAllowSystemGeneratedContextualActions(boolean arg0) { return ((Object)this) instanceof android.app.Notification.Builder ? (android.app.Notification.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.Notification.Builder setChannelId(java.lang.String arg0) { return ((Object)this) instanceof android.app.Notification.Builder ? (android.app.Notification.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.Notification.Builder setCustomContentView(android.widget.RemoteViews arg0) { return ((Object)this) instanceof android.app.Notification.Builder ? (android.app.Notification.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.Notification.Builder setSmallIcon(android.graphics.drawable.Icon arg0) { return ((Object)this) instanceof android.app.Notification.Builder ? (android.app.Notification.Builder)(Object)this : null; } // ATL-autostub
+	public static android.app.Notification.Builder recoverBuilder(android.content.Context arg0, android.app.Notification arg1) { return null; } // ATL-autostub
+}
 
 	public static class Action {
 
@@ -235,10 +242,16 @@ public class Notification implements Parcelable {
 			public Action build() {
 				return action;
 			}
-		}
+		
+	public android.app.Notification.Action.Builder setAuthenticationRequired(boolean arg0) { return ((Object)this) instanceof android.app.Notification.Action.Builder ? (android.app.Notification.Action.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.Notification.Action.Builder setContextual(boolean arg0) { return ((Object)this) instanceof android.app.Notification.Action.Builder ? (android.app.Notification.Action.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.Notification.Action.Builder setSemanticAction(int arg0) { return ((Object)this) instanceof android.app.Notification.Action.Builder ? (android.app.Notification.Action.Builder)(Object)this : null; } // ATL-autostub
+}
 	}
 
-	public static abstract class Style {}
+	public static abstract class Style {
+	public void setBuilder(android.app.Notification.Builder arg0) {} // ATL-autostub
+}
 
 	public static class MediaStyle extends Style {
 
@@ -268,4 +281,11 @@ public class Notification implements Parcelable {
 
 		public InboxStyle addLine(CharSequence line) { return this; }
 	}
+
+	public android.app.Notification clone() { return ((Object)this) instanceof android.app.Notification ? (android.app.Notification)(Object)this : null; } // ATL-autostub
+	public android.app.PendingIntent contentIntent; // ATL-autostub
+	public android.app.PendingIntent fullScreenIntent; // ATL-autostub
+	public android.graphics.drawable.Icon getSmallIcon() { return ((Object)this) instanceof android.graphics.drawable.Icon ? (android.graphics.drawable.Icon)(Object)this : null; } // ATL-autostub
+	public int number; // ATL-autostub
+	public java.lang.String getChannelId() { return null; } // ATL-autostub
 }

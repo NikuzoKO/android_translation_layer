@@ -420,4 +420,7 @@ public class SparseArray<E> implements Cloneable {
 		buffer.append('}');
 		return buffer.toString();
 	}
+
+	public boolean contentEquals(android.util.SparseArray arg0) { return false; } // ATL-autostub
+	public int contentHashCode() { return 0; } // ATL-autostub
 }

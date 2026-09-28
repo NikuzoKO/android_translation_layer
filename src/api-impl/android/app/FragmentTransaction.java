@@ -17,4 +17,6 @@ public class FragmentTransaction {
 	public int commit() {
 		return 0;
 	}
+
+	public int commitAllowingStateLoss() { return 0; } // ATL-autostub
 }

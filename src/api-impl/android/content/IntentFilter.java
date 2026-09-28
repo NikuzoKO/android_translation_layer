@@ -100,4 +100,7 @@ public class IntentFilter {
 	public final Iterator authoritiesIterator() {
 		return null;
 	}
+
+	public boolean hasDataType(java.lang.String arg0) { return false; } // ATL-autostub
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

@@ -7,4 +7,7 @@ public class Picture {
 	}
 
 	public void endRecording() {}
+
+	public int getHeight() { return 0; } // ATL-autostub
+	public int getWidth() { return 0; } // ATL-autostub
 }

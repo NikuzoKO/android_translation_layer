@@ -47,4 +47,7 @@ public class SeekBar extends AbsSeekBar {
 
 		public void onStopTrackingTouch(SeekBar seekBar);
 	}
+
+	public int getMin() { return 0; } // ATL-autostub
+	public void setMin(int arg0) {} // ATL-autostub
 }

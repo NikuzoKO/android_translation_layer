@@ -29,5 +29,10 @@ public class AudioAttributes {
 		public AudioAttributes build() {
 			return new AudioAttributes();
 		}
-	}
+	
+	public android.media.AudioAttributes.Builder setAllowedCapturePolicy(int arg0) { return ((Object)this) instanceof android.media.AudioAttributes.Builder ? (android.media.AudioAttributes.Builder)(Object)this : null; } // ATL-autostub
+	public android.media.AudioAttributes.Builder setHapticChannelsMuted(boolean arg0) { return ((Object)this) instanceof android.media.AudioAttributes.Builder ? (android.media.AudioAttributes.Builder)(Object)this : null; } // ATL-autostub
+	public android.media.AudioAttributes.Builder setIsContentSpatialized(boolean arg0) { return ((Object)this) instanceof android.media.AudioAttributes.Builder ? (android.media.AudioAttributes.Builder)(Object)this : null; } // ATL-autostub
+	public android.media.AudioAttributes.Builder setSpatializationBehavior(int arg0) { return ((Object)this) instanceof android.media.AudioAttributes.Builder ? (android.media.AudioAttributes.Builder)(Object)this : null; } // ATL-autostub
+}
 }

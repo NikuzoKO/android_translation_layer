@@ -17,4 +17,10 @@ public class Toolbar extends View {
 	public void setNavigationIcon(int resId) {}
 
 	public void setNavigationOnClickListener(OnClickListener listener) {}
+
+	public int getTitleMarginBottom() { return 0; } // ATL-autostub
+	public int getTitleMarginEnd() { return 0; } // ATL-autostub
+	public int getTitleMarginStart() { return 0; } // ATL-autostub
+	public int getTitleMarginTop() { return 0; } // ATL-autostub
+	public java.lang.CharSequence getTitle() { return null; } // ATL-autostub
 }

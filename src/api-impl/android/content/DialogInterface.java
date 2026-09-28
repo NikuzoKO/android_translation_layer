@@ -22,9 +22,15 @@ public interface DialogInterface {
 		void onShow(DialogInterface dialog);
 	}
 	public interface OnCancelListener {
-	}
+	
+	public default void onCancel(android.content.DialogInterface arg0) {} // ATL-autostub
+}
 	public interface OnMultiChoiceClickListener {
-	}
+	
+	public default void onClick(android.content.DialogInterface arg0, int arg1, boolean arg2) {} // ATL-autostub
+}
 	public interface OnKeyListener {
-	}
+	
+	public default boolean onKey(android.content.DialogInterface arg0, int arg1, android.view.KeyEvent arg2) { return false; } // ATL-autostub
+}
 }

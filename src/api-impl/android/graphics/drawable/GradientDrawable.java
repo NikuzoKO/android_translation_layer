@@ -1344,4 +1344,9 @@ public class GradientDrawable extends Drawable {
 			}
 		}
 	}
+
+	public android.content.res.ColorStateList getColor() { return ((Object)this) instanceof android.content.res.ColorStateList ? (android.content.res.ColorStateList)(Object)this : null; } // ATL-autostub
+	public void setColor(android.content.res.ColorStateList arg0) {} // ATL-autostub
+	public void setStroke(int arg0, android.content.res.ColorStateList arg1, float arg2, float arg3) {} // ATL-autostub
+	public void setThickness(int arg0) {} // ATL-autostub
 }

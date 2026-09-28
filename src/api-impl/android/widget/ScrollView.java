@@ -67,4 +67,9 @@ public class ScrollView extends ViewGroup {
 	public boolean fullScroll(int direction) {
 		return true;
 	}
+
+	public int getMaxScrollAmount() { return 0; } // ATL-autostub
+	public void fling(int arg0) {} // ATL-autostub
+	public void smoothScrollBy(int arg0, int arg1) {} // ATL-autostub
+	public void smoothScrollTo(int arg0, int arg1) {} // ATL-autostub
 }

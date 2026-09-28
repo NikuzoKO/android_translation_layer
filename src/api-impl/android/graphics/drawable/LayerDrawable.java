@@ -773,4 +773,21 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
 			return mCanConstantState;
 		}*/
 	}
+
+	public int getLayerGravity(int arg0) { return 0; } // ATL-autostub
+	public int getLayerHeight(int arg0) { return 0; } // ATL-autostub
+	public int getLayerInsetBottom(int arg0) { return 0; } // ATL-autostub
+	public int getLayerInsetEnd(int arg0) { return 0; } // ATL-autostub
+	public int getLayerInsetLeft(int arg0) { return 0; } // ATL-autostub
+	public int getLayerInsetRight(int arg0) { return 0; } // ATL-autostub
+	public int getLayerInsetStart(int arg0) { return 0; } // ATL-autostub
+	public int getLayerInsetTop(int arg0) { return 0; } // ATL-autostub
+	public int getLayerWidth(int arg0) { return 0; } // ATL-autostub
+	public void setLayerInsetBottom(int arg0, int arg1) {} // ATL-autostub
+	public void setLayerInsetEnd(int arg0, int arg1) {} // ATL-autostub
+	public void setLayerInsetLeft(int arg0, int arg1) {} // ATL-autostub
+	public void setLayerInsetRight(int arg0, int arg1) {} // ATL-autostub
+	public void setLayerInsetStart(int arg0, int arg1) {} // ATL-autostub
+	public void setLayerInsetTop(int arg0, int arg1) {} // ATL-autostub
+	public void setLayerSize(int arg0, int arg1, int arg2) {} // ATL-autostub
 }

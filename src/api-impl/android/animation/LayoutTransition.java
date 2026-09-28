@@ -15,4 +15,7 @@ public class LayoutTransition {
 	public void setDuration(int transitionType, long duration) {}
 
 	public void setInterpolator(int transitionType, TimeInterpolator interpolator) {}
+
+	public boolean isChangingLayout() { return false; } // ATL-autostub
+	public void setAnimateParentHierarchy(boolean arg0) {} // ATL-autostub
 }

@@ -68,7 +68,20 @@ public class KeyGenParameterSpec {
 		public KeyGenParameterSpec build() {
 			return spec;
 		}
-	}
+	
+	public android.security.keystore.KeyGenParameterSpec.Builder setAlgorithmParameterSpec(java.security.spec.AlgorithmParameterSpec arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setAttestationChallenge(byte[] arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setDevicePropertiesAttestationIncluded(boolean arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setInvalidatedByBiometricEnrollment(boolean arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setIsStrongBoxBacked(boolean arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setKeyValidityEnd(java.util.Date arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setKeyValidityStart(java.util.Date arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setRandomizedEncryptionRequired(boolean arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setUserAuthenticationParameters(int arg0, int arg1) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setUserAuthenticationValidityDurationSeconds(int arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setUserConfirmationRequired(boolean arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+	public android.security.keystore.KeyGenParameterSpec.Builder setUserPresenceRequired(boolean arg0) { return ((Object)this) instanceof android.security.keystore.KeyGenParameterSpec.Builder ? (android.security.keystore.KeyGenParameterSpec.Builder)(Object)this : null; } // ATL-autostub
+}
 
 	public int getKeySize() {
 		return keySize;
@@ -93,4 +106,6 @@ public class KeyGenParameterSpec {
 	public String getKeystoreAlias() {
 		return keystoreAlias;
 	}
+
+	public int getUserAuthenticationValidityDurationSeconds() { return 0; } // ATL-autostub
 }

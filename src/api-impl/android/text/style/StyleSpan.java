@@ -13,4 +13,6 @@ public class StyleSpan extends MetricAffectingSpan implements ParcelableSpan {
 	public int getStyle() {
 		return style;
 	}
+
+	public void updateDrawState(android.text.TextPaint arg0) {} // ATL-autostub
 }

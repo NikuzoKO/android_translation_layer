@@ -85,9 +85,16 @@ public final class Display {
 		public int getPhysicalHeight() {
 			return window_height;
 		}
-	}
+	
+	public int[] getSupportedHdrTypes() { return null; } // ATL-autostub
+}
 
 	public Mode[] getSupportedModes() {
 		return new Mode[] {getMode()};
 	}
+
+	public boolean isHdr() { return false; } // ATL-autostub
+	public boolean isHdrSdrRatioAvailable() { return false; } // ATL-autostub
+	public float getHdrSdrRatio() { return 0f; } // ATL-autostub
+	public int getFlags() { return 0; } // ATL-autostub
 }

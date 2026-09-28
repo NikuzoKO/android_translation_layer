@@ -3618,4 +3618,6 @@ public final class MotionEvent extends InputEvent {
 			return id | (toolType << 8);
 		}
 	}
+
+	public int getClassification() { return 0; } // ATL-autostub
 }

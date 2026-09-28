@@ -39,7 +39,9 @@ public class LayoutInflater {
 	}
 
 	public interface Factory {
-	}
+	
+	public default android.view.View onCreateView(java.lang.String arg0, android.content.Context arg1, android.util.AttributeSet arg2) { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+}
 
 	public interface Factory2 {
 		public View onCreateView(View parent, String name, Context context, AttributeSet attrs);

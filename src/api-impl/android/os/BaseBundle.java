@@ -368,4 +368,11 @@ public class BaseBundle {
 			return null;
 		}
 	}
+
+	public boolean[] getBooleanArray(java.lang.String arg0) { return null; } // ATL-autostub
+	public double getDouble(java.lang.String arg0) { return 0d; } // ATL-autostub
+	public double getDouble(java.lang.String arg0, double arg1) { return 0d; } // ATL-autostub
+	public void putBooleanArray(java.lang.String arg0, boolean[] arg1) {} // ATL-autostub
+	public void putDouble(java.lang.String arg0, double arg1) {} // ATL-autostub
+	public void putDoubleArray(java.lang.String arg0, double[] arg1) {} // ATL-autostub
 }

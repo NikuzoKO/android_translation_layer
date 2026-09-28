@@ -51,4 +51,6 @@ public class VelocityTracker {
 	}
 
 	public void clear() {}
+
+	public float getAxisVelocity(int arg0) { return 0f; } // ATL-autostub
 }

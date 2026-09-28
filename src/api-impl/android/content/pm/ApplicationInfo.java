@@ -677,4 +677,7 @@ public class ApplicationInfo extends PackageItemInfo {
 	}
 
 	public String[] splitPublicSourceDirs = new String[0];
+
+	public java.lang.String deviceProtectedDataDir; // ATL-autostub
+	public java.util.UUID storageUuid; // ATL-autostub
 }

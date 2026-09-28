@@ -330,4 +330,9 @@ public class RenderNode {
 		matrix.preRotate(rotation, pivotX, pivotY);
 		matrix.preScale(scaleX, scaleY, pivotX, pivotY);
 	}
+
+	public boolean setAmbientShadowColor(int arg0) { return false; } // ATL-autostub
+	public boolean setSpotShadowColor(int arg0) { return false; } // ATL-autostub
+	public int getAmbientShadowColor() { return 0; } // ATL-autostub
+	public int getSpotShadowColor() { return 0; } // ATL-autostub
 }

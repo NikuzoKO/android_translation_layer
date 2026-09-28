@@ -29,4 +29,7 @@ public class ResolveInfo {
 
 		public DisplayNameComparator(PackageManager pm) {}
 	}
+
+	public int match; // ATL-autostub
+	public int specificIndex; // ATL-autostub
 }

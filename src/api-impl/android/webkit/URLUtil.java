@@ -27,4 +27,6 @@ public class URLUtil {
 	public static boolean isContentUrl(String url) {
 		return url.startsWith("content://");
 	}
+
+	public static boolean isValidUrl(java.lang.String arg0) { return false; } // ATL-autostub
 }

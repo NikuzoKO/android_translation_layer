@@ -58,7 +58,9 @@ public class MediaCodecInfo {
 		public int getMaxSupportedInstances() {
 			return 0;
 		}
-	}
+	
+	public int[] colorFormats; // ATL-autostub
+}
 
 	public static final class CodecProfileLevel {
 
@@ -193,7 +195,10 @@ public class MediaCodecInfo {
 		public boolean areSizeAndRateSupported(int width, int height, double frameRate) {
 			return width > 0 && height > 0 && frameRate > 0;
 		}
-	}
+	
+	public boolean isSizeSupported(int arg0, int arg1) { return false; } // ATL-autostub
+	public java.util.List getSupportedPerformancePoints() { return null; } // ATL-autostub
+}
 
 	public static class AudioCapabilities {
 
@@ -205,4 +210,9 @@ public class MediaCodecInfo {
 			return 2;
 		}
 	}
+
+	public boolean isAlias() { return false; } // ATL-autostub
+	public boolean isHardwareAccelerated() { return false; } // ATL-autostub
+	public boolean isSoftwareOnly() { return false; } // ATL-autostub
+	public boolean isVendor() { return false; } // ATL-autostub
 }

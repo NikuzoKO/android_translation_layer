@@ -330,4 +330,7 @@ public final class Trace {
 	public static boolean isEnabled() {
 		return isTagEnabled(TRACE_TAG_APP);
 	}
+
+	public static void beginAsyncSection(java.lang.String arg0, int arg1) {} // ATL-autostub
+	public static void endAsyncSection(java.lang.String arg0, int arg1) {} // ATL-autostub
 }

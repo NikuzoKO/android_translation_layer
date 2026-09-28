@@ -32,7 +32,9 @@ public class ActivityManager {
 			this.pid = pid;
 			this.processName = processName;
 		}
-	}
+	
+	public int lastTrimLevel; // ATL-autostub
+}
 
 	public static class TaskDescription {
 		public TaskDescription(String name) {}
@@ -150,7 +152,10 @@ public class ActivityManager {
 		};
 	}
 
-	public static class AppTask {}
+	public static class AppTask {
+	public android.app.ActivityManager.RecentTaskInfo getTaskInfo() { return ((Object)this) instanceof android.app.ActivityManager.RecentTaskInfo ? (android.app.ActivityManager.RecentTaskInfo)(Object)this : null; } // ATL-autostub
+	public void finishAndRemoveTask() {} // ATL-autostub
+}
 	public List<ActivityManager.AppTask> getAppTasks() {
 		return new ArrayList<>();
 	}
@@ -284,4 +289,12 @@ public class ActivityManager {
 
 	public void moveTaskToFront(int taskId, int flags, Bundle options) {
 	}
+
+	public android.os.Debug.MemoryInfo[] getProcessMemoryInfo(int[] arg0) { return null; } // ATL-autostub
+	public boolean isBackgroundRestricted() { return false; } // ATL-autostub
+	public int getLauncherLargeIconSize() { return 0; } // ATL-autostub
+	public int getLockTaskModeState() { return 0; } // ATL-autostub
+	public static boolean isLowMemoryKillReportSupported() { return false; } // ATL-autostub
+	public void moveTaskToFront(int arg0, int arg1) {} // ATL-autostub
+	public void setProcessStateSummary(byte[] arg0) {} // ATL-autostub
 }

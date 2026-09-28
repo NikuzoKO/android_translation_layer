@@ -1789,4 +1789,8 @@ public class LinearLayout extends ViewGroup {
 			this.gravity = source.gravity;
 		}
 	}
+
+	public void onRtlPropertiesChanged(int arg0) {} // ATL-autostub
+	public void setSystemGestureExclusionRects(java.util.List arg0) {} // ATL-autostub
+	public void suppressLayout(boolean arg0) {} // ATL-autostub
 }

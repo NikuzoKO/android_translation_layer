@@ -27,7 +27,9 @@ public class AudioManager {
 	}
 
 	public interface OnAudioFocusChangeListener {
-	}
+	
+	public default void onAudioFocusChange(int arg0) {} // ATL-autostub
+}
 
 	public static final int GET_DEVICES_INPUTS = 0x0001;
 	public static final int GET_DEVICES_OUTPUTS = 0x0002;
@@ -109,4 +111,12 @@ public class AudioManager {
 	public void registerAudioDeviceCallback(AudioDeviceCallback callback, Handler handler) {}
 
 	public void unregisterAudioDeviceCallback(AudioDeviceCallback callback) {}
+
+	public android.media.AudioDeviceInfo getCommunicationDevice() { return ((Object)this) instanceof android.media.AudioDeviceInfo ? (android.media.AudioDeviceInfo)(Object)this : null; } // ATL-autostub
+	public boolean setCommunicationDevice(android.media.AudioDeviceInfo arg0) { return false; } // ATL-autostub
+	public java.util.List getAvailableCommunicationDevices() { return null; } // ATL-autostub
+	public void adjustStreamVolume(int arg0, int arg1, int arg2) {} // ATL-autostub
+	public void adjustSuggestedStreamVolume(int arg0, int arg1, int arg2) {} // ATL-autostub
+	public void playSoundEffect(int arg0) {} // ATL-autostub
+	public void startBluetoothSco() {} // ATL-autostub
 }

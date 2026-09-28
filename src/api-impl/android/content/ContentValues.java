@@ -494,4 +494,6 @@ public final class ContentValues {
 		}
 		return sb.toString();
 	}
+
+	public boolean isEmpty() { return false; } // ATL-autostub
 }

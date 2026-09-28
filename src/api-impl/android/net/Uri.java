@@ -2257,4 +2257,6 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
 
 		return true;
 	}
+
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

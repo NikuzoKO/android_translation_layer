@@ -54,4 +54,13 @@ public class Animation {
 	public boolean hasStarted() {
 		return false;
 	}
+
+	public boolean getTransformation(long arg0, android.view.animation.Transformation arg1) { return false; } // ATL-autostub
+	public boolean getTransformation(long arg0, android.view.animation.Transformation arg1, float arg2) { return false; } // ATL-autostub
+	public boolean hasEnded() { return false; } // ATL-autostub
+	public long getDuration() { return 0L; } // ATL-autostub
+	public long getStartTime() { return 0L; } // ATL-autostub
+	public void setFillEnabled(boolean arg0) {} // ATL-autostub
+	public void setInterpolator(android.content.Context arg0, int arg1) {} // ATL-autostub
+	public void setStartTime(long arg0) {} // ATL-autostub
 }

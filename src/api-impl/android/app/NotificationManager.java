@@ -107,4 +107,10 @@ public class NotificationManager {
 	public NotificationChannel getNotificationChannel(String channel) {
 		return null;
 	}
+
+	public android.app.NotificationChannelGroup getNotificationChannelGroup(java.lang.String arg0) { return ((Object)this) instanceof android.app.NotificationChannelGroup ? (android.app.NotificationChannelGroup)(Object)this : null; } // ATL-autostub
+	public boolean canUseFullScreenIntent() { return false; } // ATL-autostub
+	public int getCurrentInterruptionFilter() { return 0; } // ATL-autostub
+	public java.lang.String getNotificationDelegate() { return null; } // ATL-autostub
+	public void setNotificationDelegate(java.lang.String arg0) {} // ATL-autostub
 }

@@ -182,4 +182,11 @@ public class ContentResolver {
 	}
 
 	private static native void native_query_file_info(String path, String[] attributes, Object[] result);
+
+	public android.graphics.Bitmap loadThumbnail(android.net.Uri arg0, android.util.Size arg1, android.os.CancellationSignal arg2) { return ((Object)this) instanceof android.graphics.Bitmap ? (android.graphics.Bitmap)(Object)this : null; } // ATL-autostub
+	public android.os.Bundle call(android.net.Uri arg0, java.lang.String arg1, java.lang.String arg2, android.os.Bundle arg3) { return ((Object)this) instanceof android.os.Bundle ? (android.os.Bundle)(Object)this : null; } // ATL-autostub
+	public static boolean getSyncAutomatically(android.accounts.Account arg0, java.lang.String arg1) { return false; } // ATL-autostub
+	public static void addPeriodicSync(android.accounts.Account arg0, java.lang.String arg1, android.os.Bundle arg2, long arg3) {} // ATL-autostub
+	public static void setIsSyncable(android.accounts.Account arg0, java.lang.String arg1, int arg2) {} // ATL-autostub
+	public static void setSyncAutomatically(android.accounts.Account arg0, java.lang.String arg1, boolean arg2) {} // ATL-autostub
 }

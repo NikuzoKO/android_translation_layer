@@ -83,5 +83,15 @@ public class Typeface {
 		public Typeface build() {
 			return DEFAULT;
 		}
-	}
+	
+	public Builder(java.io.File arg0) {} // ATL-autostub
+	public Builder(java.io.FileDescriptor arg0) {} // ATL-autostub
+	public android.graphics.Typeface.Builder setFontVariationSettings(android.graphics.fonts.FontVariationAxis[] arg0) { return ((Object)this) instanceof android.graphics.Typeface.Builder ? (android.graphics.Typeface.Builder)(Object)this : null; } // ATL-autostub
+	public android.graphics.Typeface.Builder setItalic(boolean arg0) { return ((Object)this) instanceof android.graphics.Typeface.Builder ? (android.graphics.Typeface.Builder)(Object)this : null; } // ATL-autostub
+	public android.graphics.Typeface.Builder setWeight(int arg0) { return ((Object)this) instanceof android.graphics.Typeface.Builder ? (android.graphics.Typeface.Builder)(Object)this : null; } // ATL-autostub
+}
+
+	public boolean isItalic() { return false; } // ATL-autostub
+	public int getWeight() { return 0; } // ATL-autostub
+	public static android.graphics.Typeface create(android.graphics.Typeface arg0, int arg1, boolean arg2) { return null; } // ATL-autostub
 }

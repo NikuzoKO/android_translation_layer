@@ -29,4 +29,6 @@ public class RippleDrawable extends LayerDrawable {
 				array[i].mDrawable.draw(canvas);
 		}
 	}
+
+	public android.graphics.Rect getDirtyBounds() { return ((Object)this) instanceof android.graphics.Rect ? (android.graphics.Rect)(Object)this : null; } // ATL-autostub
 }

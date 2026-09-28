@@ -80,4 +80,6 @@ public class SoundPool {
 	private static native long native_constructor();
 	private static native int nativeLoad(long nativePool, String path);
 	public static native int nativePlay(long nativePool, int soundID);
+
+	public void stop(int arg0) {} // ATL-autostub
 }

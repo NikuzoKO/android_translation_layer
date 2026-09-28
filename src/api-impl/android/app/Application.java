@@ -119,4 +119,11 @@ public class Application extends ContextWrapper {
 		// note: we currently don't set the process name
 		return ATLLoadedApp.getPrimaryApplication().pkg.packageName;
 	}
+
+	public void revokeUriPermission(java.lang.String arg0, android.net.Uri arg1, int arg2) {} // ATL-autostub
+	public void sendBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, int arg1, java.lang.String arg2, java.lang.String arg3, android.content.BroadcastReceiver arg4, android.os.Handler arg5, java.lang.String arg6, android.os.Bundle arg7, android.os.Bundle arg8) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2, android.content.BroadcastReceiver arg3, android.os.Handler arg4, int arg5, java.lang.String arg6, android.os.Bundle arg7) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, java.lang.String arg2, android.content.BroadcastReceiver arg3, android.os.Handler arg4, int arg5, java.lang.String arg6, android.os.Bundle arg7) {} // ATL-autostub
 }

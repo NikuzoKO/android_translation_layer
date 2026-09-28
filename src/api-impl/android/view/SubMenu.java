@@ -9,4 +9,6 @@ public interface SubMenu extends Menu {
 	public void clearHeader();
 
 	public SubMenu setIcon(Drawable icon);
+
+	public default void setGroupDividerEnabled(boolean arg0) {} // ATL-autostub
 }

@@ -38,4 +38,13 @@ public class WifiManager {
 	public boolean isWifiEnabled() {
 		return false;
 	}
+
+	public boolean disconnect() { return false; } // ATL-autostub
+	public boolean enableNetwork(int arg0, boolean arg1) { return false; } // ATL-autostub
+	public boolean isP2pSupported() { return false; } // ATL-autostub
+	public boolean reconnect() { return false; } // ATL-autostub
+	public boolean removeNetwork(int arg0) { return false; } // ATL-autostub
+	public boolean saveConfiguration() { return false; } // ATL-autostub
+	public boolean setWifiEnabled(boolean arg0) { return false; } // ATL-autostub
+	public java.util.List getScanResults() { return null; } // ATL-autostub
 }

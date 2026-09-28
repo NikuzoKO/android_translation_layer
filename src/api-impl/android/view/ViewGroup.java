@@ -555,7 +555,9 @@ public class ViewGroup extends View implements ViewParent, ViewManager {
 		 * Used to animate layouts.
 		 */
 		//public LayoutAnimationController.AnimationParameters layoutAnimationParameters;
-	}
+	
+	public LayoutParams(android.view.ViewGroup.LayoutParams arg0) {} // ATL-autostub
+}
 
 	public static class MarginLayoutParams extends ViewGroup.LayoutParams {
 		public int leftMargin;
@@ -718,4 +720,37 @@ public class ViewGroup extends View implements ViewParent, ViewManager {
 	}
 
 	public void scheduleLayoutAnimation() {}
+
+	public android.view.ActionMode startActionModeForChild(android.view.View arg0, android.view.ActionMode.Callback arg1, int arg2) { return ((Object)this) instanceof android.view.ActionMode ? (android.view.ActionMode)(Object)this : null; } // ATL-autostub
+	public android.view.PointerIcon onResolvePointerIcon(android.view.MotionEvent arg0, int arg1) { return ((Object)this) instanceof android.view.PointerIcon ? (android.view.PointerIcon)(Object)this : null; } // ATL-autostub
+	public android.view.View focusSearch(android.view.View arg0, int arg1) { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+	public android.view.ViewParent invalidateChildInParent(int[] arg0, android.graphics.Rect arg1) { return ((Object)this) instanceof android.view.ViewParent ? (android.view.ViewParent)(Object)this : null; } // ATL-autostub
+	public android.view.WindowInsets dispatchApplyWindowInsets(android.view.WindowInsets arg0) { return ((Object)this) instanceof android.view.WindowInsets ? (android.view.WindowInsets)(Object)this : null; } // ATL-autostub
+	public boolean addStatesFromChildren() { return false; } // ATL-autostub
+	public boolean dispatchKeyEventPreIme(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public boolean onRequestFocusInDescendants(int arg0, android.graphics.Rect arg1) { return false; } // ATL-autostub
+	public boolean requestChildRectangleOnScreen(android.view.View arg0, android.graphics.Rect arg1, boolean arg2) { return false; } // ATL-autostub
+	public boolean showContextMenuForChild(android.view.View arg0) { return false; } // ATL-autostub
+	protected int getChildDrawingOrder(int arg0) { return 0; } // ATL-autostub
+	protected int getChildDrawingOrder(int arg0, int arg1) { return 0; } // ATL-autostub
+	public int getFocusable() { return 0; } // ATL-autostub
+	public int getNestedScrollAxes() { return 0; } // ATL-autostub
+	public int getOutlineAmbientShadowColor() { return 0; } // ATL-autostub
+	public int getOutlineSpotShadowColor() { return 0; } // ATL-autostub
+	public void addFocusables(java.util.ArrayList arg0, int arg1, int arg2) {} // ATL-autostub
+	public void clearChildFocus(android.view.View arg0) {} // ATL-autostub
+	public void dispatchFreezeSelfOnly(android.util.SparseArray arg0) {} // ATL-autostub
+	public void dispatchRestoreInstanceState(android.util.SparseArray arg0) {} // ATL-autostub
+	public void dispatchThawSelfOnly(android.util.SparseArray arg0) {} // ATL-autostub
+	public void drawableStateChanged() {} // ATL-autostub
+	public void offsetRectIntoDescendantCoords(android.view.View arg0, android.graphics.Rect arg1) {} // ATL-autostub
+	public void onVisibilityAggregated(boolean arg0) {} // ATL-autostub
+	public void removeViews(int arg0, int arg1) {} // ATL-autostub
+	public void removeViewsInLayout(int arg0, int arg1) {} // ATL-autostub
+	public void resetPivot() {} // ATL-autostub
+	public void setChildrenDrawingCacheEnabled(boolean arg0) {} // ATL-autostub
+	public void setOutlineAmbientShadowColor(int arg0) {} // ATL-autostub
+	public void setOutlineSpotShadowColor(int arg0) {} // ATL-autostub
+	public void setTransitionGroup(boolean arg0) {} // ATL-autostub
+	public void suppressLayout(boolean arg0) {} // ATL-autostub
 }

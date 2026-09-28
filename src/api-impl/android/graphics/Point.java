@@ -96,4 +96,6 @@ public class Point implements Parcelable {
 	public String toString() {
 		return "Point(" + x + ", " + y + ")";
 	}
+
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

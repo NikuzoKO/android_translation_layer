@@ -207,4 +207,16 @@ public class ImageView extends View {
 	protected native long native_constructor(Context context, AttributeSet attrs);
 	protected native void native_setDrawable(long widget, long paintable);
 	protected native void native_setScaleType(long widget, int scale_type);
+
+	public boolean hasOverlappingRendering() { return false; } // ATL-autostub
+	public boolean setFrame(int arg0, int arg1, int arg2, int arg3) { return false; } // ATL-autostub
+	public boolean verifyDrawable(android.graphics.drawable.Drawable arg0) { return false; } // ATL-autostub
+	public int getMaxWidth() { return 0; } // ATL-autostub
+	public void animateTransform(android.graphics.Matrix arg0) {} // ATL-autostub
+	public void clearColorFilter() {} // ATL-autostub
+	public void drawableHotspotChanged(float arg0, float arg1) {} // ATL-autostub
+	public void drawableStateChanged() {} // ATL-autostub
+	public void setImageLevel(int arg0) {} // ATL-autostub
+	public void setImageURI(android.net.Uri arg0) {} // ATL-autostub
+	public void setSystemGestureExclusionRects(java.util.List arg0) {} // ATL-autostub
 }

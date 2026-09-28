@@ -27,4 +27,7 @@ public interface Editable extends CharSequence {
 	public void clear();
 
 	public <T> T[] getSpans(int queryStart, int queryEnd, Class<T> kind);
+
+	public default android.text.Editable append(char arg0) { return ((Object)this) instanceof android.text.Editable ? (android.text.Editable)(Object)this : null; } // ATL-autostub
+	public default android.text.Editable append(java.lang.CharSequence arg0) { return ((Object)this) instanceof android.text.Editable ? (android.text.Editable)(Object)this : null; } // ATL-autostub
 }

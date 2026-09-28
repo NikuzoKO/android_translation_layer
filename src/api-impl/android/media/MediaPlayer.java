@@ -12,9 +12,13 @@ public class MediaPlayer {
 		void onCompletion(MediaPlayer media_player);
 	}
 	public interface OnErrorListener {
-	}
+	
+	public default boolean onError(android.media.MediaPlayer arg0, int arg1, int arg2) { return false; } // ATL-autostub
+}
 	public interface OnPreparedListener {
-	}
+	
+	public default void onPrepared(android.media.MediaPlayer arg0) {} // ATL-autostub
+}
 	public interface OnBufferingUpdateListener {
 	}
 	public interface OnInfoListener {
@@ -98,4 +102,14 @@ public class MediaPlayer {
 	public static native void native_start(long gtk_media_stream);
 	public static native int native_getDuration(long gtk_media_stream);
 	public static native int native_getCurrentPosition(long gtk_media_stream);
+
+	public int getVideoHeight() { return 0; } // ATL-autostub
+	public int getVideoWidth() { return 0; } // ATL-autostub
+	public void seekTo(long arg0, int arg1) {} // ATL-autostub
+	public void setAudioSessionId(int arg0) {} // ATL-autostub
+	public void setDataSource(java.io.FileDescriptor arg0) {} // ATL-autostub
+	public void setDisplay(android.view.SurfaceHolder arg0) {} // ATL-autostub
+	public void setScreenOnWhilePlaying(boolean arg0) {} // ATL-autostub
+	public void setSurface(android.view.Surface arg0) {} // ATL-autostub
+	public void setVideoScalingMode(int arg0) {} // ATL-autostub
 }

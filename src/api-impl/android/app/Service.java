@@ -64,4 +64,10 @@ public abstract class Service extends ContextWrapper {
 		super.attachBaseContext(newBase);
 		System.out.println("Service.attachBaseContext(" + newBase + ") called");
 	}
+
+	public void dump(java.io.FileDescriptor arg0, java.io.PrintWriter arg1, java.lang.String[] arg2) {} // ATL-autostub
+	public void onStart(android.content.Intent arg0, int arg1) {} // ATL-autostub
+	public void onTaskRemoved(android.content.Intent arg0) {} // ATL-autostub
+	public void onTimeout(int arg0, int arg1) {} // ATL-autostub
+	public void startForeground(int arg0, android.app.Notification arg1, int arg2) {} // ATL-autostub
 }

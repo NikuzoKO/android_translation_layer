@@ -41,4 +41,8 @@ public class Binder implements IBinder {
 	public boolean equals(Object obj) {
 		return obj instanceof Binder;
 	}
+
+	public boolean isBinderAlive() { return false; } // ATL-autostub
+	public boolean onTransact(int arg0, android.os.Parcel arg1, android.os.Parcel arg2, int arg3) { return false; } // ATL-autostub
+	public static int getCallingUidOrThrow() { return 0; } // ATL-autostub
 }

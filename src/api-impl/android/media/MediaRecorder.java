@@ -63,4 +63,19 @@ public class MediaRecorder {
 	public void resume() {}
 	public void pause() {}
 	public void release() {}
+
+	public android.view.Surface getSurface() { return ((Object)this) instanceof android.view.Surface ? (android.view.Surface)(Object)this : null; } // ATL-autostub
+	public void setAudioChannels(int arg0) {} // ATL-autostub
+	public void setCamera(android.hardware.Camera arg0) {} // ATL-autostub
+	public void setOnErrorListener(android.media.MediaRecorder.OnErrorListener arg0) {} // ATL-autostub
+	public void setOnInfoListener(android.media.MediaRecorder.OnInfoListener arg0) {} // ATL-autostub
+	public void setOrientationHint(int arg0) {} // ATL-autostub
+	public void setOutputFile(java.io.FileDescriptor arg0) {} // ATL-autostub
+	public void setPreviewDisplay(android.view.Surface arg0) {} // ATL-autostub
+	public void setVideoEncoder(int arg0) {} // ATL-autostub
+	public void setVideoEncodingBitRate(int arg0) {} // ATL-autostub
+	public void setVideoEncodingProfileLevel(int arg0, int arg1) {} // ATL-autostub
+	public void setVideoFrameRate(int arg0) {} // ATL-autostub
+	public void setVideoSize(int arg0, int arg1) {} // ATL-autostub
+	public void setVideoSource(int arg0) {} // ATL-autostub
 }

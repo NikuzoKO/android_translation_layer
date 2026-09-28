@@ -7,4 +7,6 @@ public class ToneGenerator {
 	public void stopTone() {}
 
 	public void release() {}
+
+	public boolean startTone(int arg0, int arg1) { return false; } // ATL-autostub
 }

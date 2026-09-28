@@ -709,7 +709,9 @@ public class View implements Drawable.Callback {
 
 	public interface OnLongClickListener {
 		public boolean onLongClick(View v);
-	}
+	
+	public default boolean onLongClickUseDefaultHapticFeedback(android.view.View arg0) { return false; } // ATL-autostub
+}
 
 	public interface OnHoverListener {
 		// TODO
@@ -717,7 +719,9 @@ public class View implements Drawable.Callback {
 
 	public interface OnApplyWindowInsetsListener {
 		// TODO
-	}
+	
+	public default android.view.WindowInsets onApplyWindowInsets(android.view.View arg0, android.view.WindowInsets arg1) { return ((Object)this) instanceof android.view.WindowInsets ? (android.view.WindowInsets)(Object)this : null; } // ATL-autostub
+}
 
 	public interface OnLayoutChangeListener {
 		// TODO
@@ -729,7 +733,9 @@ public class View implements Drawable.Callback {
 
 	public interface OnFocusChangeListener {
 		// TODO
-	}
+	
+	public default void onFocusChange(android.view.View arg0, boolean arg1) {} // ATL-autostub
+}
 
 	public interface OnCreateContextMenuListener {
 		/**
@@ -1529,7 +1535,11 @@ public class View implements Drawable.Callback {
 
 	public static class AccessibilityDelegate {
 		public void sendAccessibilityEvent(View view, int eventType) {}
-	}
+	
+	public android.view.accessibility.AccessibilityNodeProvider getAccessibilityNodeProvider(android.view.View arg0) { return ((Object)this) instanceof android.view.accessibility.AccessibilityNodeProvider ? (android.view.accessibility.AccessibilityNodeProvider)(Object)this : null; } // ATL-autostub
+	public boolean performAccessibilityAction(android.view.View arg0, int arg1, android.os.Bundle arg2) { return false; } // ATL-autostub
+	public void onInitializeAccessibilityNodeInfo(android.view.View arg0, android.view.accessibility.AccessibilityNodeInfo arg1) {} // ATL-autostub
+}
 
 	public Drawable getBackground() {
 		return background;
@@ -1922,7 +1932,9 @@ public class View implements Drawable.Callback {
 	}
 
 	public static class BaseSavedState extends AbsSavedState {
-	}
+	
+	public void writeToParcel(android.os.Parcel arg0, int arg1) {} // ATL-autostub
+}
 
 	public void clearFocus() {}
 
@@ -2579,4 +2591,101 @@ public class View implements Drawable.Callback {
 	public WindowInsets onApplyWindowInsets(WindowInsets insets) {
 		return insets;
 	}
+
+	public android.graphics.Rect getClipBounds() { return ((Object)this) instanceof android.graphics.Rect ? (android.graphics.Rect)(Object)this : null; } // ATL-autostub
+	public android.os.Parcelable onSaveInstanceState() { return ((Object)this) instanceof android.os.Parcelable ? (android.os.Parcelable)(Object)this : null; } // ATL-autostub
+	public android.view.KeyEvent.DispatcherState getKeyDispatcherState() { return ((Object)this) instanceof android.view.KeyEvent.DispatcherState ? (android.view.KeyEvent.DispatcherState)(Object)this : null; } // ATL-autostub
+	public android.view.PointerIcon onResolvePointerIcon(android.view.MotionEvent arg0, int arg1) { return ((Object)this) instanceof android.view.PointerIcon ? (android.view.PointerIcon)(Object)this : null; } // ATL-autostub
+	public android.view.TouchDelegate getTouchDelegate() { return ((Object)this) instanceof android.view.TouchDelegate ? (android.view.TouchDelegate)(Object)this : null; } // ATL-autostub
+	public android.view.View focusSearch(int arg0) { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+	public android.view.View.OnFocusChangeListener getOnFocusChangeListener() { return ((Object)this) instanceof android.view.View.OnFocusChangeListener ? (android.view.View.OnFocusChangeListener)(Object)this : null; } // ATL-autostub
+	public android.view.ViewParent getParentForAccessibility() { return ((Object)this) instanceof android.view.ViewParent ? (android.view.ViewParent)(Object)this : null; } // ATL-autostub
+	public android.view.WindowInsets dispatchApplyWindowInsets(android.view.WindowInsets arg0) { return ((Object)this) instanceof android.view.WindowInsets ? (android.view.WindowInsets)(Object)this : null; } // ATL-autostub
+	public android.view.accessibility.AccessibilityNodeInfo createAccessibilityNodeInfo() { return ((Object)this) instanceof android.view.accessibility.AccessibilityNodeInfo ? (android.view.accessibility.AccessibilityNodeInfo)(Object)this : null; } // ATL-autostub
+	public boolean dispatchKeyShortcutEvent(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public boolean dispatchNestedFling(float arg0, float arg1, boolean arg2) { return false; } // ATL-autostub
+	public boolean dispatchNestedPreFling(float arg0, float arg1) { return false; } // ATL-autostub
+	public boolean dispatchNestedPreScroll(int arg0, int arg1, int[] arg2, int[] arg3) { return false; } // ATL-autostub
+	public boolean dispatchNestedScroll(int arg0, int arg1, int arg2, int arg3, int[] arg4) { return false; } // ATL-autostub
+	public boolean fitSystemWindows(android.graphics.Rect arg0) { return false; } // ATL-autostub
+	public boolean getKeepScreenOn() { return false; } // ATL-autostub
+	public boolean hasOverlappingRendering() { return false; } // ATL-autostub
+	public boolean isAccessibilityFocused() { return false; } // ATL-autostub
+	public boolean isAccessibilityHeading() { return false; } // ATL-autostub
+	public boolean isFocusableInTouchMode() { return false; } // ATL-autostub
+	public boolean isHorizontalScrollBarEnabled() { return false; } // ATL-autostub
+	public boolean isScreenReaderFocusable() { return false; } // ATL-autostub
+	public boolean isVerticalScrollBarEnabled() { return false; } // ATL-autostub
+	public boolean onHoverEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public boolean onKeyShortcut(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onKeyUp(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean performLongClick() { return false; } // ATL-autostub
+	public boolean showContextMenu() { return false; } // ATL-autostub
+	public boolean startNestedScroll(int arg0) { return false; } // ATL-autostub
+	public boolean verifyDrawable(android.graphics.drawable.Drawable arg0) { return false; } // ATL-autostub
+	public float getBottomFadingEdgeStrength() { return 0f; } // ATL-autostub
+	public float getCameraDistance() { return 0f; } // ATL-autostub
+	public float getLeftFadingEdgeStrength() { return 0f; } // ATL-autostub
+	public float getRightFadingEdgeStrength() { return 0f; } // ATL-autostub
+	public float getTopFadingEdgeStrength() { return 0f; } // ATL-autostub
+	protected int computeHorizontalScrollOffset() { return 0; } // ATL-autostub
+	public int getFocusable() { return 0; } // ATL-autostub
+	public int getHorizontalFadingEdgeLength() { return 0; } // ATL-autostub
+	public int getLayerType() { return 0; } // ATL-autostub
+	public int getMeasuredHeightAndState() { return 0; } // ATL-autostub
+	public int getNextFocusDownId() { return 0; } // ATL-autostub
+	public int getNextFocusForwardId() { return 0; } // ATL-autostub
+	public int getNextFocusLeftId() { return 0; } // ATL-autostub
+	public int getNextFocusRightId() { return 0; } // ATL-autostub
+	public int getNextFocusUpId() { return 0; } // ATL-autostub
+	public int getSolidColor() { return 0; } // ATL-autostub
+	public int getTextDirection() { return 0; } // ATL-autostub
+	public java.lang.CharSequence getAccessibilityClassName() { return null; } // ATL-autostub
+	public java.lang.CharSequence getAccessibilityPaneTitle() { return null; } // ATL-autostub
+	public java.lang.CharSequence getStateDescription() { return null; } // ATL-autostub
+	public java.lang.String[] getReceiveContentMimeTypes() { return null; } // ATL-autostub
+	public long getUniqueDrawingId() { return 0L; } // ATL-autostub
+	public static android.util.Property ROTATION; // ATL-autostub
+	public static android.util.Property X; // ATL-autostub
+	public static android.util.Property Y; // ATL-autostub
+	public static int[] FOCUSED_STATE_SET; // ATL-autostub
+	public void addFocusables(java.util.ArrayList arg0, int arg1, int arg2) {} // ATL-autostub
+	public void addOnUnhandledKeyEventListener(android.view.View.OnUnhandledKeyEventListener arg0) {} // ATL-autostub
+	public void addTouchables(java.util.ArrayList arg0) {} // ATL-autostub
+	public void dispatchFinishTemporaryDetach() {} // ATL-autostub
+	public void dispatchRestoreInstanceState(android.util.SparseArray arg0) {} // ATL-autostub
+	public void dispatchStartTemporaryDetach() {} // ATL-autostub
+	public void drawableHotspotChanged(float arg0, float arg1) {} // ATL-autostub
+	public void drawableStateChanged() {} // ATL-autostub
+	public void findViewsWithText(java.util.ArrayList arg0, java.lang.CharSequence arg1, int arg2) {} // ATL-autostub
+	public void onCancelPendingInputEvents() {} // ATL-autostub
+	public void onFinishTemporaryDetach() {} // ATL-autostub
+	protected void onFocusChanged(boolean arg0, int arg1, android.graphics.Rect arg2) {} // ATL-autostub
+	public void onInitializeAccessibilityNodeInfo(android.view.accessibility.AccessibilityNodeInfo arg0) {} // ATL-autostub
+	public void onRestoreInstanceState(android.os.Parcelable arg0) {} // ATL-autostub
+	public void onRtlPropertiesChanged(int arg0) {} // ATL-autostub
+	public void onStartTemporaryDetach() {} // ATL-autostub
+	public void onWindowSystemUiVisibilityChanged(int arg0) {} // ATL-autostub
+	public void onWindowVisibilityChanged(int arg0) {} // ATL-autostub
+	public void postInvalidateDelayed(long arg0) {} // ATL-autostub
+	public void resetPivot() {} // ATL-autostub
+	public void setAccessibilityTraversalAfter(int arg0) {} // ATL-autostub
+	public void setAccessibilityTraversalBefore(int arg0) {} // ATL-autostub
+	public void setAnimationMatrix(android.graphics.Matrix arg0) {} // ATL-autostub
+	public void setAutofillHints(java.lang.String[] arg0) {} // ATL-autostub
+	public void setAutofillId(android.view.autofill.AutofillId arg0) {} // ATL-autostub
+	public void setFilterTouchesWhenObscured(boolean arg0) {} // ATL-autostub
+	public void setImportantForContentCapture(int arg0) {} // ATL-autostub
+	public void setLeftTopRightBottom(int arg0, int arg1, int arg2, int arg3) {} // ATL-autostub
+	public void setNextFocusForwardId(int arg0) {} // ATL-autostub
+	public void setOutlineAmbientShadowColor(int arg0) {} // ATL-autostub
+	public void setOutlineSpotShadowColor(int arg0) {} // ATL-autostub
+	public void setRequestedFrameRate(float arg0) {} // ATL-autostub
+	public void setScreenReaderFocusable(boolean arg0) {} // ATL-autostub
+	public void setStateDescription(java.lang.CharSequence arg0) {} // ATL-autostub
+	public void setSystemGestureExclusionRects(java.util.List arg0) {} // ATL-autostub
+	public void setTransitionAlpha(float arg0) {} // ATL-autostub
+	public void setTransitionVisibility(int arg0) {} // ATL-autostub
+	public void setZ(float arg0) {} // ATL-autostub
+	public void transformMatrixToLocal(android.graphics.Matrix arg0) {} // ATL-autostub
 }

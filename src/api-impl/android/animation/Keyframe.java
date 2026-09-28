@@ -35,4 +35,10 @@ public class Keyframe {
 	public void setValue(Object value) {
 		this.value = value;
 	}
+
+	public java.lang.Class getType() { return null; } // ATL-autostub
+	public static android.animation.Keyframe ofInt(float arg0) { return null; } // ATL-autostub
+	public static android.animation.Keyframe ofInt(float arg0, int arg1) { return null; } // ATL-autostub
+	public static android.animation.Keyframe ofObject(float arg0) { return null; } // ATL-autostub
+	public void setInterpolator(android.animation.TimeInterpolator arg0) {} // ATL-autostub
 }

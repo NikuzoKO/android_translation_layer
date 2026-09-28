@@ -2595,4 +2595,9 @@ public class Resources {
 
 		return theme.obtainStyledAttributes(set, attrs, 0, 0);
 	}
+
+	public android.graphics.Typeface getFont(int arg0) { return ((Object)this) instanceof android.graphics.Typeface ? (android.graphics.Typeface)(Object)this : null; } // ATL-autostub
+	public android.graphics.drawable.Drawable getDrawableForDensity(int arg0, int arg1, android.content.res.Resources.Theme arg2) { return ((Object)this) instanceof android.graphics.drawable.Drawable ? (android.graphics.drawable.Drawable)(Object)this : null; } // ATL-autostub
+	public float getFloat(int arg0) { return 0f; } // ATL-autostub
+	public static void registerResourcePaths(java.lang.String arg0, android.content.pm.ApplicationInfo arg1) {} // ATL-autostub
 }

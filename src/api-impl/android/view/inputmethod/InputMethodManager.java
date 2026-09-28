@@ -56,4 +56,14 @@ public class InputMethodManager {
 	private static native long nativeInit();
 	private native boolean nativeShowSoftInput(long im_context, long widget, InputConnection ic, int inputType);
 	private native void nativeHideSoftInput(long im_context);
+
+	public boolean hideSoftInputFromWindow(android.os.IBinder arg0, int arg1, android.os.ResultReceiver arg2) { return false; } // ATL-autostub
+	public boolean isAcceptingText() { return false; } // ATL-autostub
+	public boolean isActive() { return false; } // ATL-autostub
+	public boolean showSoftInput(android.view.View arg0, int arg1, android.os.ResultReceiver arg2) { return false; } // ATL-autostub
+	public java.util.List getEnabledInputMethodSubtypeList(android.view.inputmethod.InputMethodInfo arg0, boolean arg1) { return null; } // ATL-autostub
+	public void startStylusHandwriting(android.view.View arg0) {} // ATL-autostub
+	public void toggleSoftInput(int arg0, int arg1) {} // ATL-autostub
+	public void updateCursorAnchorInfo(android.view.View arg0, android.view.inputmethod.CursorAnchorInfo arg1) {} // ATL-autostub
+	public void updateExtractedText(android.view.View arg0, int arg1, android.view.inputmethod.ExtractedText arg2) {} // ATL-autostub
 }

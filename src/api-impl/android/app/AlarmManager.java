@@ -95,4 +95,12 @@ public class AlarmManager {
 	public static interface OnAlarmListener {
 		void onAlarm();
 	}
+
+	public android.app.AlarmManager.AlarmClockInfo getNextAlarmClock() { return ((Object)this) instanceof android.app.AlarmManager.AlarmClockInfo ? (android.app.AlarmManager.AlarmClockInfo)(Object)this : null; } // ATL-autostub
+	public void set(int arg0, long arg1, java.lang.String arg2, android.app.AlarmManager.OnAlarmListener arg3, android.os.Handler arg4) {} // ATL-autostub
+	public void setExact(int arg0, long arg1, java.lang.String arg2, android.app.AlarmManager.OnAlarmListener arg3, android.os.Handler arg4) {} // ATL-autostub
+	public void setTime(long arg0) {} // ATL-autostub
+	public void setTimeZone(java.lang.String arg0) {} // ATL-autostub
+	public void setWindow(int arg0, long arg1, long arg2, android.app.PendingIntent arg3) {} // ATL-autostub
+	public void setWindow(int arg0, long arg1, long arg2, java.lang.String arg3, android.app.AlarmManager.OnAlarmListener arg4, android.os.Handler arg5) {} // ATL-autostub
 }

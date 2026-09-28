@@ -88,4 +88,11 @@ public abstract class CompoundButton extends Button implements Checkable {
 	public PorterDuff.Mode getButtonTintMode() {
 		return null;
 	}
+
+	public android.os.Parcelable onSaveInstanceState() { return ((Object)this) instanceof android.os.Parcelable ? (android.os.Parcelable)(Object)this : null; } // ATL-autostub
+	public boolean verifyDrawable(android.graphics.drawable.Drawable arg0) { return false; } // ATL-autostub
+	public void drawableHotspotChanged(float arg0, float arg1) {} // ATL-autostub
+	public void drawableStateChanged() {} // ATL-autostub
+	public void onRestoreInstanceState(android.os.Parcelable arg0) {} // ATL-autostub
+	public void setButtonTintMode(android.graphics.PorterDuff.Mode arg0) {} // ATL-autostub
 }

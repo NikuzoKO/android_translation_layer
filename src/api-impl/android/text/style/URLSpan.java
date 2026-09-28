@@ -11,4 +11,6 @@ public class URLSpan extends CharacterStyle {
 	public String getURL() {
 		return url;
 	}
+
+	public void onClick(android.view.View arg0) {} // ATL-autostub
 }

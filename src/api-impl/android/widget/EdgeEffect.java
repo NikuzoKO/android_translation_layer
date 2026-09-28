@@ -25,4 +25,5 @@ public class EdgeEffect extends View {
 	public void setColor(int color) {}
 	public float getDistance() { return 0; }
 	public void finish() {}
+
 }

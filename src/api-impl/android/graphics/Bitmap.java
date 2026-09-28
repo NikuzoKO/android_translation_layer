@@ -256,4 +256,16 @@ public final class Bitmap implements Parcelable {
 	private static native void native_copy_to_buffer(long texture, Buffer buffer, int memory_format, int stride);
 	private static native byte[] native_save_to_png(long texture);
 	private static native void native_set_pixels(long snapshot, int[] pixels, int offset, int stride, int x, int y, int width, int height);
+
+	public android.graphics.Bitmap extractAlpha(android.graphics.Paint arg0, int[] arg1) { return ((Object)this) instanceof android.graphics.Bitmap ? (android.graphics.Bitmap)(Object)this : null; } // ATL-autostub
+	public android.graphics.ColorSpace getColorSpace() { return ((Object)this) instanceof android.graphics.ColorSpace ? (android.graphics.ColorSpace)(Object)this : null; } // ATL-autostub
+	public boolean isPremultiplied() { return false; } // ATL-autostub
+	public boolean sameAs(android.graphics.Bitmap arg0) { return false; } // ATL-autostub
+	public int getDensity() { return 0; } // ATL-autostub
+	public int getGenerationId() { return 0; } // ATL-autostub
+	public int getPixel(int arg0, int arg1) { return 0; } // ATL-autostub
+	public static android.graphics.Bitmap createBitmap(android.graphics.Picture arg0) { return null; } // ATL-autostub
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
+	public void copyPixelsFromBuffer(java.nio.Buffer arg0) {} // ATL-autostub
+	public void setPixel(int arg0, int arg1, int arg2) {} // ATL-autostub
 }

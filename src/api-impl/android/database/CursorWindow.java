@@ -626,4 +626,6 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
 	public String toString() {
 		return getName() + " {" + rows + "}";
 	}
+
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

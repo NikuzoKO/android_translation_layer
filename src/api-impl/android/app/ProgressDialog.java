@@ -35,4 +35,8 @@ public class ProgressDialog extends AlertDialog {
 	public static ProgressDialog show(Context context, CharSequence title, CharSequence message, boolean indeterminate, boolean cancelable, OnCancelListener cancelListener) {
 		return new ProgressDialog(context);
 	}
+
+	public int getProgress() { return 0; } // ATL-autostub
+	public void setProgressNumberFormat(java.lang.String arg0) {} // ATL-autostub
+	public void setProgressPercentFormat(java.text.NumberFormat arg0) {} // ATL-autostub
 }

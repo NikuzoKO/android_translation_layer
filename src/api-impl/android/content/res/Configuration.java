@@ -1588,4 +1588,7 @@ public final class Configuration implements Comparable<Configuration> {
 	}
 
 	public int fontWeightAdjustment;
+
+	public int getGrammaticalGender() { return 0; } // ATL-autostub
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

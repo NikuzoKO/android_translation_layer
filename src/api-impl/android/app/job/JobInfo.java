@@ -106,7 +106,15 @@ public class JobInfo {
 		public JobInfo build() {
 			return jobInfo;
 		}
-	}
+	
+	public android.app.job.JobInfo.Builder setExpedited(boolean arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobInfo.Builder setImportantWhileForeground(boolean arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobInfo.Builder setRequiredNetwork(android.net.NetworkRequest arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobInfo.Builder setTraceTag(java.lang.String arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobInfo.Builder setTriggerContentMaxDelay(long arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobInfo.Builder setTriggerContentUpdateDelay(long arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobInfo.Builder setUserInitiated(boolean arg0) { return ((Object)this) instanceof android.app.job.JobInfo.Builder ? (android.app.job.JobInfo.Builder)(Object)this : null; } // ATL-autostub
+}
 
 	public static class TriggerContentUri {
 		public TriggerContentUri(Uri uri, int flags) {}

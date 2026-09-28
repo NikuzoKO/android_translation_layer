@@ -88,4 +88,9 @@ public class Location {
 	public String getProvider() {
 		return "fused";
 	}
+
+	public float distanceTo(android.location.Location arg0) { return 0f; } // ATL-autostub
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
+	public void setTime(long arg0) {} // ATL-autostub
+	public void writeToParcel(android.os.Parcel arg0, int arg1) {} // ATL-autostub
 }

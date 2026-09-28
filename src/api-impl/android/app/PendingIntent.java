@@ -73,4 +73,6 @@ public class PendingIntent implements Parcelable {
 	public static PendingIntent getForegroundService(Context context, int requestCode, Intent intent, int flags) {
 		return getService(context, requestCode, intent, flags);
 	}
+
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

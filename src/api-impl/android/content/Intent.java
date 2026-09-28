@@ -915,4 +915,20 @@ public class Intent implements Parcelable {
 	public int[] getIntArrayExtra(String name) {
 		return extras.getIntArray(name);
 	}
+
+	public android.content.Intent cloneFilter() { return ((Object)this) instanceof android.content.Intent ? (android.content.Intent)(Object)this : null; } // ATL-autostub
+	public android.content.pm.ActivityInfo resolveActivityInfo(android.content.pm.PackageManager arg0, int arg1) { return ((Object)this) instanceof android.content.pm.ActivityInfo ? (android.content.pm.ActivityInfo)(Object)this : null; } // ATL-autostub
+	public double getDoubleExtra(java.lang.String arg0, double arg1) { return 0d; } // ATL-autostub
+	public float getFloatExtra(java.lang.String arg0, float arg1) { return 0f; } // ATL-autostub
+	public java.io.Serializable getSerializableExtra(java.lang.String arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public java.lang.CharSequence getCharSequenceExtra(java.lang.String arg0) { return null; } // ATL-autostub
+	public java.lang.Object getParcelableExtra(java.lang.String arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public java.lang.String toUri(int arg0) { return null; } // ATL-autostub
+	public java.util.ArrayList getCharSequenceArrayListExtra(java.lang.String arg0) { return null; } // ATL-autostub
+	public java.util.ArrayList getParcelableArrayListExtra(java.lang.String arg0, java.lang.Class arg1) { return null; } // ATL-autostub
+	public static android.content.Intent createChooser(android.content.Intent arg0, java.lang.CharSequence arg1, android.content.IntentSender arg2) { return null; } // ATL-autostub
+	public static android.content.Intent makeMainActivity(android.content.ComponentName arg0) { return null; } // ATL-autostub
+	public static android.content.Intent makeMainSelectorActivity(java.lang.String arg0, java.lang.String arg1) { return null; } // ATL-autostub
+	public static android.content.Intent parseUri(java.lang.String arg0, int arg1) { return null; } // ATL-autostub
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

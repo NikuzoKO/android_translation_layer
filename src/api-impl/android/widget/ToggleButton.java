@@ -196,4 +196,6 @@ public class ToggleButton extends CompoundButton {
 			return mTextOff == null ? getResources().getString(R.string.capital_off) : mTextOff;
 		}
 	}*/
+
+	public void drawableStateChanged() {} // ATL-autostub
 }

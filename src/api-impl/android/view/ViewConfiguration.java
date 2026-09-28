@@ -82,4 +82,10 @@ public class ViewConfiguration {
 	public static int getKeyRepeatDelay() {
 		return 100;
 	}
+
+	public int getScaledHandwritingGestureLineMargin() { return 0; } // ATL-autostub
+	public int getScaledHandwritingSlop() { return 0; } // ATL-autostub
+	public int getScaledHoverSlop() { return 0; } // ATL-autostub
+	public int getScaledMaximumFlingVelocity(int arg0, int arg1, int arg2) { return 0; } // ATL-autostub
+	public int getScaledMinimumFlingVelocity(int arg0, int arg1, int arg2) { return 0; } // ATL-autostub
 }

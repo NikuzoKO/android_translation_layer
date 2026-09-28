@@ -32,4 +32,6 @@ public class AccessibilityManager {
 	public boolean removeTouchExplorationStateChangeListener(TouchExplorationStateChangeListener listener) {
 		return false;
 	}
+
+	public int getRecommendedTimeoutMillis(int arg0, int arg1) { return 0; } // ATL-autostub
 }

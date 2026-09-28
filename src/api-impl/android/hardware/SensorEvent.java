@@ -10,4 +10,7 @@ public class SensorEvent {
 		this.values = values;
 		this.sensor = sensor;
 	}
+
+	public int accuracy; // ATL-autostub
+	public long timestamp; // ATL-autostub
 }

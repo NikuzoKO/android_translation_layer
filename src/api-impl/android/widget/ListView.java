@@ -3615,4 +3615,6 @@ public class ListView extends AbsListView {
 	public void setItemsCanFocus(boolean itemsCanFocus) {
 		mItemsCanFocus = itemsCanFocus;
 	}
+
+	public void onInitializeAccessibilityNodeInfoForItem(android.view.View arg0, int arg1, android.view.accessibility.AccessibilityNodeInfo arg2) {} // ATL-autostub
 }

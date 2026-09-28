@@ -148,4 +148,17 @@ public class Selection {
 	 */
 	public static final Object SELECTION_START = new START();
 	public static final Object SELECTION_END = new END();
+
+	public static boolean extendDown(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean extendLeft(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean extendRight(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean extendToLeftEdge(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean extendToRightEdge(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean extendUp(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean moveDown(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean moveLeft(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean moveRight(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean moveToLeftEdge(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean moveToRightEdge(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
+	public static boolean moveUp(android.text.Spannable arg0, android.text.Layout arg1) { return false; } // ATL-autostub
 }

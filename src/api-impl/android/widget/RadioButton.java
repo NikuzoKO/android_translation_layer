@@ -35,4 +35,6 @@ public class RadioButton extends CompoundButton {
 	public void setTextColor(int color) {}
 	@Override
 	public void setTextSize(float size) {}
+
+	public void setLineHeight(int arg0) {} // ATL-autostub
 }

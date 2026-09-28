@@ -147,7 +147,10 @@ public class ContactsContract {
 		public static final class Data implements BaseColumns, DataColumns {
 			public static final String CONTENT_DIRECTORY = "data";
 		}
-	}
+	
+	public static java.io.InputStream openContactPhotoInputStream(android.content.ContentResolver arg0, android.net.Uri arg1) { return null; } // ATL-autostub
+	public static java.io.InputStream openContactPhotoInputStream(android.content.ContentResolver arg0, android.net.Uri arg1, boolean arg2) { return null; } // ATL-autostub
+}
 
 	public static final class Profile implements BaseColumns, ContactsColumns, ContactOptionsColumns, ContactNameColumns, ContactStatusColumns {
 		public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "profile");
@@ -173,7 +176,9 @@ public class ContactsContract {
 			public static final String CONTENT_DIRECTORY = "entity";
 			public static final String DATA_ID = "data_id";
 		}
-	}
+	
+	public static android.net.Uri getContactLookupUri(android.content.ContentResolver arg0, android.net.Uri arg1) { return null; } // ATL-autostub
+}
 
 	public static final class Data implements BaseColumns, DataColumns, RawContactsColumns, ContactsColumns, ContactNameColumns, ContactOptionsColumns, ContactStatusColumns {
 		public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "data");
@@ -238,7 +243,10 @@ public class ContactsContract {
 			public static final int TYPE_WORK = 2;
 			public static final int TYPE_OTHER = 3;
 			public static final int TYPE_MOBILE = 4;
-		}
+		
+	public static int getTypeLabelResource(int arg0) { return 0; } // ATL-autostub
+	public static java.lang.CharSequence getTypeLabel(android.content.res.Resources arg0, int arg1, java.lang.CharSequence arg2) { return null; } // ATL-autostub
+}
 
 		public static final class Im implements BaseColumns, DataColumns, CommonColumns {
 			public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/im";
@@ -248,7 +256,9 @@ public class ContactsContract {
 			public static final int TYPE_HOME = 1;
 			public static final int TYPE_WORK = 2;
 			public static final int TYPE_OTHER = 3;
-		}
+		
+	public static int getProtocolLabelResource(int arg0) { return 0; } // ATL-autostub
+}
 
 		public static final class StructuredName implements BaseColumns, DataColumns {
 			public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/name";

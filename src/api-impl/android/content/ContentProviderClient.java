@@ -66,4 +66,7 @@ public class ContentProviderClient implements AutoCloseable {
 	public void close() {
 		release();
 	}
+
+	public android.database.Cursor query(android.net.Uri arg0, java.lang.String[] arg1, java.lang.String arg2, java.lang.String[] arg3, java.lang.String arg4, android.os.CancellationSignal arg5) { return ((Object)this) instanceof android.database.Cursor ? (android.database.Cursor)(Object)this : null; } // ATL-autostub
+	public android.os.Bundle call(java.lang.String arg0, java.lang.String arg1, android.os.Bundle arg2) { return ((Object)this) instanceof android.os.Bundle ? (android.os.Bundle)(Object)this : null; } // ATL-autostub
 }

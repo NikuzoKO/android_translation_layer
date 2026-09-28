@@ -13,4 +13,8 @@ public class PhoneNumberUtils {
 	public static String stripSeparators(String phoneNumber) {
 		return phoneNumber.replaceAll("[ \t\n\r-]", "");
 	}
+
+	public static boolean compare(java.lang.String arg0, java.lang.String arg1) { return false; } // ATL-autostub
+	public static java.lang.String convertKeypadLettersToDigits(java.lang.String arg0) { return null; } // ATL-autostub
+	public static java.lang.String formatNumber(java.lang.String arg0, java.lang.String arg1) { return null; } // ATL-autostub
 }

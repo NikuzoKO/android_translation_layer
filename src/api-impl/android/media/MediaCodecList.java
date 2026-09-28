@@ -33,4 +33,6 @@ public class MediaCodecList {
 			infos[i] = getCodecInfoAt(i);
 		return infos;
 	}
+
+	public java.lang.String findDecoderForFormat(android.media.MediaFormat arg0) { return null; } // ATL-autostub
 }

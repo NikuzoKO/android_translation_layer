@@ -17,4 +17,9 @@ public class ActivityOptions {
 	public Bundle toBundle() {
 		return null;
 	}
+
+	public android.app.ActivityOptions setShareIdentityEnabled(boolean arg0) { return ((Object)this) instanceof android.app.ActivityOptions ? (android.app.ActivityOptions)(Object)this : null; } // ATL-autostub
+	public static android.app.ActivityOptions makeBasic() { return null; } // ATL-autostub
+	public static android.app.ActivityOptions makeCustomAnimation(android.content.Context arg0, int arg1, int arg2) { return null; } // ATL-autostub
+	public void setAllowPassThroughOnTouchOutside(boolean arg0) {} // ATL-autostub
 }

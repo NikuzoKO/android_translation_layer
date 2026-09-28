@@ -80,4 +80,7 @@ public class WebSettings {
 	public void setSaveFormData(boolean save) {}
 
 	public void setAllowContentAccess(boolean allow) {}
+
+	public boolean getJavaScriptEnabled() { return false; } // ATL-autostub
+	public void setAllowFileAccessFromFileURLs(boolean arg0) {} // ATL-autostub
 }

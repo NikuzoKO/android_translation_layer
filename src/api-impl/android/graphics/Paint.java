@@ -407,4 +407,20 @@ public class Paint {
 	private static native void native_set_color_filter(long paint, int mode, int color);
 	private static native void native_get_text_bounds(long paint, String text, Rect bounds);
 	private static native void native_set_text_align(long paint, int align);
+
+	public boolean equalsForTextMeasurement(android.graphics.Paint arg0) { return false; } // ATL-autostub
+	public boolean isAntiAlias() { return false; } // ATL-autostub
+	public boolean isElegantTextHeight() { return false; } // ATL-autostub
+	public boolean isUnderlineText() { return false; } // ATL-autostub
+	public float getUnderlinePosition() { return 0f; } // ATL-autostub
+	public float getUnderlineThickness() { return 0f; } // ATL-autostub
+	public int getOffsetForAdvance(java.lang.CharSequence arg0, int arg1, int arg2, int arg3, int arg4, boolean arg5, float arg6) { return 0; } // ATL-autostub
+	public int getShadowLayerColor() { return 0; } // ATL-autostub
+	public int getTextWidths(java.lang.CharSequence arg0, int arg1, int arg2, float[] arg3) { return 0; } // ATL-autostub
+	public int getTextWidths(java.lang.String arg0, float[] arg1) { return 0; } // ATL-autostub
+	public java.lang.String getFontFeatureSettings() { return null; } // ATL-autostub
+	public void getTextBounds(java.lang.CharSequence arg0, int arg1, int arg2, android.graphics.Rect arg3) {} // ATL-autostub
+	public void getTextPath(java.lang.String arg0, int arg1, int arg2, float arg3, float arg4, android.graphics.Path arg5) {} // ATL-autostub
+	public void setFontFeatureSettings(java.lang.String arg0) {} // ATL-autostub
+	public void setTextLocale(java.util.Locale arg0) {} // ATL-autostub
 }

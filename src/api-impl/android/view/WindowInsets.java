@@ -393,4 +393,10 @@ public class WindowInsets {
 			return (types & (STATUS_BARS | NAVIGATION_BARS)) != 0;
 		}
 	}
+
+	public android.graphics.Insets getInsetsIgnoringVisibility(int arg0) { return ((Object)this) instanceof android.graphics.Insets ? (android.graphics.Insets)(Object)this : null; } // ATL-autostub
+	public android.graphics.Insets getMandatorySystemGestureInsets() { return ((Object)this) instanceof android.graphics.Insets ? (android.graphics.Insets)(Object)this : null; } // ATL-autostub
+	public android.graphics.Insets getSystemGestureInsets() { return ((Object)this) instanceof android.graphics.Insets ? (android.graphics.Insets)(Object)this : null; } // ATL-autostub
+	public android.graphics.Insets getTappableElementInsets() { return ((Object)this) instanceof android.graphics.Insets ? (android.graphics.Insets)(Object)this : null; } // ATL-autostub
+	public android.view.WindowInsets inset(int arg0, int arg1, int arg2, int arg3) { return ((Object)this) instanceof android.view.WindowInsets ? (android.view.WindowInsets)(Object)this : null; } // ATL-autostub
 }

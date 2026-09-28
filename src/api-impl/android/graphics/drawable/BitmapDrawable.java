@@ -80,4 +80,6 @@ public class BitmapDrawable extends Drawable {
 	}
 
 	public void setGravity(int g) {}
+
+	public void setAntiAlias(boolean arg0) {} // ATL-autostub
 }

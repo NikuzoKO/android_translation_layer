@@ -22,4 +22,7 @@ public interface ViewParent {
 	public void onStopNestedScroll(View target);
 
 	public void onDescendantInvalidated(View child, View target);
+
+	public default void notifySubtreeAccessibilityStateChanged(android.view.View arg0, android.view.View arg1, int arg2) {} // ATL-autostub
+	public default void requestChildFocus(android.view.View arg0, android.view.View arg1) {} // ATL-autostub
 }

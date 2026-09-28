@@ -28,4 +28,8 @@ public class ClipDescription /*implements Parcelable*/ {
 	public String getMimeType(int index) {
 		return "FIXME";
 	}
+
+	public ClipDescription(android.content.ClipDescription arg0) {} // ATL-autostub
+	public boolean hasMimeType(java.lang.String arg0) { return false; } // ATL-autostub
+	public void setExtras(android.os.PersistableBundle arg0) {} // ATL-autostub
 }

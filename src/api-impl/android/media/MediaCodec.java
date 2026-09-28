@@ -242,14 +242,38 @@ public class MediaCodec {
 				return blocksToSkip;
 			}
 		}
-	}
+	
+	public byte[] iv; // ATL-autostub
+	public byte[] key; // ATL-autostub
+	public int mode; // ATL-autostub
+	public int numSubSamples; // ATL-autostub
+	public int[] numBytesOfClearData; // ATL-autostub
+	public int[] numBytesOfEncryptedData; // ATL-autostub
+	public void setPattern(android.media.MediaCodec.CryptoInfo.Pattern arg0) {} // ATL-autostub
+}
 
 	public static final class BufferInfo {
 		public int size;
 		public int flags;
 		public int offset;
 		public long presentationTimeUs;
-	}
+	
+	public void set(int arg0, int arg1, long arg2, int arg3) {} // ATL-autostub
+}
 
 	public static interface OnFrameRenderedListener {}
+
+	public android.media.MediaCodecInfo getCodecInfo() { return ((Object)this) instanceof android.media.MediaCodecInfo ? (android.media.MediaCodecInfo)(Object)this : null; } // ATL-autostub
+	public android.media.MediaFormat getOutputFormat(int arg0) { return ((Object)this) instanceof android.media.MediaFormat ? (android.media.MediaFormat)(Object)this : null; } // ATL-autostub
+	public android.os.PersistableBundle getMetrics() { return ((Object)this) instanceof android.os.PersistableBundle ? (android.os.PersistableBundle)(Object)this : null; } // ATL-autostub
+	public android.view.Surface createInputSurface() { return ((Object)this) instanceof android.view.Surface ? (android.view.Surface)(Object)this : null; } // ATL-autostub
+	public java.lang.String getName() { return null; } // ATL-autostub
+	public static android.media.MediaCodec createDecoderByType(java.lang.String arg0) { return null; } // ATL-autostub
+	public static android.media.MediaCodec createEncoderByType(java.lang.String arg0) { return null; } // ATL-autostub
+	public void detachOutputSurface() {} // ATL-autostub
+	public void queueSecureInputBuffer(int arg0, int arg1, android.media.MediaCodec.CryptoInfo arg2, long arg3, int arg4) {} // ATL-autostub
+	public void reset() {} // ATL-autostub
+	public void setOnFrameRenderedListener(android.media.MediaCodec.OnFrameRenderedListener arg0, android.os.Handler arg1) {} // ATL-autostub
+	public void setParameters(android.os.Bundle arg0) {} // ATL-autostub
+	public void signalEndOfInputStream() {} // ATL-autostub
 }

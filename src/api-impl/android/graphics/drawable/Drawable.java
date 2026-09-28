@@ -98,7 +98,9 @@ public class Drawable {
 		}
 
 		public abstract int getChangingConfigurations();
-	}
+	
+	public boolean canApplyTheme() { return false; } // ATL-autostub
+}
 
 	public void setBounds(int left, int top, int right, int bottom) {
 		boolean changed = left != mBounds.left || top != mBounds.top || right != mBounds.right || bottom != mBounds.bottom;
@@ -416,4 +418,25 @@ public class Drawable {
 	protected native void native_draw(long paintable, long snapshot, int width, int height);
 	protected native void native_ref(long paintable);
 	protected native void native_unref(long paintable);
+
+	public android.graphics.Insets getOpticalInsets() { return ((Object)this) instanceof android.graphics.Insets ? (android.graphics.Insets)(Object)this : null; } // ATL-autostub
+	public android.graphics.Rect copyBounds() { return ((Object)this) instanceof android.graphics.Rect ? (android.graphics.Rect)(Object)this : null; } // ATL-autostub
+	public android.graphics.Rect getDirtyBounds() { return ((Object)this) instanceof android.graphics.Rect ? (android.graphics.Rect)(Object)this : null; } // ATL-autostub
+	public android.graphics.Region getTransparentRegion() { return ((Object)this) instanceof android.graphics.Region ? (android.graphics.Region)(Object)this : null; } // ATL-autostub
+	public android.graphics.drawable.Drawable getCurrent() { return ((Object)this) instanceof android.graphics.drawable.Drawable ? (android.graphics.drawable.Drawable)(Object)this : null; } // ATL-autostub
+	public boolean hasFocusStateSpecified() { return false; } // ATL-autostub
+	public boolean isAutoMirrored() { return false; } // ATL-autostub
+	public boolean isFilterBitmap() { return false; } // ATL-autostub
+	public boolean onLayoutDirectionChanged(int arg0) { return false; } // ATL-autostub
+	protected boolean onLevelChange(int arg0) { return false; } // ATL-autostub
+	public int getAlpha() { return 0; } // ATL-autostub
+	public int getOpacity() { return 0; } // ATL-autostub
+	public static android.graphics.drawable.Drawable createFromStream(java.io.InputStream arg0, java.lang.String arg1) { return null; } // ATL-autostub
+	public static int resolveOpacity(int arg0, int arg1) { return 0; } // ATL-autostub
+	public void applyTheme(android.content.res.Resources.Theme arg0) {} // ATL-autostub
+	public void getHotspotBounds(android.graphics.Rect arg0) {} // ATL-autostub
+	public void getOutline(android.graphics.Outline arg0) {} // ATL-autostub
+	public void inflate(android.content.res.Resources arg0, org.xmlpull.v1.XmlPullParser arg1, android.util.AttributeSet arg2) throws org.xmlpull.v1.XmlPullParserException, java.io.IOException {} // ATL-autostub
+	public void inflate(android.content.res.Resources arg0, org.xmlpull.v1.XmlPullParser arg1, android.util.AttributeSet arg2, android.content.res.Resources.Theme arg3) throws org.xmlpull.v1.XmlPullParserException, java.io.IOException {} // ATL-autostub
+	public void setTintBlendMode(android.graphics.BlendMode arg0) {} // ATL-autostub
 }

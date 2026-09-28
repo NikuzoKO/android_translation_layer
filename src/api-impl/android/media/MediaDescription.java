@@ -43,4 +43,15 @@ public class MediaDescription {
 			return description;
 		}
 	}
+
+	public android.graphics.Bitmap getIconBitmap() { return ((Object)this) instanceof android.graphics.Bitmap ? (android.graphics.Bitmap)(Object)this : null; } // ATL-autostub
+	public android.net.Uri getIconUri() { return ((Object)this) instanceof android.net.Uri ? (android.net.Uri)(Object)this : null; } // ATL-autostub
+	public android.net.Uri getMediaUri() { return ((Object)this) instanceof android.net.Uri ? (android.net.Uri)(Object)this : null; } // ATL-autostub
+	public android.os.Bundle getExtras() { return ((Object)this) instanceof android.os.Bundle ? (android.os.Bundle)(Object)this : null; } // ATL-autostub
+	public java.lang.CharSequence getDescription() { return null; } // ATL-autostub
+	public java.lang.CharSequence getSubtitle() { return null; } // ATL-autostub
+	public java.lang.CharSequence getTitle() { return null; } // ATL-autostub
+	public java.lang.String getMediaId() { return null; } // ATL-autostub
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
+	public void writeToParcel(android.os.Parcel arg0, int arg1) {} // ATL-autostub
 }

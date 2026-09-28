@@ -453,4 +453,9 @@ public class TextUtils {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	public static android.os.Parcelable.Creator CHAR_SEQUENCE_CREATOR; // ATL-autostub
+	public static java.lang.CharSequence expandTemplate(java.lang.CharSequence arg0, java.lang.CharSequence[] arg1) { return null; } // ATL-autostub
+	public static java.lang.CharSequence replace(java.lang.CharSequence arg0, java.lang.String[] arg1, java.lang.CharSequence[] arg2) { return null; } // ATL-autostub
+	public static void writeToParcel(java.lang.CharSequence arg0, android.os.Parcel arg1, int arg2) {} // ATL-autostub
 }

@@ -80,4 +80,6 @@ public class ContextThemeWrapper extends ContextWrapper {
 	protected void onApplyThemeResource(Resources.Theme theme, int resId, boolean first) {
 		theme.applyStyle(resId, true);
 	}
+
+	public void applyOverrideConfiguration(android.content.res.Configuration arg0) {} // ATL-autostub
 }

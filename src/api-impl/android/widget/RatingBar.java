@@ -16,4 +16,6 @@ public class RatingBar extends AbsSeekBar {
 	public void setRating(float rating) {
 		setProgress((int)rating);
 	}
+
+	public int getNumStars() { return 0; } // ATL-autostub
 }

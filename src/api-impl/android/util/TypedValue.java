@@ -596,4 +596,6 @@ public class TypedValue {
 		sb.append("}");
 		return sb.toString();
 	}
+
+	public static float convertPixelsToDimension(int arg0, float arg1, android.util.DisplayMetrics arg2) { return 0f; } // ATL-autostub
 };

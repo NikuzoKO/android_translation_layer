@@ -22,4 +22,6 @@ public class PackageInstaller {
 
 		public abstract void onProgressChanged(int sessionId, float progress);
 	}
+
+	public java.util.List getAllSessions() { return null; } // ATL-autostub
 }

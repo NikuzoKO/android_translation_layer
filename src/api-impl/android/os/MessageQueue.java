@@ -555,4 +555,6 @@ public final class MessageQueue {
 			pw.println(prefix + "(Total messages: " + n + ", idling=" + isIdlingLocked() + ", quitting=" + mQuitting + ")");
 		}
 	}
+
+	public boolean isIdle() { return false; } // ATL-autostub
 }

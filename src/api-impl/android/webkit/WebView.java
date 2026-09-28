@@ -128,4 +128,19 @@ public class WebView extends ViewGroup {
 	protected native long native_constructor(Context context, AttributeSet attrs);
 	private native void native_loadDataWithBaseURL(long widget, String baseUrl, String data, String mimeType, String encoding);
 	private native void native_loadUrl(long widget, String url);
+
+	public boolean canGoBack() { return false; } // ATL-autostub
+	public boolean canGoForward() { return false; } // ATL-autostub
+	public int getProgress() { return 0; } // ATL-autostub
+	public java.lang.String getTitle() { return null; } // ATL-autostub
+	public java.lang.String getUrl() { return null; } // ATL-autostub
+	public static android.content.pm.PackageInfo getCurrentWebViewPackage() { return null; } // ATL-autostub
+	public static java.lang.ClassLoader getWebViewClassLoader() { return null; } // ATL-autostub
+	public void autofill(android.util.SparseArray arg0) {} // ATL-autostub
+	public void goBack() {} // ATL-autostub
+	public void loadUrl(java.lang.String arg0, java.util.Map arg1) {} // ATL-autostub
+	public void postUrl(java.lang.String arg0, byte[] arg1) {} // ATL-autostub
+	public void reload() {} // ATL-autostub
+	public void removeJavascriptInterface(java.lang.String arg0) {} // ATL-autostub
+	public void setRendererPriorityPolicy(int arg0, boolean arg1) {} // ATL-autostub
 }

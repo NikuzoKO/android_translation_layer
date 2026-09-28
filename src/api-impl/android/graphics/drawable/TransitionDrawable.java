@@ -17,4 +17,7 @@ public class TransitionDrawable extends LayerDrawable {
 		// always draw the target drawable
 		mLayerState.mChildren[1].mDrawable.draw(canvas);
 	}
+
+	public void resetTransition() {} // ATL-autostub
+	public void reverseTransition(int arg0) {} // ATL-autostub
 }

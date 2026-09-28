@@ -19,4 +19,12 @@ public class EditorInfo {
 	public String packageName = "com.example.FIXME";
 	public String privateImeOptions = null;
 	public LocaleList hintLocales = null;
+
+	public java.lang.CharSequence getInitialSelectedText(int arg0) { return null; } // ATL-autostub
+	public java.lang.CharSequence getInitialTextAfterCursor(int arg0, int arg1) { return null; } // ATL-autostub
+	public java.lang.CharSequence getInitialTextBeforeCursor(int arg0, int arg1) { return null; } // ATL-autostub
+	public java.lang.String[] contentMimeTypes; // ATL-autostub
+	public void setInitialSurroundingSubText(java.lang.CharSequence arg0, int arg1) {} // ATL-autostub
+	public void setSupportedHandwritingGesturePreviews(java.util.Set arg0) {} // ATL-autostub
+	public void setSupportedHandwritingGestures(java.util.List arg0) {} // ATL-autostub
 }

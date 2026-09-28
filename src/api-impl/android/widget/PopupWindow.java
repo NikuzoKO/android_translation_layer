@@ -189,4 +189,12 @@ public class PopupWindow {
 	public native int native_getWidth(long widget);
 	public native int native_getHeight(long widget);
 	public native boolean native_isTouchable(long widget);
+
+	public PopupWindow(android.content.Context arg0, android.util.AttributeSet arg1, int arg2) {} // ATL-autostub
+	public PopupWindow(android.view.View arg0) {} // ATL-autostub
+	public void setEnterTransition(android.transition.Transition arg0) {} // ATL-autostub
+	public void setExitTransition(android.transition.Transition arg0) {} // ATL-autostub
+	public void setSplitTouchEnabled(boolean arg0) {} // ATL-autostub
+	public void update() {} // ATL-autostub
+	public void update(int arg0, int arg1) {} // ATL-autostub
 }

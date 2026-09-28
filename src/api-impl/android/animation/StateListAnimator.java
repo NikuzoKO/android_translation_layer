@@ -11,4 +11,6 @@ public class StateListAnimator {
 			enabledAnimator = animator;
 		}
 	}
+
+	public void jumpToCurrentState() {} // ATL-autostub
 }

@@ -15,4 +15,6 @@ public class ColorStateListDrawable extends Drawable implements Drawable.Callbac
 	@Override
 	public void invalidateDrawable(Drawable who) {
 	}
+
+	public android.content.res.ColorStateList getColorStateList() { return ((Object)this) instanceof android.content.res.ColorStateList ? (android.content.res.ColorStateList)(Object)this : null; } // ATL-autostub
 }

@@ -120,4 +120,7 @@ public class ProgressBar extends View {
 	public void setIndeterminateTintMode(PorterDuff.Mode tintMode) {}
 
 	public void setProgressTintList(ColorStateList tint) {}
+
+	public android.content.res.ColorStateList getProgressBackgroundTintList() { return ((Object)this) instanceof android.content.res.ColorStateList ? (android.content.res.ColorStateList)(Object)this : null; } // ATL-autostub
+	public void setProgressBackgroundTintList(android.content.res.ColorStateList arg0) {} // ATL-autostub
 }

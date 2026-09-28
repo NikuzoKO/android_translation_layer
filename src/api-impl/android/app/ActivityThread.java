@@ -27,4 +27,6 @@ public class ActivityThread {
 	public Configuration getConfiguration() {
 		return Context.sys_config;
 	}
+
+	public java.lang.String getProcessName() { return null; } // ATL-autostub
 }

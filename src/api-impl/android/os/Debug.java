@@ -8,7 +8,12 @@ public final class Debug {
 		public int getTotalPss() {
 			return 0;
 		}
-	}
+	
+	public int dalvikPrivateDirty; // ATL-autostub
+	public int getTotalPrivateDirty() { return 0; } // ATL-autostub
+	public int getTotalSharedDirty() { return 0; } // ATL-autostub
+	public int nativePrivateDirty; // ATL-autostub
+}
 
 	private static int globalAllocCount;
 	private static int globalAllocSize;
@@ -236,4 +241,6 @@ public final class Debug {
 	public static void startNativeTracing() {}
 
 	public static void stopNativeTracing() {}
+
+	public static java.lang.String getRuntimeStat(java.lang.String arg0) { return null; } // ATL-autostub
 }

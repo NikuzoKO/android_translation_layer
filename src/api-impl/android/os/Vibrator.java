@@ -51,4 +51,8 @@ public class Vibrator {
 
 	private native void native_vibrate(int fd, long millis);
 	private native int native_constructor();
+
+	public boolean areAllPrimitivesSupported(int[] arg0) { return false; } // ATL-autostub
+	public void vibrate(android.os.VibrationEffect arg0) {} // ATL-autostub
+	public void vibrate(android.os.VibrationEffect arg0, android.media.AudioAttributes arg1) {} // ATL-autostub
 }

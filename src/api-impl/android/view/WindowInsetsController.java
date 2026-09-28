@@ -7,4 +7,6 @@ public interface WindowInsetsController {
 	void setSystemBarsBehavior(int behavior);
 	void show(@InsetsType int types);
 	void hide(@InsetsType int types);
+
+	public default int getSystemBarsAppearance() { return 0; } // ATL-autostub
 }

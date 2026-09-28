@@ -154,7 +154,9 @@ public class Settings {
 				return def;
 			}
 		}
-	}
+	
+	public static java.lang.String getString(android.content.ContentResolver arg0, java.lang.String arg1) { return null; } // ATL-autostub
+}
 
 	public static final class Global extends NameValueTable {
 		private final static String TAG = "Settings$Global";

@@ -50,4 +50,8 @@ public class SensorManager {
 	public List<Sensor> getSensorList(int type) {
 		return Arrays.asList(getDefaultSensor(type));
 	}
+
+	public static boolean remapCoordinateSystem(float[] arg0, int arg1, int arg2, float[] arg3) { return false; } // ATL-autostub
+	public static float[] getOrientation(float[] arg0, float[] arg1) { return null; } // ATL-autostub
+	public static void getRotationMatrixFromVector(float[] arg0, float[] arg1) {} // ATL-autostub
 }

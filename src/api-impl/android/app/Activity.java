@@ -702,4 +702,48 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	public void setEnterSharedElementCallback(SharedElementCallback callback) {}
 	public void setExitSharedElementCallback(SharedElementCallback callback) {}
+
+	public android.app.Dialog onCreateDialog(int arg0, android.os.Bundle arg1) { return ((Object)this) instanceof android.app.Dialog ? (android.app.Dialog)(Object)this : null; } // ATL-autostub
+	public android.content.ComponentName getCallingActivity() { return ((Object)this) instanceof android.content.ComponentName ? (android.content.ComponentName)(Object)this : null; } // ATL-autostub
+	public android.content.ComponentName startForegroundService(android.content.Intent arg0) { return ((Object)this) instanceof android.content.ComponentName ? (android.content.ComponentName)(Object)this : null; } // ATL-autostub
+	public android.view.ActionMode startActionMode(android.view.ActionMode.Callback arg0, int arg1) { return ((Object)this) instanceof android.view.ActionMode ? (android.view.ActionMode)(Object)this : null; } // ATL-autostub
+	public android.view.View onCreateView(java.lang.String arg0, android.content.Context arg1, android.util.AttributeSet arg2) { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+	public boolean dispatchGenericMotionEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public boolean dispatchKeyShortcutEvent(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public boolean dispatchTouchEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public boolean isInPictureInPictureMode() { return false; } // ATL-autostub
+	public boolean navigateUpTo(android.content.Intent arg0) { return false; } // ATL-autostub
+	public boolean onContextItemSelected(android.view.MenuItem arg0) { return false; } // ATL-autostub
+	public boolean onKeyDown(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onKeyLongPress(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onKeyUp(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onTouchEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public boolean setTranslucent(boolean arg0) { return false; } // ATL-autostub
+	public boolean shouldUpRecreateTask(android.content.Intent arg0) { return false; } // ATL-autostub
+	public boolean startActivityIfNeeded(android.content.Intent arg0, int arg1, android.os.Bundle arg2) { return false; } // ATL-autostub
+	public java.lang.String getLaunchedFromPackage() { return null; } // ATL-autostub
+	public java.util.concurrent.Executor getMainExecutor() { return null; } // ATL-autostub
+	public void addContentView(android.view.View arg0, android.view.ViewGroup.LayoutParams arg1) {} // ATL-autostub
+	public void dump(java.lang.String arg0, java.io.FileDescriptor arg1, java.io.PrintWriter arg2, java.lang.String[] arg3) {} // ATL-autostub
+	public void finishAndRemoveTask() {} // ATL-autostub
+	public void onAttachedToWindow() {} // ATL-autostub
+	public void onContextMenuClosed(android.view.Menu arg0) {} // ATL-autostub
+	public void onCreate(android.os.Bundle arg0, android.os.PersistableBundle arg1) {} // ATL-autostub
+	public void onCreateContextMenu(android.view.ContextMenu arg0, android.view.View arg1, android.view.ContextMenu.ContextMenuInfo arg2) {} // ATL-autostub
+	public void onEnterAnimationComplete() {} // ATL-autostub
+	public void onMultiWindowModeChanged(boolean arg0, android.content.res.Configuration arg1) {} // ATL-autostub
+	public void onPictureInPictureModeChanged(boolean arg0, android.content.res.Configuration arg1) {} // ATL-autostub
+	public void onRequestPermissionsResult(int arg0, java.lang.String[] arg1, int[] arg2) {} // ATL-autostub
+	protected void onRestoreInstanceState(android.os.Bundle arg0) {} // ATL-autostub
+	public void onTitleChanged(java.lang.CharSequence arg0, int arg1) {} // ATL-autostub
+	public void onTrimMemory(int arg0) {} // ATL-autostub
+	public void onUserInteraction() {} // ATL-autostub
+	public void onUserLeaveHint() {} // ATL-autostub
+	public void openContextMenu(android.view.View arg0) {} // ATL-autostub
+	public void openOptionsMenu() {} // ATL-autostub
+	public void overrideActivityTransition(int arg0, int arg1, int arg2) {} // ATL-autostub
+	public void setRecentsScreenshotEnabled(boolean arg0) {} // ATL-autostub
+	public void setTurnScreenOn(boolean arg0) {} // ATL-autostub
+	public void startIntentSenderForResult(android.content.IntentSender arg0, int arg1, android.content.Intent arg2, int arg3, int arg4, int arg5) {} // ATL-autostub
+	public void startIntentSenderForResult(android.content.IntentSender arg0, int arg1, android.content.Intent arg2, int arg3, int arg4, int arg5, android.os.Bundle arg6) {} // ATL-autostub
 }

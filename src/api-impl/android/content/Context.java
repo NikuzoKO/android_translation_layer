@@ -592,4 +592,22 @@ public abstract class Context {
 	public abstract int getThemeResId();
 
 	public abstract ATLLoadedApp get_atl_loaded_app();
+
+	public android.content.ComponentName startForegroundService(android.content.Intent arg0) { return ((Object)this) instanceof android.content.ComponentName ? (android.content.ComponentName)(Object)this : null; } // ATL-autostub
+	public android.content.Context createWindowContext(int arg0, android.os.Bundle arg1) { return ((Object)this) instanceof android.content.Context ? (android.content.Context)(Object)this : null; } // ATL-autostub
+	public android.content.Intent registerReceiver(android.content.BroadcastReceiver arg0, android.content.IntentFilter arg1, int arg2) { return ((Object)this) instanceof android.content.Intent ? (android.content.Intent)(Object)this : null; } // ATL-autostub
+	public android.content.Intent registerReceiver(android.content.BroadcastReceiver arg0, android.content.IntentFilter arg1, java.lang.String arg2, android.os.Handler arg3, int arg4) { return ((Object)this) instanceof android.content.Intent ? (android.content.Intent)(Object)this : null; } // ATL-autostub
+	public android.view.Display getDisplay() { return ((Object)this) instanceof android.view.Display ? (android.view.Display)(Object)this : null; } // ATL-autostub
+	public boolean bindService(android.content.Intent arg0, int arg1, java.util.concurrent.Executor arg2, android.content.ServiceConnection arg3) { return false; } // ATL-autostub
+	public boolean bindServiceAsUser(android.content.Intent arg0, android.content.ServiceConnection arg1, int arg2, android.os.UserHandle arg3) { return false; } // ATL-autostub
+	public boolean deleteFile(java.lang.String arg0) { return false; } // ATL-autostub
+	public boolean isUiContext() { return false; } // ATL-autostub
+	public int checkCallingOrSelfUriPermission(android.net.Uri arg0, int arg1) { return 0; } // ATL-autostub
+	public int checkUriPermission(android.net.Uri arg0, int arg1, int arg2, int arg3) { return 0; } // ATL-autostub
+	public java.io.File getCodeCacheDir() { return null; } // ATL-autostub
+	public java.lang.String getOpPackageName() { return null; } // ATL-autostub
+	public java.util.concurrent.Executor getMainExecutor() { return null; } // ATL-autostub
+	public void sendBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2) {} // ATL-autostub
+	public void sendOrderedBroadcast(android.content.Intent arg0, java.lang.String arg1, android.os.Bundle arg2, android.content.BroadcastReceiver arg3, android.os.Handler arg4, int arg5, java.lang.String arg6, android.os.Bundle arg7) {} // ATL-autostub
+	public void startActivities(android.content.Intent[] arg0, android.os.Bundle arg1) {} // ATL-autostub
 }

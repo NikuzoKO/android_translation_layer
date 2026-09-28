@@ -51,4 +51,7 @@ public class Network {
 	public String toString() {
 		return "100";
 	}
+
+	public java.net.URLConnection openConnection(java.net.URL arg0, java.net.Proxy arg1) { return null; } // ATL-autostub
+	public static android.net.Network fromNetworkHandle(long arg0) { return null; } // ATL-autostub
 }

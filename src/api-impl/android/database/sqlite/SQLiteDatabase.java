@@ -2215,4 +2215,6 @@ public final class SQLiteDatabase extends SQLiteClosable {
 	public void enableLocalizedCollators() {
 		mConnectionPoolLocked.enableLocalizedCollators();
 	}
+
+	public void beginTransactionReadOnly() {} // ATL-autostub
 }

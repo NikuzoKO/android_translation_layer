@@ -96,4 +96,14 @@ public class EGL14 {
 		javax.microedition.khronos.egl.EGLDisplay raw_display = new javax.microedition.khronos.egl.EGLDisplay(display.getNativeHandle());
 		return impl.eglTerminate(raw_display);
 	}
+
+	public static android.opengl.EGLContext eglGetCurrentContext() { return null; } // ATL-autostub
+	public static android.opengl.EGLSurface eglCreateWindowSurface(android.opengl.EGLDisplay arg0, android.opengl.EGLConfig arg1, java.lang.Object arg2, int[] arg3, int arg4) { return null; } // ATL-autostub
+	public static android.opengl.EGLSurface eglGetCurrentSurface(int arg0) { return null; } // ATL-autostub
+	public static boolean eglGetConfigAttrib(android.opengl.EGLDisplay arg0, android.opengl.EGLConfig arg1, int arg2, int[] arg3, int arg4) { return false; } // ATL-autostub
+	public static boolean eglQueryContext(android.opengl.EGLDisplay arg0, android.opengl.EGLContext arg1, int arg2, int[] arg3, int arg4) { return false; } // ATL-autostub
+	public static boolean eglQuerySurface(android.opengl.EGLDisplay arg0, android.opengl.EGLSurface arg1, int arg2, int[] arg3, int arg4) { return false; } // ATL-autostub
+	public static boolean eglSwapBuffers(android.opengl.EGLDisplay arg0, android.opengl.EGLSurface arg1) { return false; } // ATL-autostub
+	public static int eglGetError() { return 0; } // ATL-autostub
+	public static java.lang.String eglQueryString(android.opengl.EGLDisplay arg0, int arg1) { return null; } // ATL-autostub
 }

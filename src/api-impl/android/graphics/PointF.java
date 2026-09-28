@@ -119,4 +119,6 @@ public class PointF implements Parcelable {
 	public static float length(float x, float y) {
 		return (float)Math.hypot(x, y);
 	}
+
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
 }

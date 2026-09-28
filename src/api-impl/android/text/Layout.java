@@ -280,4 +280,9 @@ public class Layout {
 	protected native int native_get_offset_for_horizontal(long layout, int line, float x);
 	protected static native float native_get_desired_width(long layout);
 	protected static native void native_free(long layout);
+
+	public float getLineMax(int arg0) { return 0f; } // ATL-autostub
+	public int getLineBottom(int arg0, boolean arg1) { return 0; } // ATL-autostub
+	public int getLineBounds(int arg0, android.graphics.Rect arg1) { return 0; } // ATL-autostub
+	public void draw(android.graphics.Canvas arg0, java.util.List arg1, java.util.List arg2, android.graphics.Path arg3, android.graphics.Paint arg4, int arg5) {} // ATL-autostub
 }

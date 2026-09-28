@@ -70,4 +70,15 @@ public class TelephonyManager {
 	public String getDeviceId() {
 		return "";
 	}
+
+	public android.telephony.TelephonyManager createForSubscriptionId(int arg0) { return ((Object)this) instanceof android.telephony.TelephonyManager ? (android.telephony.TelephonyManager)(Object)this : null; } // ATL-autostub
+	public boolean isSmsCapable() { return false; } // ATL-autostub
+	public int getCallStateForSubscription() { return 0; } // ATL-autostub
+	public int getDataActivity() { return 0; } // ATL-autostub
+	public int getDataNetworkType() { return 0; } // ATL-autostub
+	public int getDataState() { return 0; } // ATL-autostub
+	public int getPhoneCount() { return 0; } // ATL-autostub
+	public java.lang.CharSequence getSimCarrierIdName() { return null; } // ATL-autostub
+	public java.lang.String getSimSerialNumber() { return null; } // ATL-autostub
+	public static java.lang.String EXTRA_STATE_RINGING; // ATL-autostub
 }

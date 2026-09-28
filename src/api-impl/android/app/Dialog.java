@@ -224,4 +224,21 @@ public class Dialog implements Window.Callback, DialogInterface {
 	}
 
 	public void setOnKeyListener(OnKeyListener onKeyListener) {}
+
+	public android.os.Bundle onSaveInstanceState() { return ((Object)this) instanceof android.os.Bundle ? (android.os.Bundle)(Object)this : null; } // ATL-autostub
+	public android.view.LayoutInflater getLayoutInflater() { return ((Object)this) instanceof android.view.LayoutInflater ? (android.view.LayoutInflater)(Object)this : null; } // ATL-autostub
+	public android.view.View getCurrentFocus() { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+	public android.view.View requireViewById(int arg0) { return ((Object)this) instanceof android.view.View ? (android.view.View)(Object)this : null; } // ATL-autostub
+	public boolean dispatchKeyEvent(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public boolean dispatchTouchEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public boolean onKeyDown(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onKeyUp(int arg0, android.view.KeyEvent arg1) { return false; } // ATL-autostub
+	public boolean onOptionsItemSelected(android.view.MenuItem arg0) { return false; } // ATL-autostub
+	public void addContentView(android.view.View arg0, android.view.ViewGroup.LayoutParams arg1) {} // ATL-autostub
+	public void onAttachedToWindow() {} // ATL-autostub
+	public void onBackPressed() {} // ATL-autostub
+	public void onRestoreInstanceState(android.os.Bundle arg0) {} // ATL-autostub
+	public void onStart() {} // ATL-autostub
+	public void onStop() {} // ATL-autostub
+	public void setContentView(android.view.View arg0, android.view.ViewGroup.LayoutParams arg1) {} // ATL-autostub
 }

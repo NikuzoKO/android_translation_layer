@@ -57,5 +57,10 @@ public class StaticLayout extends Layout {
 		public Builder setJustificationMode(int mode) { return this; }
 
 		public StaticLayout build() { return layout; }
-	}
+	
+	public android.text.StaticLayout.Builder setUseBoundsForWidth(boolean arg0) { return ((Object)this) instanceof android.text.StaticLayout.Builder ? (android.text.StaticLayout.Builder)(Object)this : null; } // ATL-autostub
+	public android.text.StaticLayout.Builder setUseLineSpacingFromFallbacks(boolean arg0) { return ((Object)this) instanceof android.text.StaticLayout.Builder ? (android.text.StaticLayout.Builder)(Object)this : null; } // ATL-autostub
+}
+
+	public boolean isFallbackLineSpacingEnabled() { return false; } // ATL-autostub
 }

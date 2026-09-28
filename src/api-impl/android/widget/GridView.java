@@ -1697,4 +1697,6 @@ public class GridView extends AbsListView {
 		final int rowCount = (mItemCount + numColumns - 1) / numColumns;
 		return Math.max(rowCount * 100, 0);
 	}
+
+	public int getNumColumns() { return 0; } // ATL-autostub
 }

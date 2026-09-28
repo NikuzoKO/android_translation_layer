@@ -81,4 +81,8 @@ public class JobScheduler {
 			});
 		}
 	}
+
+	public android.app.job.JobInfo getPendingJob(int arg0) { return ((Object)this) instanceof android.app.job.JobInfo ? (android.app.job.JobInfo)(Object)this : null; } // ATL-autostub
+	public android.app.job.JobScheduler forNamespace(java.lang.String arg0) { return ((Object)this) instanceof android.app.job.JobScheduler ? (android.app.job.JobScheduler)(Object)this : null; } // ATL-autostub
+	public void cancelAll() {} // ATL-autostub
 }

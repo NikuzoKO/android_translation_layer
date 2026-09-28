@@ -75,4 +75,15 @@ public class Spinner extends AbsSpinner {
 	public int getDropDownWidth() { return 100; }
 
 	public void setDropDownHorizontalOffset(int offset){};
+
+	public android.graphics.drawable.Drawable getPopupBackground() { return ((Object)this) instanceof android.graphics.drawable.Drawable ? (android.graphics.drawable.Drawable)(Object)this : null; } // ATL-autostub
+	public android.os.Parcelable onSaveInstanceState() { return ((Object)this) instanceof android.os.Parcelable ? (android.os.Parcelable)(Object)this : null; } // ATL-autostub
+	public int getDropDownHorizontalOffset() { return 0; } // ATL-autostub
+	public int getDropDownVerticalOffset() { return 0; } // ATL-autostub
+	public java.lang.CharSequence getPrompt() { return null; } // ATL-autostub
+	public void onRestoreInstanceState(android.os.Parcelable arg0) {} // ATL-autostub
+	public void setDropDownVerticalOffset(int arg0) {} // ATL-autostub
+	public void setDropDownWidth(int arg0) {} // ATL-autostub
+	public void setPopupBackgroundDrawable(android.graphics.drawable.Drawable arg0) {} // ATL-autostub
+	public void setPrompt(java.lang.CharSequence arg0) {} // ATL-autostub
 }

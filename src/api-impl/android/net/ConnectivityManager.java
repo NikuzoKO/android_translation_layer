@@ -211,4 +211,6 @@ public class ConnectivityManager {
 			});
 		}
 	}
+
+	public void reportNetworkConnectivity(android.net.Network arg0, boolean arg1) {} // ATL-autostub
 }

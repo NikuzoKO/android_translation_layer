@@ -362,4 +362,8 @@ public interface InputConnection {
 	 * <p>Note: This does nothing when called from input methods.</p>
 	 */
 	void closeConnection();
+
+	public default android.os.Handler getHandler() { return ((Object)this) instanceof android.os.Handler ? (android.os.Handler)(Object)this : null; } // ATL-autostub
+	public default boolean deleteSurroundingTextInCodePoints(int arg0, int arg1) { return false; } // ATL-autostub
+	public default boolean requestCursorUpdates(int arg0) { return false; } // ATL-autostub
 }

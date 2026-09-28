@@ -539,4 +539,7 @@ public final class Rect {
 			bottom = (int)(bottom * scale + 0.5f);
 		}
 	}
+
+	public static android.os.Parcelable.Creator CREATOR; // ATL-autostub
+	public void writeToParcel(android.os.Parcel arg0, int arg1) {} // ATL-autostub
 }

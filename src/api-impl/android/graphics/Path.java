@@ -265,4 +265,7 @@ public class Path {
 	private static native void native_add_round_rect(long builder, float left, float top, float right, float bottom, float[] radii);
 	private static native void native_get_bounds(long path, RectF rect);
 	private static native long native_transform(long path, long matrix);
+
+	public float[] approximate(float arg0) { return null; } // ATL-autostub
+	public void toggleInverseFillType() {} // ATL-autostub
 }

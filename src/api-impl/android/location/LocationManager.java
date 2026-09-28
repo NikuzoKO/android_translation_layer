@@ -74,4 +74,8 @@ public class LocationManager {
 
 	public void unregisterGnssStatusCallback(GnssStatus.Callback callback) {
 	}
+
+	public boolean isLocationEnabled() { return false; } // ATL-autostub
+	public boolean isProviderEnabled(java.lang.String arg0) { return false; } // ATL-autostub
+	public void requestLocationUpdates(java.lang.String arg0, long arg1, float arg2, android.location.LocationListener arg3, android.os.Looper arg4) {} // ATL-autostub
 }

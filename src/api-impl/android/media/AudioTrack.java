@@ -218,5 +218,17 @@ public class AudioTrack {
 		public Builder setPerformanceMode(int performanceMode) {
 			return this;
 		}
-	}
+	
+	public android.media.AudioTrack.Builder setOffloadedPlayback(boolean arg0) { return ((Object)this) instanceof android.media.AudioTrack.Builder ? (android.media.AudioTrack.Builder)(Object)this : null; } // ATL-autostub
+	public android.media.AudioTrack.Builder setSessionId(int arg0) { return ((Object)this) instanceof android.media.AudioTrack.Builder ? (android.media.AudioTrack.Builder)(Object)this : null; } // ATL-autostub
+}
+
+	public boolean isOffloadedPlayback() { return false; } // ATL-autostub
+	public boolean setPreferredDevice(android.media.AudioDeviceInfo arg0) { return false; } // ATL-autostub
+	public int getBufferSizeInFrames() { return 0; } // ATL-autostub
+	public int getUnderrunCount() { return 0; } // ATL-autostub
+	public int write(java.nio.ByteBuffer arg0, int arg1, int arg2, long arg3) { return 0; } // ATL-autostub
+	public static boolean isDirectPlaybackSupported(android.media.AudioFormat arg0, android.media.AudioAttributes arg1) { return false; } // ATL-autostub
+	public void setOffloadDelayPadding(int arg0, int arg1) {} // ATL-autostub
+	public void setOffloadEndOfStream() {} // ATL-autostub
 }

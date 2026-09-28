@@ -29,7 +29,24 @@ public class Window {
 		public void onPanelClosed(int featureId, Menu menu);
 
 		public boolean onMenuOpened(int featureId, Menu menu);
-	}
+	
+	public default android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback arg0) { return ((Object)this) instanceof android.view.ActionMode ? (android.view.ActionMode)(Object)this : null; } // ATL-autostub
+	public default android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback arg0, int arg1) { return ((Object)this) instanceof android.view.ActionMode ? (android.view.ActionMode)(Object)this : null; } // ATL-autostub
+	public default boolean dispatchGenericMotionEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public default boolean dispatchKeyEvent(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public default boolean dispatchKeyShortcutEvent(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public default boolean dispatchTouchEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public default boolean dispatchTrackballEvent(android.view.MotionEvent arg0) { return false; } // ATL-autostub
+	public default boolean onSearchRequested() { return false; } // ATL-autostub
+	public default void onActionModeFinished(android.view.ActionMode arg0) {} // ATL-autostub
+	public default void onActionModeStarted(android.view.ActionMode arg0) {} // ATL-autostub
+	public default void onAttachedToWindow() {} // ATL-autostub
+	public default void onDetachedFromWindow() {} // ATL-autostub
+	public default void onPointerCaptureChanged(boolean arg0) {} // ATL-autostub
+	public default void onProvideKeyboardShortcuts(java.util.List arg0, android.view.Menu arg1, int arg2) {} // ATL-autostub
+	public default void onWindowAttributesChanged(android.view.WindowManager.LayoutParams arg0) {} // ATL-autostub
+	public default void onWindowFocusChanged(boolean arg0) {} // ATL-autostub
+}
 
 	public static interface OnFrameMetricsAvailableListener {}
 
@@ -217,4 +234,9 @@ public class Window {
 	public Transition getReturnTransition() { return null; }
 	public Transition getReenterTransition() { return null; }
 	public Transition getSharedElementReturnTransition() { return null; }
+
+	public boolean isFloating() { return false; } // ATL-autostub
+	public boolean superDispatchKeyEvent(android.view.KeyEvent arg0) { return false; } // ATL-autostub
+	public void setDimAmount(float arg0) {} // ATL-autostub
+	public void setWindowAnimations(int arg0) {} // ATL-autostub
 }

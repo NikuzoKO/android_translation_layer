@@ -28,4 +28,6 @@ public abstract class JobService extends Service {
 			JobScheduler.pendingJobs.remove(params.jobInfo.getId());
 		}
 	}
+
+	public void setNotification(android.app.job.JobParameters arg0, int arg1, android.app.Notification arg2, int arg3) {} // ATL-autostub
 }

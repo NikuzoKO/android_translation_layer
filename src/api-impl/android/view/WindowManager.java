@@ -38,5 +38,12 @@ public interface WindowManager {
 		public LayoutParams() {}
 
 		public void setTitle(CharSequence title) {}
-	}
+	
+	public LayoutParams(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {} // ATL-autostub
+	public float verticalMargin; // ATL-autostub
+	public int rotationAnimation; // ATL-autostub
+}
+
+	public default int addScreenRecordingCallback(java.util.concurrent.Executor arg0, java.util.function.Consumer arg1) { return 0; } // ATL-autostub
+	public default void removeScreenRecordingCallback(java.util.function.Consumer arg0) {} // ATL-autostub
 }

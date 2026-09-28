@@ -130,7 +130,11 @@ public final class StrictMode {
 			public VmPolicy build() {
 				return new VmPolicy();
 			}
-		}
+		
+	public Builder() {} // ATL-autostub
+	public Builder(android.os.StrictMode.VmPolicy arg0) {} // ATL-autostub
+	public android.os.StrictMode.VmPolicy.Builder permitUnsafeIntentLaunch() { return ((Object)this) instanceof android.os.StrictMode.VmPolicy.Builder ? (android.os.StrictMode.VmPolicy.Builder)(Object)this : null; } // ATL-autostub
+}
 
 		static {
 			LAX = (new Builder()).build();

@@ -379,4 +379,7 @@ public class FrameLayout extends ViewGroup {
 			this.gravity = source.gravity;
 		}
 	}
+
+	public void onVisibilityAggregated(boolean arg0) {} // ATL-autostub
+	public void setSystemGestureExclusionRects(java.util.List arg0) {} // ATL-autostub
 }

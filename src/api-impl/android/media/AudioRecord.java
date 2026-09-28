@@ -82,5 +82,13 @@ public class AudioRecord {
 		public AudioRecord build() {
 			return new AudioRecord(audioSource, audioFormat.sampleRate, audioFormat.channelMask, audioFormat.encoding, 32768);
 		}
-	}
+	
+	public android.media.AudioRecord.Builder setBufferSizeInBytes(int arg0) { return ((Object)this) instanceof android.media.AudioRecord.Builder ? (android.media.AudioRecord.Builder)(Object)this : null; } // ATL-autostub
+}
+
+	public int getTimestamp(android.media.AudioTimestamp arg0, int arg1) { return 0; } // ATL-autostub
+	public int read(byte[] arg0, int arg1, int arg2) { return 0; } // ATL-autostub
+	public int read(byte[] arg0, int arg1, int arg2, int arg3) { return 0; } // ATL-autostub
+	public int read(java.nio.ByteBuffer arg0, int arg1) { return 0; } // ATL-autostub
+	public int read(short[] arg0, int arg1, int arg2, int arg3) { return 0; } // ATL-autostub
 }

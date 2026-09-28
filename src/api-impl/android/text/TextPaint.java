@@ -85,4 +85,9 @@ public class TextPaint extends Paint {
 	public float getLetterSpacing() {
 		return 1.0f;
 	}
+
+	public android.os.LocaleList getTextLocales() { return ((Object)this) instanceof android.os.LocaleList ? (android.os.LocaleList)(Object)this : null; } // ATL-autostub
+	public int getTextRunCursor(java.lang.CharSequence arg0, int arg1, int arg2, boolean arg3, int arg4, int arg5) { return 0; } // ATL-autostub
+	public java.lang.String getFontVariationSettings() { return null; } // ATL-autostub
+	public void setTextLocales(android.os.LocaleList arg0) {} // ATL-autostub
 }

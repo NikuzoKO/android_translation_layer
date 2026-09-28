@@ -17,4 +17,6 @@ public class TextSwitcher extends ViewSwitcher {
 	public void setCurrentText(CharSequence text) {
 		Slog.v("TextSwitcher", "setCurrentText(" + text + ")");
 	}
+
+	public void setText(java.lang.CharSequence arg0) {} // ATL-autostub
 }
