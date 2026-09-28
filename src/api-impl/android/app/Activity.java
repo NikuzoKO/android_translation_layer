@@ -145,7 +145,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	public final void setVolumeControlStream(int streamType) {}
 
 	protected void onCreate(Bundle savedInstanceState) {
-		Slog.i(TAG, "- onCreate - yay!");
+		Slog.i(TAG, "- onCreate - yay! " + getClass().getName());
 		Application.dispatchActivityCreated(this, savedInstanceState);
 
 		for (Fragment fragment : fragments) {
@@ -161,7 +161,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	protected void onStart() {
-		Slog.i(TAG, "- onStart - yay!");
+		Slog.i(TAG, "- onStart - yay! " + getClass().getName());
 		Application.dispatchActivityStarted(this);
 		window.set_widget_as_root(window.native_window, window.getDecorView().widget);
 		window.setTitle(title);
@@ -180,7 +180,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	protected void onResume() {
-		Slog.i(TAG, "- onResume - yay!");
+		Slog.i(TAG, "- onResume - yay! " + getClass().getName());
 		Application.dispatchActivityResumed(this);
 
 		for (Fragment fragment : fragments) {
@@ -236,7 +236,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	protected void onPause() {
-		Slog.i(TAG, "- onPause - yay!");
+		Slog.i(TAG, "- onPause - yay! " + getClass().getName());
 		Application.dispatchActivityPaused(this);
 
 		for (Fragment fragment : fragments) {
@@ -248,7 +248,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	protected void onStop() {
-		Slog.i(TAG, "- onStop - yay!");
+		Slog.i(TAG, "- onStop - yay! " + getClass().getName());
 		Application.dispatchActivityStopped(this);
 
 		for (Fragment fragment : fragments) {
@@ -259,7 +259,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	protected void onDestroy() {
-		Slog.i(TAG, "- onDestroy - yay!");
+		Slog.i(TAG, "- onDestroy - yay! " + getClass().getName());
 		deliverResult(); // however we got here, the caller gets its result (once)
 		Application.dispatchActivityDestroyed(this);
 
@@ -401,8 +401,10 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 
 	private void deliverResult() {
 		Activity target = resultActivity;
-		if (target == null)
+		if (target == null) {
+			Slog.i(TAG, "deliverResult: " + getClass().getName() + " has no result target");
 			return;
+		}
 		resultActivity = null; // deliver once
 		Slog.i(TAG, "delivering result " + pendingResultCode + " for request " + resultRequestCode + " to " + target);
 		target.onActivityResult(resultRequestCode, pendingResultCode, pendingResultData);
@@ -447,6 +449,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	public void finish() {
+		Slog.i(TAG, "finish() " + getClass().getName() + (resultActivity != null ? " (result for " + resultActivity.getClass().getName() + ")" : ""));
 		finishing = true;
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 			@Override
