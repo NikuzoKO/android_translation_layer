@@ -7,13 +7,21 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef android_net_ConnectivityManager_TYPE_MOBILE
+#define android_net_ConnectivityManager_TYPE_MOBILE 0L
+#undef android_net_ConnectivityManager_TYPE_WIFI
+#define android_net_ConnectivityManager_TYPE_WIFI 1L
+#undef android_net_ConnectivityManager_TYPE_ETHERNET
+#define android_net_ConnectivityManager_TYPE_ETHERNET 9L
+#undef android_net_ConnectivityManager_RESTRICT_BACKGROUND_STATUS_DISABLED
+#define android_net_ConnectivityManager_RESTRICT_BACKGROUND_STATUS_DISABLED 1L
 /*
  * Class:     android_net_ConnectivityManager
- * Method:    registerNetworkCallback
- * Signature: (Landroid/net/NetworkRequest;Landroid/net/ConnectivityManager/NetworkCallback;)V
+ * Method:    nativeRegisterMonitor
+ * Signature: (Landroid/net/ConnectivityManager/NetworkCallback;)V
  */
-JNIEXPORT void JNICALL Java_android_net_ConnectivityManager_registerNetworkCallback
-  (JNIEnv *, jobject, jobject, jobject);
+JNIEXPORT void JNICALL Java_android_net_ConnectivityManager_nativeRegisterMonitor
+  (JNIEnv *, jobject, jobject);
 
 /*
  * Class:     android_net_ConnectivityManager
