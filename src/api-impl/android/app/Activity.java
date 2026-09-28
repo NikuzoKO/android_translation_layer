@@ -699,4 +699,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 	}
 
 	public void applyOverrideConfiguration(Configuration overrideConfiguration) {}
+
+	public void setEnterSharedElementCallback(SharedElementCallback callback) {}
+	public void setExitSharedElementCallback(SharedElementCallback callback) {}
 }

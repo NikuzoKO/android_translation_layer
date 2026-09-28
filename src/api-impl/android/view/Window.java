@@ -200,4 +200,21 @@ public class Window {
 	private static native void set_jobject(long ptr, Window obj);
 	private native void remove_gtk_background(long native_window);
 	private native void set_screen_brightness(float brightness);
+
+	public void setExitTransition(Transition transition) {}
+	public void setReenterTransition(Transition transition) {}
+	public void setSharedElementEnterTransition(Transition transition) {}
+	public void setAllowEnterTransitionOverlap(boolean allow) {}
+	public void setAllowReturnTransitionOverlap(boolean allow) {}
+	public boolean getAllowEnterTransitionOverlap() { return true; }
+	public boolean getAllowReturnTransitionOverlap() { return true; }
+	public void setTransitionBackgroundFadeDuration(long fadeDurationMillis) {}
+	public long getTransitionBackgroundFadeDuration() { return 0; }
+	public void setSharedElementsUseOverlay(boolean sharedElementsUseOverlay) {}
+	public boolean getSharedElementsUseOverlay() { return true; }
+	public Transition getEnterTransition() { return null; }
+	public Transition getExitTransition() { return null; }
+	public Transition getReturnTransition() { return null; }
+	public Transition getReenterTransition() { return null; }
+	public Transition getSharedElementReturnTransition() { return null; }
 }
