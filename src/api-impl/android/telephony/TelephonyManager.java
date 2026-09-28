@@ -55,8 +55,17 @@ public class TelephonyManager {
 		return null;
 	}
 
+	public static final int SIM_STATE_UNKNOWN = 0;
+	public static final int SIM_STATE_ABSENT = 1;
+
+	/* No SIM is reachable from ATL apps. Saying so keeps apps (e.g. WhatsApp) from
+	 * picking SIM-dependent flows like flash-call verification. */
 	public int getSimState() {
-		return 0; // SIM_STATE_UNKNOWN
+		return SIM_STATE_ABSENT;
+	}
+
+	public int getSimState(int slotIndex) {
+		return SIM_STATE_ABSENT;
 	}
 
 	public String getSimOperatorName() {
