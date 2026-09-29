@@ -12,8 +12,11 @@ static void file_dialog_callback(GObject *dialog, GAsyncResult *res, gpointer us
 	GFile *file = gtk_file_dialog_open_finish(GTK_FILE_DIALOG(dialog), res, NULL);
 	JNIEnv *env = get_jni_env();
 	jobject this = (jobject)user_data;
-	(*env)->CallVoidMethod(env, this, _METHOD(_CLASS(this), "setSelectedFile", "(Ljava/lang/String;)V"), _JSTRING(g_file_get_path(file)));
-	g_object_unref(file);
+	char *path = file ? g_file_get_path(file) : NULL; // NULL when the dialog was cancelled
+	(*env)->CallVoidMethod(env, this, _METHOD(_CLASS(this), "setSelectedFile", "(Ljava/lang/String;)V"), path ? _JSTRING(path) : NULL);
+	g_free(path);
+	if (file)
+		g_object_unref(file);
 	_UNREF(this);
 }
 

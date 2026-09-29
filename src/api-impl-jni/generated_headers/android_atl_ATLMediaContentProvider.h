@@ -7,6 +7,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef android_atl_ATLMediaContentProvider_MAX_DEPTH
+#define android_atl_ATLMediaContentProvider_MAX_DEPTH 4L
+#undef android_atl_ATLMediaContentProvider_RESCAN_INTERVAL_MS
+#define android_atl_ATLMediaContentProvider_RESCAN_INTERVAL_MS 5000LL
 /*
  * Class:     android_atl_ATLMediaContentProvider
  * Method:    native_open_media_folder
