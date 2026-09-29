@@ -363,6 +363,7 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 					}
 				});
 			} catch (ReflectiveOperationException e) {
+				Slog.w(TAG, "startActivityForResult: could not create " + intent.getComponent().getClassName() + ", answering RESULT_CANCELED", e);
 				onActivityResult(requestCode, 0 /*RESULT_CANCELED*/, new Intent());
 			}
 		} else if (FILE_CHOOSER_ACTIONS.contains(intent.getAction())) {
