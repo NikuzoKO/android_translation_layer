@@ -62,6 +62,9 @@ public class ATLMediaContentProvider extends ContentProvider {
 			openFileChooser();
 		}
 		MatrixCursor cursor = new MatrixCursor(projection);
+		// nothing chosen (chooser cancelled): no rows instead of rows full of nulls
+		if (selectedFile == null && uri.getQueryParameter("distinct") == null)
+			return cursor;
 		Object[] row = new Object[projection.length];
 		if (uri.getQueryParameter("distinct") != null) {
 			for (int i = 0; i < projection.length; i++) {
@@ -116,6 +119,8 @@ public class ATLMediaContentProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
+		if (selectedFile == null)
+			return "application/octet-stream";
 		try {
 			return Files.probeContentType(selectedFile.toPath());
 		} catch (IOException e) {
