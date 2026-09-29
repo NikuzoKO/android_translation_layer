@@ -115,13 +115,20 @@ public class DrawableContainer extends Drawable {
 			state.drawables[curIndex].setBounds(left, top, right, bottom);
 	}
 
+	/* a child may swap its paintable when filtered (BitmapDrawable), so point the native container at the current one again */
+	private void reselectCurrent() {
+		if (curIndex != -1 && state.drawables[curIndex] != null)
+			native_selectChild(paintable, state.drawables[curIndex].paintable);
+		invalidateSelf();
+	}
+
 	/* forward tint and color filter to all children, so every state gets them */
 	@Override
 	public void setColorFilter(ColorFilter cf) {
 		for (int i = 0; i < state.childCount; i++)
 			if (state.drawables[i] != null)
 				state.drawables[i].setColorFilter(cf);
-		invalidateSelf();
+		reselectCurrent();
 	}
 
 	@Override
@@ -129,7 +136,7 @@ public class DrawableContainer extends Drawable {
 		for (int i = 0; i < state.childCount; i++)
 			if (state.drawables[i] != null)
 				state.drawables[i].setTintList(tint);
-		invalidateSelf();
+		reselectCurrent();
 	}
 
 	@Override
@@ -137,7 +144,7 @@ public class DrawableContainer extends Drawable {
 		for (int i = 0; i < state.childCount; i++)
 			if (state.drawables[i] != null)
 				state.drawables[i].setTintMode(tintMode);
-		invalidateSelf();
+		reselectCurrent();
 	}
 
 	public void setEnterFadeDuration(int duration) {}
