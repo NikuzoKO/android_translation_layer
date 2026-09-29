@@ -191,7 +191,18 @@ public class Drawable {
 	public void setColorFilter(int color, PorterDuff.Mode mode) {
 		setColorFilter(new PorterDuffColorFilter(color, mode));
 	}
-	public void setColorFilter(ColorFilter filter) {}
+	public void setColorFilter(ColorFilter filter) {
+		logUnsupported("setColorFilter");
+	}
+
+	private static final java.util.Set<String> unsupported_logged = new java.util.HashSet<>();
+	private void logUnsupported(String what) {
+		String key = what + " " + getClass().getName();
+		synchronized (unsupported_logged) {
+			if (unsupported_logged.add(key))
+				System.out.println("Drawable: " + what + " not supported by " + getClass().getName());
+		}
+	}
 
 	public ColorFilter getColorFilter() { return null; }
 
@@ -202,7 +213,9 @@ public class Drawable {
 	public int getIntrinsicWidth() { return -1; }
 	public int getIntrinsicHeight() { return -1; }
 
-	public void setTintList(ColorStateList tint) {}
+	public void setTintList(ColorStateList tint) {
+		logUnsupported("setTintList");
+	}
 
 	public void setTint(int tint) {
 		setTintList(ColorStateList.valueOf(tint));

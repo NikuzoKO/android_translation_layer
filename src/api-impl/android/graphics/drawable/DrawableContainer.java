@@ -1,7 +1,10 @@
 package android.graphics.drawable;
 
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 
 public class DrawableContainer extends Drawable {
 
@@ -110,6 +113,31 @@ public class DrawableContainer extends Drawable {
 	public void setBounds(int left, int top, int right, int bottom) {
 		if (curIndex != -1)
 			state.drawables[curIndex].setBounds(left, top, right, bottom);
+	}
+
+	/* forward tint and color filter to all children, so every state gets them */
+	@Override
+	public void setColorFilter(ColorFilter cf) {
+		for (int i = 0; i < state.childCount; i++)
+			if (state.drawables[i] != null)
+				state.drawables[i].setColorFilter(cf);
+		invalidateSelf();
+	}
+
+	@Override
+	public void setTintList(ColorStateList tint) {
+		for (int i = 0; i < state.childCount; i++)
+			if (state.drawables[i] != null)
+				state.drawables[i].setTintList(tint);
+		invalidateSelf();
+	}
+
+	@Override
+	public void setTintMode(PorterDuff.Mode tintMode) {
+		for (int i = 0; i < state.childCount; i++)
+			if (state.drawables[i] != null)
+				state.drawables[i].setTintMode(tintMode);
+		invalidateSelf();
 	}
 
 	public void setEnterFadeDuration(int duration) {}

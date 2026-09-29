@@ -16,12 +16,14 @@
 
 package android.graphics.drawable;
 
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 //import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -428,14 +430,35 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
 		}
 	}*/
 
-	/*@Override
+	@Override
 	public void setColorFilter(ColorFilter cf) {
 		final ChildDrawable[] array = mLayerState.mChildren;
 		final int N = mLayerState.mNum;
 		for (int i = 0; i < N; i++) {
-			array[i].mDrawable.setColorFilter(cf);
+			if (array[i].mDrawable != null)
+				array[i].mDrawable.setColorFilter(cf);
 		}
-	}*/
+	}
+
+	@Override
+	public void setTintList(ColorStateList tint) {
+		final ChildDrawable[] array = mLayerState.mChildren;
+		final int N = mLayerState.mNum;
+		for (int i = 0; i < N; i++) {
+			if (array[i].mDrawable != null)
+				array[i].mDrawable.setTintList(tint);
+		}
+	}
+
+	@Override
+	public void setTintMode(PorterDuff.Mode tintMode) {
+		final ChildDrawable[] array = mLayerState.mChildren;
+		final int N = mLayerState.mNum;
+		for (int i = 0; i < N; i++) {
+			if (array[i].mDrawable != null)
+				array[i].mDrawable.setTintMode(tintMode);
+		}
+	}
 
 	/**
 	 * Sets the opacity of this drawable directly, instead of collecting the states from

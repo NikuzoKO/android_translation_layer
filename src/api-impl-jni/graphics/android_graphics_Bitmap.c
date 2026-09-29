@@ -111,8 +111,12 @@ JNIEXPORT void JNICALL Java_android_graphics_Bitmap_native_1get_1pixels(JNIEnv *
 		printf("Bitmap.readPixels: partial read not supported\n");
 		exit(1);
 	}
+	/* Android pixels are non-premultiplied 0xAARRGGBB ints: B,G,R,A bytes on little endian */
 	jint *array = (*env)->GetIntArrayElements(env, pixels, NULL);
-	gdk_texture_download(texture, (guchar *)(array + offset), stride * 4);
+	GdkTextureDownloader *downloader = gdk_texture_downloader_new(texture);
+	gdk_texture_downloader_set_format(downloader, GDK_MEMORY_B8G8R8A8);
+	gdk_texture_downloader_download_into(downloader, (guchar *)(array + offset), stride * 4);
+	gdk_texture_downloader_free(downloader);
 	(*env)->ReleaseIntArrayElements(env, pixels, array, 0);
 }
 
@@ -149,7 +153,7 @@ JNIEXPORT void JNICALL Java_android_graphics_Bitmap_native_1set_1pixels(JNIEnv *
 	memcpy(data, array + offset, height * stride * 4);
 	(*env)->ReleaseIntArrayElements(env, pixels, array, 0);
 	GBytes *bytes = g_bytes_new_take(data, height * stride * 4);
-	GdkTexture *texture = gdk_memory_texture_new(width, height, GDK_MEMORY_R8G8B8A8, bytes, stride * 4);
+	GdkTexture *texture = gdk_memory_texture_new(width, height, GDK_MEMORY_B8G8R8A8, bytes, stride * 4); // non-premultiplied 0xAARRGGBB ints
 	g_bytes_unref(bytes);
 	gtk_snapshot_append_texture(snapshot, texture, &GRAPHENE_RECT_INIT(x, y, width, height));
 	g_object_unref(texture);
