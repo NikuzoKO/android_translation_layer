@@ -515,6 +515,7 @@ srcs = [
 	'android/text/method/NumberKeyListener.java',
 	'android/text/method/PasswordTransformationMethod.java',
 	'android/text/method/ScrollingMovementMethod.java',
+	'android/text/method/SingleLineTransformationMethod.java',
 	'android/text/method/TextKeyListener.java',
 	'android/text/method/TransformationMethod.java',
 	'android/text/style/AbsoluteSizeSpan.java',

@@ -90,6 +90,19 @@ public class TextView extends View {
 				boolean allCaps = a.getBoolean(com.android.internal.R.styleable.TextView_textAllCaps, false);
 				setAllCaps(allCaps);
 			}
+
+			if (a.getBoolean(com.android.internal.R.styleable.TextView_singleLine, false))
+				maxLines = 1;
+			if (a.hasValue(com.android.internal.R.styleable.TextView_lines))
+				maxLines = a.getInt(com.android.internal.R.styleable.TextView_lines, maxLines);
+			if (a.hasValue(com.android.internal.R.styleable.TextView_maxLines))
+				maxLines = a.getInt(com.android.internal.R.styleable.TextView_maxLines, maxLines);
+			if (a.hasValue(com.android.internal.R.styleable.TextView_ellipsize)) {
+				// attr values: none=0 start=1 middle=2 end=3 marquee=4
+				int e = a.getInt(com.android.internal.R.styleable.TextView_ellipsize, 0);
+				ellipsize = e == 1 ? TextUtils.TruncateAt.START : e == 2 ? TextUtils.TruncateAt.MIDDLE : e == 3 ? TextUtils.TruncateAt.END : e == 4 ? TextUtils.TruncateAt.MARQUEE : null;
+			}
+			updateLineLimit();
 		} catch (java.lang.Exception e) {
 			System.out.println("exception while inflating TextView:");
 			e.printStackTrace();
@@ -200,7 +213,26 @@ public class TextView extends View {
 	public void setHintTextColor(int i) {}
 	public void setLinkTextColor(ColorStateList colorStateList) {}
 
-	public void setSingleLine() {}
+	/* line limit and ellipsizing, done by the GtkLabel (lines + ellipsize) */
+	private int maxLines = Integer.MAX_VALUE;
+	private TextUtils.TruncateAt ellipsize = null;
+
+	private void updateLineLimit() {
+		int mode = 0; // PANGO_ELLIPSIZE_NONE
+		if (ellipsize == TextUtils.TruncateAt.START)
+			mode = 1;
+		else if (ellipsize == TextUtils.TruncateAt.MIDDLE)
+			mode = 2;
+		else if (ellipsize != null)
+			mode = 3; // END, MARQUEE
+		native_setLineLimit(maxLines == Integer.MAX_VALUE ? -1 : maxLines, mode);
+	}
+
+	protected native void native_setLineLimit(int lines, int ellipsizeMode);
+
+	public void setSingleLine() {
+		setSingleLine(true);
+	}
 	public void setSelection(int i) {}
 	public void setSelection(int i, int j) {}
 
@@ -212,11 +244,17 @@ public class TextView extends View {
 		return 0;
 	}
 
-	public void setEllipsize(TextUtils.TruncateAt truncateAt) {}
+	public void setEllipsize(TextUtils.TruncateAt truncateAt) {
+		ellipsize = truncateAt;
+		updateLineLimit();
+	}
 
 	public void setTextAppearance(Context context, int appearance) {}
 
-	public void setMaxLines(int maxLines) {}
+	public void setMaxLines(int maxLines) {
+		this.maxLines = maxLines > 0 ? maxLines : Integer.MAX_VALUE;
+		updateLineLimit();
+	}
 
 	public void setMinWidth(int minWidth) {}
 	public void setMaxWidth(int maxWidth) {}
@@ -281,7 +319,7 @@ public class TextView extends View {
 
 	public InputFilter[] getFilters() { return new InputFilter[0]; }
 
-	public int getMaxLines() { return -1; }
+	public int getMaxLines() { return maxLines == Integer.MAX_VALUE ? -1 : maxLines; }
 
 	public void setCompoundDrawablesRelative(Drawable start, Drawable top, Drawable end, Drawable bottom) {
 		setCompoundDrawables(start, top, end, bottom);
@@ -329,7 +367,9 @@ public class TextView extends View {
 		return Color.CYAN;
 	}
 
-	public void setSingleLine(boolean singleLine) {}
+	public void setSingleLine(boolean singleLine) {
+		setMaxLines(singleLine ? 1 : Integer.MAX_VALUE);
+	}
 
 	public int getCompoundPaddingLeft() { return 0; }
 
@@ -383,9 +423,11 @@ public class TextView extends View {
 
 	public void setRawInputType(int type) {}
 
-	public TextUtils.TruncateAt getEllipsize() { return null; }
+	public TextUtils.TruncateAt getEllipsize() { return ellipsize; }
 
-	public void setLines(int lines) {}
+	public void setLines(int lines) {
+		setMaxLines(lines);
+	}
 
 	public int getMinLines() {
 		return -1;

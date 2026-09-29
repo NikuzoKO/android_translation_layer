@@ -253,6 +253,14 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setTextColor
 
 /*
  * Class:     android_widget_TextView
+ * Method:    native_setLineLimit
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setLineLimit
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     android_widget_TextView
  * Method:    native_setCompoundDrawables
  * Signature: (JJJJJ)V
  */

@@ -120,3 +120,34 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setCompoundDrawables
 		gtk_widget_insert_before(picture, box, NULL);
 	}
 }
+
+static GtkLabel *find_label(GtkWidget *widget, int depth)
+{
+	if (GTK_IS_LABEL(widget))
+		return GTK_LABEL(widget);
+	if (depth > 3)
+		return NULL;
+	for (GtkWidget *child = gtk_widget_get_first_child(widget); child; child = gtk_widget_get_next_sibling(child)) {
+		GtkLabel *label = find_label(child, depth + 1);
+		if (label)
+			return label;
+	}
+	return NULL;
+}
+
+/* Android maxLines/lines/singleLine + ellipsize. lines <= 0: no limit. ellipsize_mode is a PangoEllipsizeMode.
+ * Android clips a limited TextView without ellipsize; GtkLabel only limits lines when ellipsizing, so use END then. */
+JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setLineLimit(JNIEnv *env, jobject this, jint lines, jint ellipsize_mode)
+{
+	GtkWidget *widget = GTK_WIDGET(_PTR(_GET_LONG_FIELD(this, "widget")));
+	GtkLabel *label = widget ? find_label(widget, 0) : NULL;
+	if (!label)
+		return;
+	if (lines <= 0) {
+		gtk_label_set_lines(label, -1);
+		gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_NONE);
+		return;
+	}
+	gtk_label_set_lines(label, lines);
+	gtk_label_set_ellipsize(label, ellipsize_mode ? ellipsize_mode : PANGO_ELLIPSIZE_END);
+}
