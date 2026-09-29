@@ -15,11 +15,17 @@ public class ActivityOptions {
 	}
 
 	public Bundle toBundle() {
-		return null;
+		return new Bundle();
 	}
 
-	public android.app.ActivityOptions setShareIdentityEnabled(boolean arg0) { return ((Object)this) instanceof android.app.ActivityOptions ? (android.app.ActivityOptions)(Object)this : null; } // ATL-autostub
-	public static android.app.ActivityOptions makeBasic() { return null; } // ATL-autostub
-	public static android.app.ActivityOptions makeCustomAnimation(android.content.Context arg0, int arg1, int arg2) { return null; } // ATL-autostub
-	public void setAllowPassThroughOnTouchOutside(boolean arg0) {} // ATL-autostub
+	public android.app.ActivityOptions setShareIdentityEnabled(boolean arg0) { return this; }
+	public static android.app.ActivityOptions makeBasic() { return new ActivityOptions(); }
+	public static android.app.ActivityOptions makeCustomAnimation(android.content.Context arg0, int arg1, int arg2) { return new ActivityOptions(); }
+	public void setAllowPassThroughOnTouchOutside(boolean arg0) {}
+
+	/* other factories apps use for transitions; ATL doesn't animate, so they are all "basic" */
+	public static ActivityOptions makeScaleUpAnimation(View source, int startX, int startY, int width, int height) { return new ActivityOptions(); }
+	public static ActivityOptions makeClipRevealAnimation(View source, int startX, int startY, int width, int height) { return new ActivityOptions(); }
+	public static ActivityOptions makeThumbnailScaleUpAnimation(View source, android.graphics.Bitmap thumbnail, int startX, int startY) { return new ActivityOptions(); }
+	public static ActivityOptions makeTaskLaunchBehind() { return new ActivityOptions(); }
 }
