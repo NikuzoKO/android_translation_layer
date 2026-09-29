@@ -212,3 +212,10 @@ JNIEXPORT void JNICALL Java_android_atl_GskCanvas_native_1drawRenderNode(JNIEnv 
 	GskRenderNode *node = _PTR(node_ptr);
 	gtk_snapshot_append_node(snapshot, node);
 }
+
+JNIEXPORT void JNICALL Java_android_atl_GskCanvas_native_1clipPath(JNIEnv *env, jclass this_class, jlong snapshot_ptr, jlong path_ptr)
+{
+	GtkSnapshot *snapshot = GTK_SNAPSHOT(_PTR(snapshot_ptr));
+	GskPath *path = _PTR(path_ptr);
+	gtk_snapshot_push_fill(snapshot, path, GSK_FILL_RULE_WINDING);
+}

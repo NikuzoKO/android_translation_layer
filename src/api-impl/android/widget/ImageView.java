@@ -9,6 +9,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -112,8 +113,9 @@ public class ImageView extends View {
 
 	public void setImageMatrix(Matrix matrix) {}
 
+	/* like Android: wrap in a BitmapDrawable, so getDrawable() returns it and tint applies */
 	public void setImageBitmap(Bitmap bitmap) {
-		native_setDrawable(widget, bitmap != null ? bitmap.getTexture() : 0);
+		setImageDrawable(bitmap != null ? new BitmapDrawable(getResources(), bitmap) : null);
 	}
 
 	/**

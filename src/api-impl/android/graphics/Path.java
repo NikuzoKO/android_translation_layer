@@ -180,7 +180,7 @@ public class Path {
 	}
 
 	public void addCircle(float x, float y, float radius, Direction direction) {
-		Log.w("Path", "STUB: addCircle");
+		addOval(x - radius, y - radius, x + radius, y + radius, direction);
 	}
 
 	public void transform(Matrix matrix) {
