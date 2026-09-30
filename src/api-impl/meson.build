@@ -89,6 +89,7 @@ srcs = [
 	'android/atl/ATLKeyboardViewer.java',
 	'android/atl/ATLLoadedApp.java',
 	'android/atl/ATLLoadedAppManager.java',
+	'android/atl/ATLContactsContentProvider.java',
 	'android/atl/ATLMediaContentProvider.java',
 	'android/atl/ATLPaths.java',
 	'android/atl/ATLProvider.java',

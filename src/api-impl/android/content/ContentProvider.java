@@ -1,5 +1,6 @@
 package android.content;
 
+import android.atl.ATLContactsContentProvider;
 import android.atl.ATLLoadedApp;
 import android.atl.ATLMediaContentProvider;
 import android.atl.ATLProvider;
@@ -21,6 +22,7 @@ public abstract class ContentProvider {
 
 	static void createContentProviders() {
 		atl_providers.put("media", new ATLProvider(new ATLMediaContentProvider()));
+		atl_providers.put("com.android.contacts", new ATLProvider(new ATLContactsContentProvider()));
 		ATLLoadedApp primary = ATLLoadedApp.getPrimaryApplication();
 		for (PackageParser.Provider provider_parsed : primary.pkg.providers) {
 			String process_name = provider_parsed.info.processName;

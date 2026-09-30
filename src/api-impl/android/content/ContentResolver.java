@@ -92,7 +92,11 @@ public class ContentResolver {
 			cursor.addRow(row);
 			return cursor;
 		} else {
-			return null;
+			// the API 26 form: the classic arguments travel in the Bundle
+			String selection = queryArgs == null ? null : queryArgs.getString("android:query-arg-sql-selection");
+			String[] selectionArgs = queryArgs == null ? null : queryArgs.getStringArray("android:query-arg-sql-selection-args");
+			String sortOrder = queryArgs == null ? null : queryArgs.getString("android:query-arg-sql-sort-order");
+			return query(uri, projection, selection, selectionArgs, sortOrder);
 		}
 	}
 
