@@ -92,6 +92,11 @@ JNIEXPORT jlong JNICALL Java_android_app_NotificationManager_nativeInitBuilder(J
 	return _INTPTR(g_notification_new(""));
 }
 
+JNIEXPORT void JNICALL Java_android_app_NotificationManager_nativeSetSilent(JNIEnv *env, jobject this, jlong builder_ptr)
+{
+	g_notification_set_priority(G_NOTIFICATION(_PTR(builder_ptr)), G_NOTIFICATION_PRIORITY_LOW);
+}
+
 JNIEXPORT void JNICALL Java_android_app_NotificationManager_nativeAddAction(JNIEnv *env, jobject this, jlong builder_ptr, jstring name_jstr, jint type, jobject intent)
 {
 	GNotification *notification = _PTR(builder_ptr);

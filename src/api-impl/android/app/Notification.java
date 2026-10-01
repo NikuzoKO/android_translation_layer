@@ -60,6 +60,7 @@ public class Notification implements Parcelable {
 	PendingIntent intent;
 	String iconPath;
 	boolean ongoing;
+	boolean onlyAlertOnce;
 	Style style;
 
 	public String toString() {
@@ -101,7 +102,10 @@ public class Notification implements Parcelable {
 			return this;
 		}
 
-		public Builder setOnlyAlertOnce(boolean onlyAlertOnce) { return this; }
+		public Builder setOnlyAlertOnce(boolean onlyAlertOnce) {
+			notification.onlyAlertOnce = onlyAlertOnce;
+			return this;
+		}
 
 		public Builder setAutoCancel(boolean autoCancel) { return this; }
 

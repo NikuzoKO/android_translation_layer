@@ -13,6 +13,8 @@ import java.util.List;
 public class NotificationManager {
 
 	private static int mpris_notification_id = -1;
+	// ids currently shown, for setOnlyAlertOnce
+	private static final java.util.Set<Integer> shown = new java.util.HashSet<>();
 
 	public void cancelAll() {}
 
@@ -27,7 +29,18 @@ public class NotificationManager {
 		}
 
 		System.out.println("notify(" + tag + ", " + id + ", " + notification + ") called");
+		// custom-layout notifications (RemoteViews, e.g. WhatsApp's voice note
+		// player) carry no title or text: nothing to show, so don't post an
+		// empty popup on every progress update
+		if ((notification.title == null || notification.title.length() == 0)
+		    && (notification.text == null || notification.text.length() == 0))
+			return;
 		long builder = nativeInitBuilder();
+		// Android doesn't alert again for ongoing notifications or for updates
+		// of an onlyAlertOnce one; low priority = no sound in lagos-app-notify
+		if (notification.ongoing || (notification.onlyAlertOnce && shown.contains(id)))
+			nativeSetSilent(builder);
+		shown.add(id);
 		for (Notification.Action action : notification.actions) {
 			int intentType = -1;
 			Intent intent = null;
@@ -61,6 +74,7 @@ public class NotificationManager {
 					mpris_notification_id = -1;
 					nativeCancelMPRIS();
 				} else {
+					shown.remove(id);
 					nativeCancel(id);
 				}
 			}
@@ -74,6 +88,7 @@ public class NotificationManager {
 	public void createNotificationChannel(NotificationChannel channel) {}
 
 	protected native long nativeInitBuilder();
+	protected native void nativeSetSilent(long builder);
 	protected native void nativeAddAction(long builder, String title, int intentType, Intent intent);
 	protected native void nativeShowNotification(long builder, int id, String title, String text, String iconPath, boolean ongoing, int intentType, Intent intent);
 	protected native void nativeShowMPRIS(String packageName, String identiy);

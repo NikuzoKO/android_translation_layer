@@ -17,6 +17,14 @@ JNIEXPORT jlong JNICALL Java_android_app_NotificationManager_nativeInitBuilder
 
 /*
  * Class:     android_app_NotificationManager
+ * Method:    nativeSetSilent
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_android_app_NotificationManager_nativeSetSilent
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     android_app_NotificationManager
  * Method:    nativeAddAction
  * Signature: (JLjava/lang/String;ILandroid/content/Intent;)V
  */
