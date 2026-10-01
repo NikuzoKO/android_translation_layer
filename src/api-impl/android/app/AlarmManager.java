@@ -2,6 +2,7 @@ package android.app;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.text.format.DateUtils;
@@ -15,37 +16,122 @@ public class AlarmManager {
 	public static final int ELAPSED_REALTIME = 3;
 	public static final int ELAPSED_REALTIME_WAKEUP = 2;
 
-	/* scheduled alarms by token (PendingIntent or OnAlarmListener): setting again replaces, cancel removes */
-	private static final java.util.HashMap<Object, Runnable> alarms = new java.util.HashMap<Object, Runnable>();
+	/* Scheduled alarms by token (PendingIntent or OnAlarmListener): setting again replaces, cancel removes.
+	 * Handler.postDelayed runs on CLOCK_MONOTONIC, which stops while the device is suspended, so the alarms
+	 * are kept on SystemClock.elapsedRealtime() (CLOCK_BOOTTIME) and checked by a dispatcher thread that never
+	 * sleeps more than a second: after a resume, due alarms go out within a second. The earliest *_WAKEUP
+	 * alarm is published (see publishNextWakeup) so the system's suspend loop can set an RTC wakeup for it. */
+	private static class Alarm {
+		int type;
+		long when; // elapsedRealtime
+		long interval;
+		Runnable action;
+		Handler target;
+	}
+	private static final java.util.HashMap<Object, Alarm> alarms = new java.util.HashMap<Object, Alarm>();
 	private static final Handler handler = new Handler(Looper.getMainLooper());
+	private static Thread dispatcher;
+	private static long publishedWakeup = -1;
+
+	private static boolean isWakeup(int type) {
+		return type == RTC_WAKEUP || type == ELAPSED_REALTIME_WAKEUP;
+	}
 
 	private static long delayFor(int type, long triggerTime) {
 		long now = (type == ELAPSED_REALTIME || type == ELAPSED_REALTIME_WAKEUP) ? SystemClock.elapsedRealtime() : System.currentTimeMillis();
 		return Math.max(0, triggerTime - now);
 	}
 
-	private static void schedule(final Object token, final Runnable action, long delay, final long interval, Handler target) {
-		final Handler h = target != null ? target : handler;
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				synchronized (alarms) {
-					if (alarms.get(token) != this)
-						return; // cancelled or replaced
-					if (interval <= 0)
-						alarms.remove(token);
-				}
-				action.run();
-				if (interval > 0)
-					h.postDelayed(this, interval);
-			}
-		};
+	private static void schedule(int type, final Object token, final Runnable action, long delay, final long interval, Handler target) {
+		Alarm alarm = new Alarm();
+		alarm.type = type;
+		alarm.when = SystemClock.elapsedRealtime() + delay;
+		alarm.interval = interval;
+		alarm.action = action;
+		alarm.target = target != null ? target : handler;
 		synchronized (alarms) {
-			Runnable old = alarms.put(token, runnable);
-			if (old != null)
-				handler.removeCallbacks(old);
+			alarms.put(token, alarm);
+			if (dispatcher == null) {
+				dispatcher = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						dispatch();
+					}
+				}, "AlarmManager");
+				dispatcher.setDaemon(true);
+				dispatcher.start();
+			}
+			alarms.notifyAll();
 		}
-		h.postDelayed(runnable, delay);
+	}
+
+	private static void dispatch() {
+		java.util.ArrayList<Alarm> due = new java.util.ArrayList<Alarm>();
+		while (true) {
+			synchronized (alarms) {
+				long now = SystemClock.elapsedRealtime();
+				long next = Long.MAX_VALUE;
+				long nextWakeup = Long.MAX_VALUE;
+				java.util.Iterator<java.util.Map.Entry<Object, Alarm>> it = alarms.entrySet().iterator();
+				while (it.hasNext()) {
+					Alarm alarm = it.next().getValue();
+					if (alarm.when <= now) {
+						due.add(alarm);
+						if (alarm.interval > 0)
+							alarm.when = now + alarm.interval;
+						else
+							it.remove();
+					}
+					if (alarm.interval > 0 || alarm.when > now) {
+						next = Math.min(next, alarm.when);
+						if (isWakeup(alarm.type))
+							nextWakeup = Math.min(nextWakeup, alarm.when);
+					}
+				}
+				publishNextWakeup(nextWakeup, now);
+				if (due.isEmpty()) {
+					try {
+						alarms.wait(Math.max(1, Math.min(1000, next - now)));
+					} catch (InterruptedException e) {
+					}
+					continue;
+				}
+			}
+			for (Alarm alarm : due) {
+				// like the Android alarm manager, keep the device awake while the alarm is handled
+				if (isWakeup(alarm.type))
+					PowerManager.kernelWakeLock("atl_alarm_" + android.os.Process.myPid(), 5000);
+				alarm.target.post(alarm.action);
+			}
+			due.clear();
+		}
+	}
+
+	/* $XDG_RUNTIME_DIR/atl-alarms/<pid>: wall-clock time (seconds since the epoch) of the next wakeup alarm */
+	private static void publishNextWakeup(long nextWakeup, long now) {
+		if (nextWakeup == publishedWakeup)
+			return;
+		publishedWakeup = nextWakeup;
+		String runtimeDir = System.getenv("XDG_RUNTIME_DIR");
+		if (runtimeDir == null)
+			return;
+		java.io.File dir = new java.io.File(runtimeDir, "atl-alarms");
+		java.io.File file = new java.io.File(dir, String.valueOf(android.os.Process.myPid()));
+		try {
+			if (nextWakeup == Long.MAX_VALUE) {
+				file.delete();
+				return;
+			}
+			dir.mkdirs();
+			long wall = (System.currentTimeMillis() + (nextWakeup - now) + 999) / 1000;
+			java.io.File tmp = new java.io.File(dir, "." + file.getName());
+			java.io.FileOutputStream out = new java.io.FileOutputStream(tmp);
+			out.write((wall + "\n").getBytes());
+			out.close();
+			tmp.renameTo(file);
+		} catch (java.io.IOException e) {
+			Slog.w(TAG, "can't publish the next wakeup: " + e);
+		}
 	}
 
 	private static Runnable sender(final PendingIntent operation) {
@@ -60,9 +146,8 @@ public class AlarmManager {
 
 	static void cancelAlarms(Object token) {
 		synchronized (alarms) {
-			Runnable old = alarms.remove(token);
-			if (old != null)
-				handler.removeCallbacks(old);
+			if (alarms.remove(token) != null)
+				alarms.notifyAll();
 		}
 	}
 
@@ -84,13 +169,13 @@ public class AlarmManager {
 	public void setInexactRepeating(int type, long triggerTime, long interval, PendingIntent operation) {
 		long delay = delayFor(type, triggerTime);
 		Slog.i(TAG, "setInexactRepeating(" + type + ", " + operation + ") delay: " + DateUtils.formatElapsedTime(delay / 1000) + " interval: " + DateUtils.formatElapsedTime(interval / 1000));
-		schedule(operation, sender(operation), delay, interval, null);
+		schedule(type, operation, sender(operation), delay, interval, null);
 	}
 
 	public void setExact(int type, long triggerTime, PendingIntent operation) {
 		long delay = delayFor(type, triggerTime);
 		Slog.i(TAG, "setExact(" + type + ", " + operation + ") delay: " + DateUtils.formatElapsedTime(delay / 1000));
-		schedule(operation, sender(operation), delay, 0, null);
+		schedule(type, operation, sender(operation), delay, 0, null);
 	}
 
 	public void set(int type, long triggerTime, PendingIntent operation) {
@@ -106,7 +191,7 @@ public class AlarmManager {
 	}
 
 	public void setExact(int type, long triggerAtMillis, String tag, final OnAlarmListener listener, Handler targetHandler) {
-		schedule(listener, new Runnable() {
+		schedule(type, listener, new Runnable() {
 			@Override
 			public void run() {
 				listener.onAlarm();
