@@ -33,12 +33,13 @@ static void changed_cb(GtkEditable *self, jobject listener)
 {
 	JNIEnv *env = get_jni_env();
 
-	const char *text = gtk_editable_get_text(self);
+	jstring text = _JSTRING(gtk_editable_get_text(self));
 	jclass spannable_string_builder = (*env)->FindClass(env, "android/text/SpannableStringBuilder");
 	jmethodID spannable_string_builder_constructor = _METHOD(spannable_string_builder, "<init>", "(Ljava/lang/CharSequence;)V");
-	jobject text_obj = (*env)->NewObject(env, spannable_string_builder, spannable_string_builder_constructor, _JSTRING(text));
+	jobject text_obj = (*env)->NewObject(env, spannable_string_builder, spannable_string_builder_constructor, text);
 	jmethodID onTextChanged = _METHOD(_CLASS(listener), "onTextChanged", "(Ljava/lang/CharSequence;III)V");
-	(*env)->CallVoidMethod(env, listener, onTextChanged, text_obj, 0, 0, strlen(text));
+	// Java counts UTF-16 units, not UTF-8 bytes: strlen() overshoots on any non-ASCII text
+	(*env)->CallVoidMethod(env, listener, onTextChanged, text_obj, 0, 0, (*env)->GetStringLength(env, text));
 	if ((*env)->ExceptionCheck(env))
 		(*env)->ExceptionDescribe(env);
 	jmethodID listener_method = _METHOD(_CLASS(listener), "afterTextChanged", "(Landroid/text/Editable;)V");
