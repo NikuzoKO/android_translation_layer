@@ -9,6 +9,9 @@ public class AudioManager {
 	public static final int STREAM_MUSIC = 0x3;
 
 	private native void nativeSetStreamVolume(int volume);
+	private native int nativeGetStreamVolume();
+
+	public static final int RINGER_MODE_NORMAL = 2;
 
 	public boolean isBluetoothA2dpOn() {
 		return false;
@@ -36,11 +39,13 @@ public class AudioManager {
 	public static final int GET_DEVICES_ALL = GET_DEVICES_OUTPUTS | GET_DEVICES_INPUTS;
 
 	public int getRingerMode() {
-		return 0;
+		return RINGER_MODE_NORMAL; // 0 is RINGER_MODE_SILENT
 	}
 
+	// every stream reports the system (ALSA "Master") volume
 	public int getStreamVolume(int streamType) {
-		return 0; // arbitrary, shouldn't matter too much?
+		int volume = nativeGetStreamVolume();
+		return volume < 0 ? getStreamMaxVolume(streamType) / 2 : volume;
 	}
 
 	public int getStreamMaxVolume(int streamType) {
@@ -64,7 +69,7 @@ public class AudioManager {
 	}
 
 	public boolean isStreamMute(int streamType) {
-		return false;
+		return nativeGetStreamVolume() == 0;
 	}
 
 	public boolean isMusicActive() {

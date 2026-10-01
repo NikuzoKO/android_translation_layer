@@ -40,3 +40,38 @@ JNIEXPORT void JNICALL Java_android_media_AudioManager_nativeSetStreamVolume(JNI
 	g_task_run_in_thread(task, set_stream_volume);
 	g_object_unref(task);
 }
+
+/* Master volume in percent (0-100), or -1 if the mixer can't be read; muted
+ * counts as 0. Apps compare it with getStreamMaxVolume() (100) and warn about
+ * "volume too low" when it reads 0. */
+JNIEXPORT jint JNICALL Java_android_media_AudioManager_nativeGetStreamVolume(JNIEnv *env, jobject clazz)
+{
+	snd_mixer_t *handle;
+	snd_mixer_selem_id_t *sid;
+	long minv, maxv, value;
+	int on = 1;
+	jint volume = -1;
+
+	if (snd_mixer_open(&handle, 0) < 0)
+		return -1;
+	if (snd_mixer_attach(handle, "default") < 0 || snd_mixer_selem_register(handle, NULL, NULL) < 0 || snd_mixer_load(handle) < 0) {
+		snd_mixer_close(handle);
+		return -1;
+	}
+
+	snd_mixer_selem_id_malloc(&sid);
+	snd_mixer_selem_id_set_index(sid, 0);
+	snd_mixer_selem_id_set_name(sid, "Master");
+
+	snd_mixer_elem_t *elem = snd_mixer_find_selem(handle, sid);
+	if (elem && snd_mixer_selem_get_playback_volume_range(elem, &minv, &maxv) == 0 && maxv > minv
+	    && snd_mixer_selem_get_playback_volume(elem, SND_MIXER_SCHN_FRONT_LEFT, &value) == 0) {
+		if (snd_mixer_selem_has_playback_switch(elem))
+			snd_mixer_selem_get_playback_switch(elem, SND_MIXER_SCHN_FRONT_LEFT, &on);
+		volume = on ? (jint)((value - minv) * 100 / (maxv - minv)) : 0;
+	}
+
+	snd_mixer_close(handle);
+	snd_mixer_selem_id_free(sid);
+	return volume;
+}
