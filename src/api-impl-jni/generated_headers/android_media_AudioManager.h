@@ -9,6 +9,8 @@ extern "C" {
 #endif
 #undef android_media_AudioManager_STREAM_MUSIC
 #define android_media_AudioManager_STREAM_MUSIC 3L
+#undef android_media_AudioManager_RINGER_MODE_NORMAL
+#define android_media_AudioManager_RINGER_MODE_NORMAL 2L
 #undef android_media_AudioManager_GET_DEVICES_INPUTS
 #define android_media_AudioManager_GET_DEVICES_INPUTS 1L
 #undef android_media_AudioManager_GET_DEVICES_OUTPUTS
@@ -22,6 +24,14 @@ extern "C" {
  */
 JNIEXPORT void JNICALL Java_android_media_AudioManager_nativeSetStreamVolume
   (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     android_media_AudioManager
+ * Method:    nativeGetStreamVolume
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_android_media_AudioManager_nativeGetStreamVolume
+  (JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }
