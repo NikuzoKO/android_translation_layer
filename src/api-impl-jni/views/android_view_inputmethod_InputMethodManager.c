@@ -153,11 +153,41 @@ static void set_input_type(GtkIMContext *context, jint input_type)
 	g_object_set(G_OBJECT(context), "input-purpose", purpose, "input-hints", hints, NULL);
 }
 
+/* The IM context keeps a plain pointer to its client widget. A view that asked for the
+ * keyboard and was destroyed afterwards would leave it dangling, and the next focus_in/out
+ * (apps hide the keyboard on every resume) makes GTK's Wayland IM code use freed memory. */
+static GtkWidget *client_widget = NULL;
+static gulong client_destroy_handler = 0;
+
+static void client_widget_destroyed(GtkWidget *widget, gpointer user_data)
+{
+	GtkIMContext *context = GTK_IM_CONTEXT(user_data);
+	fprintf(stderr, "IMM: client widget %p destroyed\n", widget);
+	client_widget = NULL;
+	client_destroy_handler = 0;
+	gtk_im_context_focus_out(context);
+	gtk_im_context_set_client_widget(context, NULL);
+}
+
+static void set_client_widget(GtkIMContext *context, GtkWidget *widget)
+{
+	if (widget == client_widget)
+		return;
+	if (client_widget && client_destroy_handler)
+		g_signal_handler_disconnect(client_widget, client_destroy_handler);
+	client_widget = widget;
+	client_destroy_handler = widget ? g_signal_connect(widget, "destroy", G_CALLBACK(client_widget_destroyed), context) : 0;
+	gtk_im_context_set_client_widget(context, widget);
+}
+
 JNIEXPORT jboolean JNICALL Java_android_view_inputmethod_InputMethodManager_nativeShowSoftInput(JNIEnv *env, jobject this, jlong context_ptr, jlong widget_ptr, jobject new_connection, jint input_type)
 {
-	GtkWidget *widget = GTK_WIDGET(_PTR(widget_ptr));
 	GtkIMContext *context = GTK_IM_CONTEXT(_PTR(context_ptr));
-	gtk_im_context_set_client_widget(context, widget);
+	if (!widget_ptr || !GTK_IS_WIDGET(_PTR(widget_ptr)))
+		return false;
+	GtkWidget *widget = GTK_WIDGET(_PTR(widget_ptr));
+	fprintf(stderr, "IMM: showSoftInput widget %p (%s) new_connection=%p\n", widget, G_OBJECT_TYPE_NAME(widget), new_connection);
+	set_client_widget(context, widget);
 	if (new_connection) {
 		set_input_type(context, input_type);
 		if (connection)
@@ -173,5 +203,8 @@ JNIEXPORT jboolean JNICALL Java_android_view_inputmethod_InputMethodManager_nati
 JNIEXPORT void JNICALL Java_android_view_inputmethod_InputMethodManager_nativeHideSoftInput(JNIEnv *env, jobject this, jlong context_ptr)
 {
 	GtkIMContext *context = GTK_IM_CONTEXT(_PTR(context_ptr));
+	fprintf(stderr, "IMM: hideSoftInput client=%p\n", client_widget);
+	if (!client_widget) // nothing asked for the keyboard (or that view is gone)
+		return;
 	gtk_im_context_focus_out(context);
 }
