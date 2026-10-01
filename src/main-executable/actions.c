@@ -3,11 +3,13 @@
 
 #include "../api-impl-jni/defines.h"
 #include "../api-impl-jni/util.h"
+#include "../api-impl-jni/app/android_app_Activity.h"
 
 static void action_start_activity(GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
 	JNIEnv *env = get_jni_env();
 
+	activity_window_show();
 	jobject intent = intent_deserialize(env, parameter);
 	jobject context = _GET_STATIC_OBJ_FIELD(handle_cache.context.class, "this_application", "Landroid/app/Application;");
 	(*env)->CallVoidMethod(env, context, handle_cache.context.startActivity, intent);

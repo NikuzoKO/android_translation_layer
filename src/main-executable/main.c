@@ -20,6 +20,7 @@
 #include <libgen.h>
 #include <locale.h>
 #include <stdio.h>
+#include <sys/prctl.h>
 #include <sys/resource.h>
 #include <sys/stat.h>
 
@@ -46,6 +47,10 @@ char *apk_path;
 
 gboolean app_exit(GtkWindow *self, JNIEnv *env) // TODO: do more cleanup?
 {
+	if (activity_background_mode()) {
+		activity_window_hide();
+		return true;
+	}
 	activity_close_all();
 	return false;
 }
@@ -117,7 +122,9 @@ JNIEnv *create_vm(char *api_impl_jar, char *apk_classpath, char *framework_res_a
 	// ATLLoadedApp relies on the first element in atl.app.class.path being the main apk
 	options[2].optionString = construct_classpath("-Datl.app.class.path=", (char *[]){apk_classpath}, 1);
 	options[3].optionString = construct_classpath("-Datl.app.library.path=", (char *[]){api_impl_natives_dir, app_lib_dir}, 2);
-	options[4].optionString = "-Xcheck:jni";
+	/* like on Android, release apps may run without CheckJNI: some (WhatsApp's native code) make JNI
+	   calls with an exception pending, which CheckJNI turns into an abort (-Xusejit:true = the default, a no-op) */
+	options[4].optionString = getenv("ATL_CHECKJNI") && !strcmp(getenv("ATL_CHECKJNI"), "0") ? "-Xusejit:true" : "-Xcheck:jni";
 	if (jdwp_port) {
 		strncat(jdwp_option_string, jdwp_port, 5); // 5 chars is enough for a port number, and won't overflow our array
 		options[option_counter++].optionString = "-XjdwpProvider:internal";
@@ -258,6 +265,16 @@ static void parse_string_extras(JNIEnv *env, char **extra_string_keys, jobject i
 }
 
 /* Drag and drop callback to simulate ACTION_SEND intents */
+/* Escape that no view consumed acts as the Android back key (like the ESCAPE -> BACK fallback in
+ * Android's keymaps), so a compositor-level back button can just send Escape. */
+static gboolean on_window_key_pressed(GtkEventControllerKey *controller, guint keyval, guint keycode, GdkModifierType state, gpointer user_data)
+{
+	if (keyval != GDK_KEY_Escape || (state & gtk_accelerator_get_default_mod_mask()))
+		return FALSE;
+	current_activity_back_pressed();
+	return TRUE;
+}
+
 static gboolean on_drop(GtkDropTarget *target, const GValue *value, double x, double y, gpointer user_data)
 {
 	const char *data = g_value_get_string(value);
@@ -703,7 +720,30 @@ static void open(GtkApplication *app, GFile **files, gint nfiles, const gchar *h
 	GtkDropTarget *drop_target = gtk_drop_target_new(G_TYPE_STRING, GDK_ACTION_COPY);
 	g_signal_connect(drop_target, "drop", G_CALLBACK(on_drop), NULL);
 	gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(drop_target));
-	gtk_window_present(GTK_WINDOW(window));
+	GtkEventController *back_key = gtk_event_controller_key_new();
+	g_signal_connect(back_key, "key-pressed", G_CALLBACK(on_window_key_pressed), NULL);
+	gtk_widget_add_controller(window, back_key);
+	/* GTK binds zwp_text_input_v3 with the first input method context, which apps create with their
+	   first text field, possibly long after the window got focus. Compositors (sway) only send
+	   text_input.enter on a focus change, so such a late text input never becomes active and the
+	   on-screen keyboard never shows. Have a context bind it before the window is mapped (GTK
+	   looks up the display's text input through the client widget, on focus in). */
+	GtkIMContext *im_context = gtk_im_multicontext_new();
+	gtk_im_context_set_client_widget(im_context, window);
+	gtk_im_context_focus_in(im_context);
+	gtk_im_context_focus_out(im_context);
+	gtk_im_context_set_client_widget(im_context, NULL);
+	g_object_unref(im_context);
+	if (activity_background_mode() && getenv("ATL_START_HIDDEN") && strcmp(getenv("ATL_START_HIDDEN"), "0")) {
+		/* realized (so the Wayland app_id can be set below) but not mapped; the activities
+		   go through the normal start-up and are stopped once it settled (apps expect that) */
+		activity_window_start_hidden();
+		gtk_widget_realize(window);
+	} else {
+		gtk_window_present(GTK_WINDOW(window));
+	}
+	if (activity_background_mode())
+		activity_window_show_on_sigusr1();
 
 	// set package name as application id for window icon on Wayland. Needs a {package_name}.desktop file defining the icon
 	const char *app_id = g_application_get_application_id(G_APPLICATION(app));
@@ -762,7 +802,7 @@ static void open(GtkApplication *app, GFile **files, gint nfiles, const gchar *h
 static void activate(GtkApplication *app, struct jni_callback_data *d)
 {
 	if (window) { // this is not the first launch, but a DBus activate request to the running app
-		gtk_window_present(GTK_WINDOW(window));
+		activity_window_show();
 		return;
 	}
 	fprintf(stderr, "error: usage: ./android-translation-layer [app.apk] [-l path/to/activity]\n"
@@ -839,6 +879,11 @@ int main(int argc, char **argv)
 	int status;
 
 	pregrow_stack();
+
+	/* Capabilities handed over as ambient ones (e.g. CAP_BLOCK_SUSPEND for kernel wakelocks) are
+	   for this process only: child processes must not inherit them (bubblewrap refuses to run
+	   with unexpected capabilities, which breaks glycin, i.e. every image decode) */
+	prctl(PR_CAP_AMBIENT, PR_CAP_AMBIENT_CLEAR_ALL, 0, 0, 0);
 
 	/* this has to be done in the main executable, so might as well do it here */
 	init__r_debug();

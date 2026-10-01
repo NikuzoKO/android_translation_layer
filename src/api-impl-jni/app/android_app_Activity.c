@@ -1,4 +1,6 @@
+#include <glib-unix.h>
 #include <gtk/gtk.h>
+#include <signal.h>
 #include <libportal/portal.h>
 
 #include <jni.h>
@@ -12,6 +14,9 @@
 
 static GList *activity_backlog = NULL;
 static jobject activity_current = NULL;
+/* background mode: the window is hidden and no activity is started/resumed, like an app in the background on Android */
+static bool window_hidden = false;
+extern GtkWindow *window;
 
 static void activity_close(JNIEnv *env, jobject activity)
 {
@@ -74,7 +79,7 @@ static void activity_focus(JNIEnv *env, jobject activity)
 
 static void activity_update_current(JNIEnv *env)
 {
-	jobject activity_new = activity_backlog ? g_list_first(activity_backlog)->data : NULL;
+	jobject activity_new = activity_backlog && !window_hidden ? g_list_first(activity_backlog)->data : NULL;
 
 	if (activity_current != activity_new) {
 		if (activity_current)
@@ -117,6 +122,9 @@ void activity_window_ready(void)
 void current_activity_back_pressed(void)
 {
 	JNIEnv *env = get_jni_env();
+
+	if (!activity_current)
+		return;
 
 	jclass current_activity_class = (*env)->GetObjectClass(env, activity_current);
 	jmethodID current_activity_on_back_pressed_method_id = (*env)->GetMethodID(env, current_activity_class, "onBackPressed", "()V");
@@ -184,6 +192,11 @@ JNIEXPORT void JNICALL Java_android_app_Activity_nativeFinish(JNIEnv *env, jobje
 {
 	GList *l;
 	jobject removed_activity = NULL;
+	if (activity_background_mode() && g_list_length(activity_backlog) == 1 && (*env)->IsSameObject(env, this, activity_backlog->data)) {
+		_SET_BOOL_FIELD(this, "finishing", false);
+		activity_window_hide();
+		return;
+	}
 	for (l = activity_backlog; l != NULL; l = l->next) {
 		if ((*env)->IsSameObject(env, this, l->data)) {
 			removed_activity = l->data;
@@ -332,4 +345,65 @@ JNIEXPORT jboolean JNICALL Java_android_app_Activity_isTaskRoot(JNIEnv *env, job
 	jobject root_activity = activity_backlog ? g_list_last(activity_backlog)->data : NULL;
 	// NULL means that we are currently creating the root activity, so no other activity can exist yet
 	return root_activity == NULL || (*env)->IsSameObject(env, this, root_activity);
+}
+
+bool activity_background_mode(void)
+{
+	static int mode = -1;
+	if (mode == -1)
+		mode = getenv("ATL_BACKGROUND") && strcmp(getenv("ATL_BACKGROUND"), "0");
+	return mode;
+}
+
+void activity_window_hide(void)
+{
+	JNIEnv *env = get_jni_env();
+	if ((*env)->ExceptionCheck(env)) // called from the main loop: don't carry one into the lifecycle calls
+		(*env)->ExceptionDescribe(env);
+	if (window_hidden)
+		return;
+	window_hidden = true;
+	activity_update_current(env);
+	gtk_widget_set_visible(GTK_WIDGET(window), false);
+	fprintf(stderr, "ATL: window hidden, app in the background\n");
+}
+
+void activity_window_show(void)
+{
+	JNIEnv *env = get_jni_env();
+	if ((*env)->ExceptionCheck(env)) // called from the main loop: don't carry one into the lifecycle calls
+		(*env)->ExceptionDescribe(env);
+	gtk_window_present(window);
+	if (!window_hidden)
+		return;
+	window_hidden = false;
+	activity_update_current(env);
+	fprintf(stderr, "ATL: window shown, app in the foreground\n");
+}
+
+static gboolean hide_after_start(gpointer user_data)
+{
+	if (!gtk_widget_get_visible(GTK_WIDGET(window)))
+		activity_window_hide();
+	return G_SOURCE_REMOVE;
+}
+
+/* call before the first activity starts: the window isn't mapped, and the activities go to the
+   background 10 s after the start (launcher activities that start another one and finish need a
+   full lifecycle, e.g. androidx throws on onDestroy while still INITIALIZED) */
+void activity_window_start_hidden(void)
+{
+	g_timeout_add_seconds(10, hide_after_start, NULL);
+}
+
+static gboolean show_window_on_signal(gpointer user_data)
+{
+	activity_window_show();
+	return G_SOURCE_CONTINUE;
+}
+
+/* `kill -USR1 <pid>` brings a background app to the front */
+void activity_window_show_on_sigusr1(void)
+{
+	g_unix_signal_add(SIGUSR1, show_window_on_signal, NULL);
 }

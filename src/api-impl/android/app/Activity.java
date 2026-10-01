@@ -460,7 +460,9 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 				deliverResult();
 				if (window != null && window.native_window != 0) {
 					nativeFinish(getWindow().native_window);
-					window.native_window = 0;
+					// in background mode the last activity is moved to the back instead (finishing is reset then)
+					if (finishing)
+						window.native_window = 0;
 				}
 			}
 		});
