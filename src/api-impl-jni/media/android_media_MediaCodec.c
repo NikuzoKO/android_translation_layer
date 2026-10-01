@@ -376,11 +376,19 @@ JNIEXPORT jint JNICALL Java_android_media_MediaCodec_native_1dequeueOutputBuffer
 			}
 			swr_init(ctx->audio.swr);
 		}
+		/* never write past the Java buffer: a 120 ms opus frame or an upsampled
+		 * one is bigger than the buffer; swr keeps what doesn't fit for later */
+		int frame_bytes = 2 * codec_ctx->ch_layout.nb_channels;
+		int capacity = get_nio_buffer_size(env, buffer) / frame_bytes;
+		int wanted = swr_get_out_samples(ctx->audio.swr, frame->nb_samples);
+		int out_count = wanted < capacity ? wanted : capacity;
 		uint8_t *raw_buffer = get_nio_buffer(env, buffer, &array_ref, &array);
-		int outSamples = swr_convert(ctx->audio.swr, &raw_buffer, frame->nb_samples, (uint8_t const **)(frame->data), frame->nb_samples);
+		int outSamples = swr_convert(ctx->audio.swr, &raw_buffer, out_count, (uint8_t const **)(frame->data), frame->nb_samples);
 		release_nio_buffer(env, array_ref, array);
+		if (outSamples < 0)
+			outSamples = 0;
 		_SET_INT_FIELD(buffer_info, "offset", 0);
-		_SET_INT_FIELD(buffer_info, "size", outSamples * 2 * codec_ctx->ch_layout.nb_channels);
+		_SET_INT_FIELD(buffer_info, "size", outSamples * frame_bytes);
 
 		av_frame_free(&frame);
 	} else if (codec_ctx->codec_type == AVMEDIA_TYPE_VIDEO) {

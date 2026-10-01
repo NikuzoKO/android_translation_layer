@@ -55,7 +55,8 @@ public class MediaCodec {
 		outputBuffers = new ByteBuffer[4];
 		freeOutputBuffers = new ArrayDeque<>(outputBuffers.length);
 		for (int i = 0; i < outputBuffers.length; i++) {
-			outputBuffers[i] = ByteBuffer.allocate(8192).order(ByteOrder.LITTLE_ENDIAN);
+			// 120 ms of 8-channel 48 kHz S16 is 92160 bytes; 8192 overflowed on opus
+			outputBuffers[i] = ByteBuffer.allocate(128 * 1024).order(ByteOrder.LITTLE_ENDIAN);
 			freeOutputBuffers.add(i);
 		}
 
