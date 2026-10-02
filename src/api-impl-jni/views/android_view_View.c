@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -51,6 +52,31 @@ int canceled_action = 0;
 
 static struct pointer pointers[MAX_POINTERS] = {};
 
+/* ATL_TOUCH_DEBUG=1: log touch dispatch and long-press gesture decisions to stderr */
+static int touch_debug = -1;
+static bool tdbg_on(void)
+{
+	if (touch_debug < 0)
+		touch_debug = getenv("ATL_TOUCH_DEBUG") != NULL;
+	return touch_debug;
+}
+
+static const char *tdbg_class(JNIEnv *env, jobject obj, char *buf, size_t len)
+{
+	jclass cls = (*env)->GetObjectClass(env, obj);
+	jclass cls_cls = (*env)->GetObjectClass(env, cls);
+	jstring name = (*env)->CallObjectMethod(env, cls, (*env)->GetMethodID(env, cls_cls, "getName", "()Ljava/lang/String;"));
+	const char *utf = (*env)->GetStringUTFChars(env, name, NULL);
+	snprintf(buf, len, "%s", utf);
+	(*env)->ReleaseStringUTFChars(env, name, utf);
+	(*env)->DeleteLocalRef(env, name);
+	(*env)->DeleteLocalRef(env, cls_cls);
+	(*env)->DeleteLocalRef(env, cls);
+	return buf;
+}
+
+#define TDBG(...) do { if (tdbg_on()) { fprintf(stderr, "ATL-TOUCH %u ", (unsigned)(g_get_monotonic_time() / 1000)); fprintf(stderr, __VA_ARGS__); fputc('\n', stderr); } } while (0)
+
 bool view_dispatch_motionevent(JNIEnv *env, WrapperWidget *wrapper, GtkPropagationPhase phase, jobject motion_event, gpointer event, int action)
 {
 	int ret;
@@ -95,6 +121,34 @@ bool view_dispatch_motionevent(JNIEnv *env, WrapperWidget *wrapper, GtkPropagati
 
 	if (action == ACTION_CANCEL)
 		ret = false;
+
+	if (tdbg_on() && (action & 0xff) == ACTION_MOVE && cancel_triggerer == wrapper) {
+		char cn[128];
+		jclass mc = (*env)->GetObjectClass(env, motion_event);
+		float mx = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getX", "()F"));
+		float my = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getY", "()F"));
+		float rx = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getRawX", "()F"));
+		float ry = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getRawY", "()F"));
+		(*env)->DeleteLocalRef(env, mc);
+		TDBG("%s INTERCEPTS on MOVE at x=%.1f y=%.1f raw=%.1f,%.1f", tdbg_class(env, this, cn, sizeof(cn)), mx, my, rx, ry);
+	}
+	if (tdbg_on() && (action & 0xff) == ACTION_DOWN && phase == GTK_PHASE_CAPTURE) {
+		char cn[128];
+		jclass mc = (*env)->GetObjectClass(env, motion_event);
+		float mx = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getX", "()F"));
+		float my = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getY", "()F"));
+		float rx = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getRawX", "()F"));
+		float ry = (*env)->CallFloatMethod(env, motion_event, (*env)->GetMethodID(env, mc, "getRawY", "()F"));
+		(*env)->DeleteLocalRef(env, mc);
+		TDBG("%s DOWN at x=%.1f y=%.1f raw=%.1f,%.1f", tdbg_class(env, this, cn, sizeof(cn)), mx, my, rx, ry);
+	}
+	if (tdbg_on() && (action & 0xff) != ACTION_MOVE) {
+		char cn[128];
+		TDBG("%s w=%p child=%p lp=%d phase=%s action=%d ret=%d intercepting=%d custom=%d %s", tdbg_class(env, this, cn, sizeof(cn)),
+		     wrapper, wrapper->child, wrapper->child && g_object_get_data(G_OBJECT(wrapper->child), "on_long_click_listener") != NULL,
+		     phase == GTK_PHASE_CAPTURE ? "capture" : "bubble", action, ret, wrapper->intercepting_touch, wrapper->custom_dispatch_touch,
+		     cancel_triggerer == wrapper ? "CANCELS-CHILDREN" : "");
+	}
 
 	return ret;
 }
@@ -818,6 +872,10 @@ static void on_long_click(GtkGestureLongPress *gesture, double x, double y, gpoi
 	WrapperWidget *wrapper = WRAPPER_WIDGET(gtk_widget_get_parent(widget));
 
 	bool ret = (*env)->CallBooleanMethod(env, wrapper->jobj, handle_cache.view.performLongClick, x, y);
+	if (tdbg_on()) {
+		char cn[128];
+		TDBG("longpress FIRED %s at %.0f,%.0f handled=%d", tdbg_class(env, wrapper->jobj, cn, sizeof(cn)), x, y, ret);
+	}
 
 	if ((*env)->ExceptionCheck(env))
 		(*env)->ExceptionDescribe(env);
@@ -830,14 +888,34 @@ static void on_long_click_update(GtkGesture *gesture, GdkEventSequence *sequence
 {
 	GdkEvent *event = gtk_gesture_get_last_event(gesture, sequence);
 	if (event == canceled_event) {
+		TDBG("longpress reset: parent intercepted");
 		gtk_event_controller_reset(GTK_EVENT_CONTROLLER(gesture));
 	}
+}
+
+static void on_long_click_cancelled(GtkGestureLongPress *gesture, gpointer user_data)
+{
+	TDBG("longpress CANCELLED (moved past drag threshold, released early, or sequence claimed elsewhere)");
+}
+
+static void on_long_click_begin(GtkGesture *gesture, GdkEventSequence *sequence, gpointer user_data)
+{
+	JNIEnv *env = get_jni_env();
+	GtkWidget *widget = gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(gesture));
+	WrapperWidget *wrapper = WRAPPER_WIDGET(gtk_widget_get_parent(widget));
+	char cn[128];
+	TDBG("longpress begin %s", tdbg_class(env, wrapper->jobj, cn, sizeof(cn)));
 }
 
 JNIEXPORT void JNICALL Java_android_view_View_nativeSetOnLongClickListener(JNIEnv *env, jobject this, jlong widget_ptr)
 {
 	GtkWidget *widget = GTK_WIDGET(_PTR(widget_ptr));
 	GtkEventController *old_controller = g_object_get_data(G_OBJECT(widget), "on_long_click_listener");
+	if (tdbg_on()) {
+		char cn[128];
+		TDBG("nativeSetOnLongClickListener %s widget=%p parent=%p mapped=%d existing=%d", tdbg_class(env, this, cn, sizeof(cn)),
+		     widget, gtk_widget_get_parent(widget), gtk_widget_get_mapped(widget), old_controller != NULL);
+	}
 	if (old_controller)
 		return;
 
@@ -845,6 +923,10 @@ JNIEXPORT void JNICALL Java_android_view_View_nativeSetOnLongClickListener(JNIEn
 
 	g_signal_connect(controller, "pressed", G_CALLBACK(on_long_click), NULL);
 	g_signal_connect(controller, "update", G_CALLBACK(on_long_click_update), NULL);
+	if (tdbg_on()) {
+		g_signal_connect(controller, "cancelled", G_CALLBACK(on_long_click_cancelled), NULL);
+		g_signal_connect(controller, "begin", G_CALLBACK(on_long_click_begin), NULL);
+	}
 	gtk_widget_add_controller(widget, controller);
 	g_object_set_data(G_OBJECT(widget), "on_long_click_listener", controller);
 }

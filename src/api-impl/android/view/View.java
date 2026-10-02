@@ -1563,13 +1563,19 @@ public class View implements Drawable.Callback {
 		}
 		return false;
 	}
+	private static final boolean TOUCH_DEBUG = System.getenv("ATL_TOUCH_DEBUG") != null;
 	public void setOnLongClickListener(OnLongClickListener listener) {
+		if (TOUCH_DEBUG)
+			System.err.println("ATL-TOUCH setOnLongClickListener " + getClass().getName() + " listener=" + listener);
 		nativeSetOnLongClickListener(widget);
 		on_long_click_listener = listener;
 	}
 	protected native void nativeSetOnLongClickListener(long widget);
 
-	public void setLongClickable(boolean longClickable) {}
+	public void setLongClickable(boolean longClickable) {
+		if (TOUCH_DEBUG)
+			System.err.println("ATL-TOUCH setLongClickable " + getClass().getName() + " " + longClickable);
+	}
 
 	public void setOnHoverListener(OnHoverListener listener) {}
 
@@ -1965,7 +1971,10 @@ public class View implements Drawable.Callback {
 
 	public boolean willNotDraw() { return false; }
 
-	public void setOnCreateContextMenuListener(View.OnCreateContextMenuListener l) {}
+	public void setOnCreateContextMenuListener(View.OnCreateContextMenuListener l) {
+		if (TOUCH_DEBUG)
+			System.err.println("ATL-TOUCH setOnCreateContextMenuListener " + getClass().getName() + " " + l);
+	}
 
 	protected void onAnimationStart() {}
 
