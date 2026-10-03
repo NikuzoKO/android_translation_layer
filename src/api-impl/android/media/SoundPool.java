@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Environment;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class SoundPool {
 
@@ -32,10 +36,22 @@ public class SoundPool {
 		return nativeLoad(nativePool, Environment.getExternalStorageDirectory().getPath() + "/" + afd.fileName);
 	}
 
-	public int load(Context context, int resId, int priority) throws IOException {
-		String fileName = context.getResources().getResourceEntryName(resId);
-		AssetManager.extractFromAPK(context.getPackageCodePath(), fileName, fileName);
-		return nativeLoad(nativePool, Environment.getExternalStorageDirectory().getPath() + "/" + fileName);
+	/* The resource's file inside the APK is not named after its entry name (WhatsApp's are
+	 * res/<obfuscated>), so go through Resources to find it and copy it out once per package. */
+	public int load(Context context, int resId, int priority) {
+		File file = new File(context.getCacheDir(), "soundpool/" + Integer.toHexString(resId));
+		try {
+			if (!file.exists() || file.lastModified() < new File(context.getPackageCodePath()).lastModified()) {
+				file.getParentFile().mkdirs();
+				try (InputStream in = context.getResources().openRawResource(resId)) {
+					Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("SoundPool.load: resource 0x" + Integer.toHexString(resId) + " unavailable: " + e);
+			return 0;
+		}
+		return nativeLoad(nativePool, file.getPath());
 	}
 
 	/**
