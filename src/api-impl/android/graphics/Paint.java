@@ -121,12 +121,24 @@ public class Paint {
 	}
 
 	public float ascent() {
-		return -getTextSize();
+		float[] m = new float[5];
+		native_get_font_metrics(paint, m);
+		return m[1];
 	}
 
-	public float measureText(char[] text, int index, int count) { return 10; }
+	public float descent() {
+		float[] m = new float[5];
+		native_get_font_metrics(paint, m);
+		return m[2];
+	}
+
+	public float measureText(char[] text, int index, int count) {
+		return measureText(new String(text, index, count));
+	}
 	public float measureText(String text, int start, int end) {
-		return (end - start) * getTextSize() * .6f;
+		if (text == null || end <= start)
+			return 0;
+		return native_measure_text(paint, text.substring(start, end));
 	}
 	public float measureText(String text) {
 		return measureText(text, 0, text.length());
@@ -250,9 +262,31 @@ public class Paint {
 	public /*native*/ float getTextSkewX() { return 0; }
 	public /*native*/ void setTextSkewX(float skewX) {}
 
-	public /*native*/ float descent() { return 0; }
-	public /*native*/ float getFontMetrics(FontMetrics metrics) { return 0; }
-	public /*native*/ int getFontMetricsInt(FontMetricsInt fmi) { return 0; }
+	/* {top, ascent, descent, bottom, leading}, Android signs (above the baseline is negative) */
+	public float getFontMetrics(FontMetrics metrics) {
+		float[] m = new float[5];
+		native_get_font_metrics(paint, m);
+		if (metrics != null) {
+			metrics.top = m[0];
+			metrics.ascent = m[1];
+			metrics.descent = m[2];
+			metrics.bottom = m[3];
+			metrics.leading = m[4];
+		}
+		return m[2] - m[1] + m[4];
+	}
+	public int getFontMetricsInt(FontMetricsInt fmi) {
+		float[] m = new float[5];
+		native_get_font_metrics(paint, m);
+		if (fmi != null) {
+			fmi.top = (int)Math.floor(m[0]);
+			fmi.ascent = Math.round(m[1]);
+			fmi.descent = Math.round(m[2]);
+			fmi.bottom = (int)Math.ceil(m[3]);
+			fmi.leading = Math.round(m[4]);
+		}
+		return Math.round(m[2] - m[1] + m[4]);
+	}
 
 	public void setShadowLayer(float radius, float dx, float dy, int color) {}
 
@@ -349,9 +383,28 @@ public class Paint {
 		return effect;
 	}
 
-	public int breakText(char[] text, int index, int count, float maxWidth, float[] measuredWidth) { return 10; }
-	public int breakText(String text, boolean measureForwards, float maxWidth, float[] measuredWidth) { return 10; }
-	public int breakText(CharSequence text, int start, int end, boolean measureForwards, float maxWidth, float[] measuredWidth) { return 10; }
+	public int breakText(char[] text, int index, int count, float maxWidth, float[] measuredWidth) {
+		return breakText(new String(text, index, count), true, maxWidth, measuredWidth);
+	}
+	public int breakText(String text, boolean measureForwards, float maxWidth, float[] measuredWidth) {
+		return breakText(text, 0, text.length(), measureForwards, maxWidth, measuredWidth);
+	}
+	/* how many chars (from the start or, backwards, from the end) fit in maxWidth */
+	public int breakText(CharSequence text, int start, int end, boolean measureForwards, float maxWidth, float[] measuredWidth) {
+		String s = text.subSequence(start, end).toString();
+		int lo = 0, hi = s.length();
+		while (lo < hi) {
+			int mid = (lo + hi + 1) / 2;
+			String part = measureForwards ? s.substring(0, mid) : s.substring(s.length() - mid);
+			if (measureText(part) <= maxWidth)
+				lo = mid;
+			else
+				hi = mid - 1;
+		}
+		if (measuredWidth != null && measuredWidth.length > 0)
+			measuredWidth[0] = lo == 0 ? 0 : measureText(measureForwards ? s.substring(0, lo) : s.substring(s.length() - lo));
+		return lo;
+	}
 
 	public void clearShadowLayer() {}
 
@@ -360,13 +413,17 @@ public class Paint {
 	}
 
 	public FontMetrics getFontMetrics() {
-		return new FontMetrics();
+		FontMetrics fm = new FontMetrics();
+		getFontMetrics(fm);
+		return fm;
 	}
 
 	public void setFontMetricsInt(FontMetricsInt fmi) {}
 
 	public FontMetricsInt getFontMetricsInt() {
-		return new FontMetricsInt();
+		FontMetricsInt fmi = new FontMetricsInt();
+		getFontMetricsInt(fmi);
+		return fmi;
 	}
 
 	public void set(Paint paint) {
@@ -453,4 +510,6 @@ public class Paint {
 	public void setFontFeatureSettings(java.lang.String arg0) {} // ATL-autostub
 	public void setTextLocale(java.util.Locale arg0) {} // ATL-autostub
 	private static native void native_set_typeface(long paint, String family, int weight, boolean italic);
+	private static native float native_measure_text(long paint, String text);
+	private static native void native_get_font_metrics(long paint, float[] metrics);
 }

@@ -198,3 +198,30 @@ JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1typeface(JNIEnv 
 	pango_font_description_set_weight(paint->font, weight);
 	pango_font_description_set_style(paint->font, italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
 }
+
+JNIEXPORT jfloat JNICALL Java_android_graphics_Paint_native_1measure_1text(JNIEnv *env, jclass clazz, jlong paint_ptr, jstring text_jstr)
+{
+	struct AndroidPaint *paint = _PTR(paint_ptr);
+	PangoLayout *layout = pango_layout_new(gtk_widget_get_pango_context(window));
+	pango_layout_set_font_description(layout, paint->font);
+	const char *str = (*env)->GetStringUTFChars(env, text_jstr, NULL);
+	pango_layout_set_text(layout, str, -1);
+	(*env)->ReleaseStringUTFChars(env, text_jstr, str);
+	PangoRectangle logical;
+	pango_layout_get_extents(layout, NULL, &logical);
+	g_object_unref(layout);
+	return (jfloat)logical.width / PANGO_SCALE;
+}
+
+JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1get_1font_1metrics(JNIEnv *env, jclass clazz, jlong paint_ptr, jfloatArray metrics_arr)
+{
+	struct AndroidPaint *paint = _PTR(paint_ptr);
+	PangoFontMetrics *metrics = pango_context_get_metrics(gtk_widget_get_pango_context(window), paint->font, NULL);
+	float ascent = (float)pango_font_metrics_get_ascent(metrics) / PANGO_SCALE;
+	float descent = (float)pango_font_metrics_get_descent(metrics) / PANGO_SCALE;
+	float height = (float)pango_font_metrics_get_height(metrics) / PANGO_SCALE;
+	pango_font_metrics_unref(metrics);
+	float leading = height > ascent + descent ? height - ascent - descent : 0;
+	jfloat values[5] = {-ascent, -ascent, descent, descent, leading};
+	(*env)->SetFloatArrayRegion(env, metrics_arr, 0, 5, values);
+}

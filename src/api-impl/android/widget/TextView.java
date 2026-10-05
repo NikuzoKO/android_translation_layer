@@ -74,7 +74,7 @@ public class TextView extends View {
 					setTextColor(aa.getColorStateList(com.android.internal.R.styleable.TextAppearance_textColor));
 				}
 				if (aa.hasValue(com.android.internal.R.styleable.TextAppearance_textSize)) {
-					setTextSize(aa.getDimensionPixelSize(com.android.internal.R.styleable.TextAppearance_textSize, 10));
+					setTextSize(TypedValue.COMPLEX_UNIT_PX, aa.getDimensionPixelSize(com.android.internal.R.styleable.TextAppearance_textSize, 10));
 				}
 				fontFamily = fontName(aa, com.android.internal.R.styleable.TextAppearance_fontFamily, fontFamily);
 				textStyle = aa.getInt(com.android.internal.R.styleable.TextAppearance_textStyle, textStyle);
@@ -85,7 +85,7 @@ public class TextView extends View {
 				setTextColor(a.getColorStateList(com.android.internal.R.styleable.TextView_textColor));
 			}
 			if (a.hasValue(com.android.internal.R.styleable.TextView_textSize)) {
-				setTextSize(a.getDimensionPixelSize(com.android.internal.R.styleable.TextView_textSize, 10));
+				setTextSize(TypedValue.COMPLEX_UNIT_PX, a.getDimensionPixelSize(com.android.internal.R.styleable.TextView_textSize, 10));
 			}
 
 			fontFamily = fontName(a, com.android.internal.R.styleable.TextView_fontFamily, fontFamily);
@@ -161,12 +161,27 @@ public class TextView extends View {
 
 	public native final void native_setText(String text);
 
+	private float textSizePx = 14;
+
 	public void setTextSize(int unit, float size) {
-		if (unit != TypedValue.COMPLEX_UNIT_SP)
-			System.out.println("setTextSize called with non-SP unit (" + unit + "), we don't currently handle that");
-		setTextSize(size);
+		float px = TypedValue.applyDimension(unit, size, getContext().getResources().getDisplayMetrics());
+		if (px <= 0)
+			return;
+		textSizePx = px;
+		getPaint().setTextSize(px);
+		applyTextSize(px);
 	}
-	public native void setTextSize(float size);
+	/* in SP, like Android */
+	public void setTextSize(float size) {
+		setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+	}
+	/* pixels, absolute (Android sizes are device pixels; Pango points would be 4/3 larger at 96 dpi) */
+	protected void applyTextSize(float px) {
+		native_setTextSize(px);
+	}
+	private native void native_setTextSize(float px);
+	/* CSS font-size for widgets that aren't a GtkLabel (EditText, Button) */
+	protected static native void native_setFontSizeCss(long widget, float px);
 
 	public native final void native_setTextColor(int color);
 	public void setTextColor(int color) {
@@ -287,7 +302,9 @@ public class TextView extends View {
 
 	public Typeface getTypeface() { return typeface; }
 
-	public float getTextSize() { return 10; }
+	public float getTextSize() {
+		return textSizePx;
+	}
 
 	public int getGravity() {
 		return gravity;
@@ -353,10 +370,10 @@ public class TextView extends View {
 
 	/* line count of the text as the label lays it out now */
 	public int getLineCount() {
-		return Math.max(1, native_getLineCount(widget));
+		return Math.max(1, native_getLineCount(widget, getMeasuredWidth() - getPaddingLeft() - getPaddingRight()));
 	}
 
-	private static native int native_getLineCount(long widget);
+	private static native int native_getLineCount(long widget, int width);
 
 	public URLSpan[] getUrls() { return new URLSpan[0]; }
 
@@ -392,13 +409,14 @@ public class TextView extends View {
 
 	/* a copy of the label's own PangoLayout, so apps measure exactly what is drawn (font, size, wrapping) */
 	public Layout getLayout() {
-		long nativeLayout = native_copyLayout(widget);
+		int width = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
+		long nativeLayout = native_copyLayout(widget, width);
 		if (nativeLayout != 0)
 			return new Layout(nativeLayout, getText(), getPaint());
 		return new BoringLayout(getText(), getPaint(), getWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, new BoringLayout.Metrics(), false);
 	}
 
-	private static native long native_copyLayout(long widget);
+	private static native long native_copyLayout(long widget, int width);
 
 	public int getCurrentTextColor() {
 		return Color.CYAN;

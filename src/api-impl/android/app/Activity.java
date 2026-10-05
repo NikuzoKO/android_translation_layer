@@ -247,6 +247,8 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		    .append("] vis=").append(view.getVisibility());
 		if (view instanceof android.widget.TextView)
 			line.append(" text=\"").append(((android.widget.TextView)view).getText()).append("\"");
+		if (view instanceof android.widget.EditText)
+			line.append(" hint=\"").append(((android.widget.EditText)view).getHint()).append("\"");
 		line.append(" bg=").append(describeDrawable(view.getBackground()));
 		if (view instanceof android.widget.ImageView)
 			line.append(" img=").append(describeDrawable(((android.widget.ImageView)view).getDrawable()));

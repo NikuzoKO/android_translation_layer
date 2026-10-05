@@ -237,11 +237,19 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setText
 
 /*
  * Class:     android_widget_TextView
- * Method:    setTextSize
+ * Method:    native_setTextSize
  * Signature: (F)V
  */
-JNIEXPORT void JNICALL Java_android_widget_TextView_setTextSize
+JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setTextSize
   (JNIEnv *, jobject, jfloat);
+
+/*
+ * Class:     android_widget_TextView
+ * Method:    native_setFontSizeCss
+ * Signature: (JF)V
+ */
+JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setFontSizeCss
+  (JNIEnv *, jclass, jlong, jfloat);
 
 /*
  * Class:     android_widget_TextView
@@ -270,18 +278,18 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setCompoundDrawables
 /*
  * Class:     android_widget_TextView
  * Method:    native_getLineCount
- * Signature: (J)I
+ * Signature: (JI)I
  */
 JNIEXPORT jint JNICALL Java_android_widget_TextView_native_1getLineCount
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     android_widget_TextView
  * Method:    native_copyLayout
- * Signature: (J)J
+ * Signature: (JI)J
  */
 JNIEXPORT jlong JNICALL Java_android_widget_TextView_native_1copyLayout
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jlong, jint);
 
 #ifdef __cplusplus
 }

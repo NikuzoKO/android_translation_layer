@@ -519,7 +519,7 @@ static void open(GtkApplication *app, GFile **files, gint nfiles, const gchar *h
 		gtk_window_fullscreen(GTK_WINDOW(window));
 
 	// Android's default font is Roboto, not the desktop's UI font ($ATL_FONT overrides it, "" keeps the desktop's)
-	const char *font = getenv("ATL_FONT") ? getenv("ATL_FONT") : "Roboto 10";
+	const char *font = getenv("ATL_FONT") ? getenv("ATL_FONT") : "Roboto 10.5"; // 14 px at 96 dpi, Android's default text size
 	if (*font)
 		g_object_set(gtk_settings_get_default(), "gtk-font-name", font, NULL);
 

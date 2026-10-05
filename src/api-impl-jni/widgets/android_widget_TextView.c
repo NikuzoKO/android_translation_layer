@@ -72,7 +72,7 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setTextColor(JNIEnv 
 }
 #pragma GCC diagnostic pop
 
-JNIEXPORT void JNICALL Java_android_widget_TextView_setTextSize(JNIEnv *env, jobject this, jfloat size)
+JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setTextSize(JNIEnv *env, jobject this, jfloat size)
 {
 	GtkLabel *label = box_get_label(env, _PTR(_GET_LONG_FIELD(this, "widget")));
 	PangoAttrList *attrs;
@@ -83,7 +83,7 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_setTextSize(JNIEnv *env, job
 	else
 		attrs = pango_attr_list_new();
 
-	PangoAttribute *size_attr = pango_attr_size_new(size * PANGO_SCALE);
+	PangoAttribute *size_attr = pango_attr_size_new_absolute(size * PANGO_SCALE);
 	pango_attr_list_change(attrs, size_attr);
 	gtk_label_set_attributes(label, attrs);
 
@@ -163,14 +163,40 @@ static GtkLabel *box_find_label(GtkWidget *box)
 	return label && GTK_IS_LABEL(label) ? GTK_LABEL(label) : NULL;
 }
 
-JNIEXPORT jlong JNICALL Java_android_widget_TextView_native_1copyLayout(JNIEnv *env, jclass clazz, jlong widget_ptr)
+/* width: the text width the view was last measured to (apps call getLayout() from onMeasure,
+   before GTK allocated the label at that width), <= 0 keeps the label's current one */
+JNIEXPORT jlong JNICALL Java_android_widget_TextView_native_1copyLayout(JNIEnv *env, jclass clazz, jlong widget_ptr, jint width)
 {
 	GtkLabel *label = box_find_label(_PTR(widget_ptr));
-	return label ? _INTPTR(pango_layout_copy(gtk_label_get_layout(label))) : 0;
+	if (!label)
+		return 0;
+	PangoLayout *layout = pango_layout_copy(gtk_label_get_layout(label));
+	if (width > 0 && gtk_label_get_wrap(label))
+		pango_layout_set_width(layout, width * PANGO_SCALE);
+	return _INTPTR(layout);
 }
 
-JNIEXPORT jint JNICALL Java_android_widget_TextView_native_1getLineCount(JNIEnv *env, jclass clazz, jlong widget_ptr)
+JNIEXPORT jint JNICALL Java_android_widget_TextView_native_1getLineCount(JNIEnv *env, jclass clazz, jlong widget_ptr, jint width)
 {
-	GtkLabel *label = box_find_label(_PTR(widget_ptr));
-	return label ? pango_layout_get_line_count(gtk_label_get_layout(label)) : 1;
+	jlong layout_ptr = Java_android_widget_TextView_native_1copyLayout(env, clazz, widget_ptr, width);
+	if (!layout_ptr)
+		return 1;
+	PangoLayout *layout = _PTR(layout_ptr);
+	int count = pango_layout_get_line_count(layout);
+	g_object_unref(layout);
+	return count;
+}
+
+JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setFontSizeCss(JNIEnv *env, jclass clazz, jlong widget_ptr, jfloat px)
+{
+	GtkWidget *widget = _PTR(widget_ptr);
+	GtkCssProvider *old = g_object_get_data(G_OBJECT(widget), "atl-font-size-css");
+	if (old)
+		gtk_style_context_remove_provider(gtk_widget_get_style_context(widget), GTK_STYLE_PROVIDER(old));
+	GtkCssProvider *provider = gtk_css_provider_new();
+	char css[64];
+	g_snprintf(css, sizeof(css), "* { font-size: %.2fpx; }", px);
+	gtk_css_provider_load_from_string(provider, css);
+	gtk_style_context_add_provider(gtk_widget_get_style_context(widget), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
+	g_object_set_data_full(G_OBJECT(widget), "atl-font-size-css", provider, g_object_unref);
 }

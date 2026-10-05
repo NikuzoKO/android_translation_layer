@@ -127,8 +127,21 @@ public class GskCanvas extends DisplayListCanvas {
 
 	@Override
 	public void drawRect(float left, float top, float right, float bottom, Paint paint) {
+		if (paint != null && paint.getShader() instanceof BitmapShader) {
+			BitmapShader shader = (BitmapShader)paint.getShader();
+			Bitmap bitmap = shader.atlBitmap();
+			if (bitmap != null && bitmap.getWidth() > 0 && bitmap.getHeight() > 0) {
+				float[] t = shader.atlTileTransform();
+				// drawPaint/drawColor pass "infinite" rects, GSK wants finite bounds
+				native_drawRectBitmapShader(snapshot, Math.max(left, -16384), Math.max(top, -16384), Math.min(right, 16384), Math.min(bottom, 16384),
+				                            bitmap.getTexture(), bitmap.getWidth() * t[0], bitmap.getHeight() * t[1], t[2], t[3], paint.paint);
+				return;
+			}
+		}
 		native_drawRect(snapshot, left, top, right, bottom, paint != null ? paint.paint : default_paint.paint);
 	}
+
+	protected native void native_drawRectBitmapShader(long snapshot, float left, float top, float right, float bottom, long texture, float tileWidth, float tileHeight, float tileX, float tileY, long paint);
 
 	@Override
 	public void drawText(String text, float x, float y, Paint paint) {

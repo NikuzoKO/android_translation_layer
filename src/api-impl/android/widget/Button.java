@@ -51,7 +51,9 @@ public class Button extends TextView {
 	public native CharSequence getText();
 
 	@Override
-	public void setTextSize(float size) {}
+	protected void applyTextSize(float px) {
+		native_setFontSizeCss(widget, px);
+	}
 
 	@Override
 	public void setCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom) {

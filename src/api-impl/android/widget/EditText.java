@@ -43,7 +43,9 @@ public class EditText extends TextView {
 		native_setText(widget, text == null ? "" : text.toString());
 	}
 	@Override
-	public void setTextSize(float size) {}
+	protected void applyTextSize(float px) {
+		native_setFontSizeCss(widget, px);
+	}
 
 	@Override
 	public void removeTextChangedListener(TextWatcher watcher) {
@@ -65,6 +67,8 @@ public class EditText extends TextView {
 
 	@Override
 	public void setHint(CharSequence s) {
+		if (System.getenv("ATL_DEBUG_HINT") != null)
+			android.util.Slog.i("EditText", "ATL_DEBUG_HINT " + this + " setHint \"" + s + "\"", new Throwable());
 		native_setHint(widget, s == null ? "" : s.toString());
 	}
 

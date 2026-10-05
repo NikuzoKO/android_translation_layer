@@ -219,3 +219,24 @@ JNIEXPORT void JNICALL Java_android_atl_GskCanvas_native_1clipPath(JNIEnv *env, 
 	GskPath *path = _PTR(path_ptr);
 	gtk_snapshot_push_fill(snapshot, path, GSK_FILL_RULE_WINDING);
 }
+
+/* a rect filled with a repeated bitmap (BitmapShader, TileMode.REPEAT), tile origin at (tile_x, tile_y) */
+JNIEXPORT void JNICALL Java_android_atl_GskCanvas_native_1drawRectBitmapShader(JNIEnv *env, jobject this, jlong snapshot_ptr, jfloat left, jfloat top, jfloat right, jfloat bottom, jlong texture_ptr, jfloat tile_width, jfloat tile_height, jfloat tile_x, jfloat tile_y, jlong paint_ptr)
+{
+	GdkSnapshot *snapshot = (GdkSnapshot *)_PTR(snapshot_ptr);
+	GdkTexture *texture = GDK_TEXTURE(_PTR(texture_ptr));
+	struct AndroidPaint *paint = _PTR(paint_ptr);
+	if (right <= left || bottom <= top || tile_width <= 0 || tile_height <= 0)
+		return;
+	if (paint->use_color_filter)
+		gtk_snapshot_push_color_matrix(snapshot, &paint->color_matrix, &paint->color_offset);
+	if (paint->color.alpha < 1.f)
+		gtk_snapshot_push_opacity(snapshot, paint->color.alpha);
+	gtk_snapshot_push_repeat(snapshot, &GRAPHENE_RECT_INIT(left, top, right - left, bottom - top), &GRAPHENE_RECT_INIT(tile_x, tile_y, tile_width, tile_height));
+	gtk_snapshot_append_texture(snapshot, texture, &GRAPHENE_RECT_INIT(tile_x, tile_y, tile_width, tile_height));
+	gtk_snapshot_pop(snapshot);
+	if (paint->color.alpha < 1.f)
+		gtk_snapshot_pop(snapshot);
+	if (paint->use_color_filter)
+		gtk_snapshot_pop(snapshot);
+}

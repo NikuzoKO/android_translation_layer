@@ -11,6 +11,14 @@ extern "C" {
 #define android_atl_GskCanvas_HAS_ALPHA_LAYER_SAVE_FLAG 4L
 /*
  * Class:     android_atl_GskCanvas
+ * Method:    native_drawRectBitmapShader
+ * Signature: (JFFFFJFFFFJ)V
+ */
+JNIEXPORT void JNICALL Java_android_atl_GskCanvas_native_1drawRectBitmapShader
+  (JNIEnv *, jobject, jlong, jfloat, jfloat, jfloat, jfloat, jlong, jfloat, jfloat, jfloat, jfloat, jlong);
+
+/*
+ * Class:     android_atl_GskCanvas
  * Method:    native_drawBitmap
  * Signature: (JJIIIIJ)V
  */
