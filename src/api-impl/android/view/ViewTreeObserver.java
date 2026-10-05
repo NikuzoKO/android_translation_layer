@@ -315,6 +315,8 @@ public final class ViewTreeObserver {
 	 * @param observer The ViewTreeObserver whose listeners must be added to this observer
 	 */
 	void merge(ViewTreeObserver observer) {
+		if (DEBUG)
+			android.util.Slog.i("ViewTreeObserver", "ATL_DEBUG_VTO merge " + observer + " into " + this + " window=" + window);
 		if (observer.mOnWindowAttachListeners != null) {
 			if (mOnWindowAttachListeners != null) {
 				mOnWindowAttachListeners.addAll(observer.mOnWindowAttachListeners);
@@ -553,11 +555,10 @@ public final class ViewTreeObserver {
 		}
 
 		mOnPreDrawListeners.add(listener);
-		// without a window there are no frames to dispatch from: keep the old immediate call
-		if (window == 0)
-			listener.onPreDraw();
-		else
-			updateFrameHook();
+		if (DEBUG)
+			android.util.Slog.i("ViewTreeObserver", "ATL_DEBUG_VTO add preDraw " + listener.getClass().getName() + " window=" + window + " to " + this);
+		// a floating observer (view not attached yet) gets merged into the window's one on attach
+		updateFrameHook();
 	}
 
 	/**
@@ -819,6 +820,7 @@ public final class ViewTreeObserver {
 	/* the native frame clock hook (before each paint) runs while there are global layout or
 	   pre-draw listeners */
 	private boolean frameHook = false;
+	private static final boolean DEBUG = System.getenv("ATL_DEBUG_VTO") != null;
 
 	private void updateFrameHook() {
 		boolean want = (mOnGlobalLayoutListeners != null && mOnGlobalLayoutListeners.size() > 0)
@@ -878,6 +880,8 @@ public final class ViewTreeObserver {
 			try {
 				int count = access.size();
 				for (int i = 0; i < count; i++) {
+					if (DEBUG)
+						android.util.Slog.i("ViewTreeObserver", "ATL_DEBUG_VTO dispatch preDraw " + access.get(i).getClass().getName());
 					cancelDraw |= !(access.get(i).onPreDraw());
 				}
 			} finally {

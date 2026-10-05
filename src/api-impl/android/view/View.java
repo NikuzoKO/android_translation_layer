@@ -1415,7 +1415,9 @@ public class View implements Drawable.Callback {
 				window.view_tree_observer = new ViewTreeObserver(window);
 			return window.view_tree_observer;
 		} else {
-			floating_observer = new ViewTreeObserver(null);
+			// kept until the view is attached, then merged into the window's observer
+			if (floating_observer == null)
+				floating_observer = new ViewTreeObserver(null);
 			return floating_observer;
 		}
 	}

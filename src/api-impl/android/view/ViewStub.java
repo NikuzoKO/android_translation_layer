@@ -245,6 +245,8 @@ public final class ViewStub extends View {
 	 */
 	public View inflate() {
 		final ViewParent viewParent = getParent();
+		if (System.getenv("ATL_DEBUG_VIEWSTUB") != null)
+			android.util.Slog.i("ViewStub", "ATL_DEBUG_VIEWSTUB inflate id=0x" + Integer.toHexString(getId()) + " parent=" + viewParent, new Throwable());
 
 		if (viewParent != null && viewParent instanceof ViewGroup) {
 			if (mLayoutResource != 0) {

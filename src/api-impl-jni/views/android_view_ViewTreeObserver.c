@@ -4,8 +4,15 @@
 #include "../util.h"
 #include "../generated_headers/android_view_ViewTreeObserver.h"
 
+extern GtkWidget *window;
+
 static void on_global_layout_callback(GdkFrameClock *clock, jobject view_tree_observer)
 {
+	/* a hidden window (ATL_START_HIDDEN, background mode) gets no layout passes: like Android,
+	   no layout/pre-draw callbacks until it is shown (WhatsApp's pre-draw setup ran before its
+	   tab fragments had views) */
+	if (window && !gtk_widget_get_mapped(window))
+		return;
 	JNIEnv *env = get_jni_env();
 	(*env)->CallVoidMethod(env, view_tree_observer, handle_cache.view_tree_observer.dispatchOnGlobalLayout);
 	if ((*env)->ExceptionCheck(env)) {
