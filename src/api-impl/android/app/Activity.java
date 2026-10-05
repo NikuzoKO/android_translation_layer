@@ -207,6 +207,14 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		return;
 	}
 
+	private static String describeDrawable(android.graphics.drawable.Drawable d) {
+		if (d == null)
+			return "-";
+		if (d instanceof android.graphics.drawable.ColorDrawable)
+			return "#" + Integer.toHexString(((android.graphics.drawable.ColorDrawable)d).getColor());
+		return d.getClass().getSimpleName();
+	}
+
 	private void dumpViewTree(View view, int depth) {
 		if (view == null)
 			return;
@@ -227,6 +235,11 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		    .append("] vis=").append(view.getVisibility());
 		if (view instanceof android.widget.TextView)
 			line.append(" text=\"").append(((android.widget.TextView)view).getText()).append("\"");
+		line.append(" bg=").append(describeDrawable(view.getBackground()));
+		if (view instanceof android.widget.ImageView)
+			line.append(" img=").append(describeDrawable(((android.widget.ImageView)view).getDrawable()));
+		if (view.isSelected())
+			line.append(" selected");
 		Slog.i(TAG, line.toString());
 		if (view instanceof ViewGroup) {
 			ViewGroup group = (ViewGroup)view;

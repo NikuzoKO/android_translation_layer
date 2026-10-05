@@ -78,18 +78,30 @@ JNIEXPORT void JNICALL Java_android_content_Context_native_1updateConfig(JNIEnv 
 		if (!portal) {
 			printf("xdp_portal_initable_new failed: %s\n", error->message);
 			g_error_free(error);
-			return;
+		} else {
+			xdp_settings = xdp_portal_get_settings(portal);
+			g_object_unref(portal);
+			g_signal_connect(xdp_settings, "changed", G_CALLBACK(settings_changed_cb), NULL);
 		}
-		xdp_settings = xdp_portal_get_settings(portal);
-		g_object_unref(portal);
-		g_signal_connect(xdp_settings, "changed", G_CALLBACK(settings_changed_cb), NULL);
 	}
-	GVariant *color_sheme = xdp_settings_read_value(xdp_settings, "org.freedesktop.appearance", "color-scheme", NULL, NULL);
+	GVariant *color_sheme = !xdp_settings ? NULL : xdp_settings_read_value(xdp_settings, "org.freedesktop.appearance", "color-scheme", NULL, NULL);
 	if (color_sheme) {
-		settings_changed_cb(xdp_settings, "org.freedesktop.appearance", "color-scheme", color_sheme, config);
+		while (g_variant_is_of_type(color_sheme, G_VARIANT_TYPE_VARIANT)) {
+			GVariant *inner = g_variant_get_variant(color_sheme);
+			g_variant_unref(color_sheme);
+			color_sheme = inner;
+		}
+		if (g_variant_is_of_type(color_sheme, G_VARIANT_TYPE_UINT32))
+			settings_changed_cb(xdp_settings, "org.freedesktop.appearance", "color-scheme", color_sheme, config);
 		g_variant_unref(color_sheme);
 	}
 #endif
+	/* no answer from the portal: follow GTK's dark theme preference */
+	if (!(_GET_INT_FIELD(config, "uiMode") & /*UI_MODE_NIGHT_MASK*/ 0x30)) {
+		gboolean dark = FALSE;
+		g_object_get(gtk_settings_get_default(), "gtk-application-prefer-dark-theme", &dark, NULL);
+		_SET_INT_FIELD(config, "uiMode", dark ? /*UI_MODE_NIGHT_YES*/ 0x20 : /*UI_MODE_NIGHT_NO*/ 0x10);
+	}
 }
 
 void update_config_for_window(GtkWindow *window)

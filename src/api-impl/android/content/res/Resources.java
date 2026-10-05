@@ -200,6 +200,10 @@ public class Resources {
 	 * @param token The Activity token for determining stack affiliation. Usually null.
 	 * @hide
 	 */
+	private static final boolean DEBUG_UIMODE = System.getenv("ATL_DEBUG_UIMODE") != null;
+	private static int lastUiMode = -1;
+	private static int appNightMode = 0;
+
 	public Resources(AssetManager assets, DisplayMetrics metrics, Configuration config,
 	                 CompatibilityInfo compatInfo, IBinder token) {
 		mAssets = assets;
@@ -1723,6 +1727,25 @@ public class Resources {
 			int keyboardHidden = mConfiguration.keyboardHidden;
 			if (keyboardHidden == Configuration.KEYBOARDHIDDEN_NO && mConfiguration.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
 				keyboardHidden = Configuration.KEYBOARDHIDDEN_SOFT;
+			}
+			/* all Resources share one native AssetManager: one built from a fresh Configuration
+			   (uiMode undefined, e.g. an app's own Resources wrapper) must not switch the whole
+			   app back to notnight, so undefined night bits follow the system setting */
+			int night = mConfiguration.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+			if (night == Configuration.UI_MODE_NIGHT_YES || night == Configuration.UI_MODE_NIGHT_NO) {
+				// an explicit choice (AppCompat's night mode for the app's own theme setting) holds for the whole app
+				if (config != null && (config.uiMode & Configuration.UI_MODE_NIGHT_MASK) == night)
+					appNightMode = night;
+			} else {
+				// undefined (or 0x30, both bits): the app's last choice, else the system's
+				night = appNightMode;
+				if (night == 0 && android.content.Context.sys_config != null)
+					night = android.content.Context.sys_config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+				mConfiguration.uiMode = (mConfiguration.uiMode & ~Configuration.UI_MODE_NIGHT_MASK) | night;
+			}
+			if (DEBUG_UIMODE && mConfiguration.uiMode != lastUiMode) {
+				Slog.i(TAG, "ATL_DEBUG_UIMODE assets uiMode 0x" + Integer.toHexString(lastUiMode) + " -> 0x" + Integer.toHexString(mConfiguration.uiMode) + " by " + this + " (sys_config 0x" + (android.content.Context.sys_config != null ? Integer.toHexString(android.content.Context.sys_config.uiMode) : "null") + ", passed 0x" + (config != null ? Integer.toHexString(config.uiMode) : "null") + ")", new Throwable());
+				lastUiMode = mConfiguration.uiMode;
 			}
 			mAssets.setConfiguration(mConfiguration.mcc, mConfiguration.mnc,
 			                         locale, mConfiguration.orientation,
