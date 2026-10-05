@@ -1464,7 +1464,11 @@ public class View implements Drawable.Callback {
 		onVisibilityChanged(changedView, visibility);
 	}
 
+	private static final String DEBUG_VISIBILITY = System.getenv("ATL_DEBUG_VISIBILITY");
+
 	public void setVisibility(int visibility) {
+		if (DEBUG_VISIBILITY != null && getClass().getName().contains(DEBUG_VISIBILITY))
+			Slog.i(TAG, "ATL_DEBUG_VISIBILITY " + this + " " + this.visibility + " -> " + visibility, new Throwable());
 		if (visibility == this.visibility)
 			return;
 		if ((visibility == View.GONE) != (this.visibility == View.GONE) && parent instanceof ViewGroup) {

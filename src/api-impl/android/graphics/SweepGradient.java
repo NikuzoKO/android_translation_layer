@@ -62,6 +62,7 @@ public class SweepGradient extends Shader {
 		mCy = cy;
 		mColors = colors;
 		mPositions = positions;
+		atl_colors = colors;
 		init(nativeCreate1(cx, cy, colors, positions));
 	}
 
@@ -79,6 +80,7 @@ public class SweepGradient extends Shader {
 		mCy = cy;
 		mColor0 = color0;
 		mColor1 = color1;
+		atl_colors = new int[] {color0, color1};
 		init(nativeCreate2(cx, cy, color0, color1));
 	}
 

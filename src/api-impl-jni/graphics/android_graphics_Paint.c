@@ -13,6 +13,7 @@ JNIEXPORT jlong JNICALL Java_android_graphics_Paint_native_1create(JNIEnv *env, 
 	struct AndroidPaint *paint = g_new0(struct AndroidPaint, 1);
 	paint->color.alpha = 1.f;
 	paint->gsk_stroke = gsk_stroke_new(1);
+	paint->hairline = true;
 	paint->font = pango_font_description_new();
 	paint->is_fill = true;
 	return _INTPTR(paint);
@@ -91,6 +92,7 @@ JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1stroke_1width(JN
 	 * meanwile width of 1 should care about scaling;
 	 * The problem is, 0 is not a valid value for gsk_stroke_set_line_width,
 	 * so at least change it to 1 for now */
+	paint->hairline = width == 0;
 	if (width == 0)
 		width = 1;
 	gsk_stroke_set_line_width(paint->gsk_stroke, width);
@@ -99,7 +101,7 @@ JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1stroke_1width(JN
 JNIEXPORT jfloat JNICALL Java_android_graphics_Paint_native_1get_1stroke_1width(JNIEnv *env, jclass clazz, jlong paint_ptr)
 {
 	struct AndroidPaint *paint = _PTR(paint_ptr);
-	return gsk_stroke_get_line_width(paint->gsk_stroke);
+	return paint->hairline ? 0 : gsk_stroke_get_line_width(paint->gsk_stroke);
 }
 
 JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1stroke_1cap(JNIEnv *env, jclass clazz, jlong paint_ptr, jint cap)

@@ -36,10 +36,24 @@ public class Paint {
 	public Paint(Paint paint) {
 		this.paint = native_clone(paint.paint);
 		this.typeface = paint.typeface;
+		this.userColor = paint.userColor;
+		this.shader = paint.shader;
 	}
 
+	private int userColor = 0xff000000;
+
 	public void setColor(int color) {
-		native_set_color(paint, color);
+		userColor = color;
+		applyColor();
+	}
+
+	/* with a gradient shader the paint color only contributes its alpha (see Shader.atl_colors) */
+	private void applyColor() {
+		int avg = shader != null ? shader.atlAverageColor() : 0;
+		if (shader != null && shader.atl_colors != null)
+			native_set_color(paint, (avg & 0xffffff) | ((Color.alpha(avg) * Color.alpha(userColor) / 255) << 24));
+		else
+			native_set_color(paint, userColor);
 	}
 
 	public void setARGB(int a, int r, int g, int b) {
@@ -51,7 +65,11 @@ public class Paint {
 	}
 
 	public void setAlpha(int a) {
-		native_set_alpha(paint, a);
+		userColor = (userColor & 0xffffff) | ((a & 0xff) << 24);
+		if (shader != null && shader.atl_colors != null)
+			applyColor();
+		else
+			native_set_alpha(paint, a);
 	}
 
 	public int getAlpha() {
@@ -133,7 +151,10 @@ public class Paint {
 	}
 
 	public Shader setShader(Shader shader) {
+		boolean was = this.shader != null && this.shader.atl_colors != null;
 		this.shader = shader;
+		if (was || (shader != null && shader.atl_colors != null))
+			applyColor();
 		return shader;
 	}
 
@@ -352,6 +373,8 @@ public class Paint {
 		native_recycle(this.paint);
 		this.paint = native_clone(paint.paint);
 		this.typeface = paint.typeface;
+		this.userColor = paint.userColor;
+		this.shader = paint.shader;
 	}
 
 	public boolean isFilterBitmap() { return false; }
