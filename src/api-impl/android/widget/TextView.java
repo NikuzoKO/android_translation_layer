@@ -175,7 +175,7 @@ public class TextView extends View {
 	public void setTextColor(ColorStateList colors) {
 		if (colors != null) {
 			this.colors = colors;
-			native_setTextColor(colors.getDefaultColor()); // TODO: do this properly
+			native_setTextColor(colors.getColorForState(getDrawableState(), colors.getDefaultColor()));
 		}
 	}
 	/* android:fontFamily is a family name or a font resource (its file name, e.g. res/font/roboto_medium.ttf;
@@ -351,7 +351,12 @@ public class TextView extends View {
 		setCompoundDrawables(start, top, end, bottom);
 	}
 
-	public int getLineCount() { return 1; }
+	/* line count of the text as the label lays it out now */
+	public int getLineCount() {
+		return Math.max(1, native_getLineCount(widget));
+	}
+
+	private static native int native_getLineCount(long widget);
 
 	public URLSpan[] getUrls() { return new URLSpan[0]; }
 
@@ -385,9 +390,15 @@ public class TextView extends View {
 		SPANNABLE,
 	}
 
+	/* a copy of the label's own PangoLayout, so apps measure exactly what is drawn (font, size, wrapping) */
 	public Layout getLayout() {
+		long nativeLayout = native_copyLayout(widget);
+		if (nativeLayout != 0)
+			return new Layout(nativeLayout, getText(), getPaint());
 		return new BoringLayout(getText(), getPaint(), getWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, new BoringLayout.Metrics(), false);
 	}
+
+	private static native long native_copyLayout(long widget);
 
 	public int getCurrentTextColor() {
 		return Color.CYAN;
@@ -634,7 +645,6 @@ public class TextView extends View {
 	public int getShadowColor() { return 0; } // ATL-autostub
 	public int[] getAutoSizeTextAvailableSizes() { return null; } // ATL-autostub
 	public void beginBatchEdit() {} // ATL-autostub
-	public void drawableStateChanged() {} // ATL-autostub
 	public void endBatchEdit() {} // ATL-autostub
 	protected void onFocusChanged(boolean arg0, int arg1, android.graphics.Rect arg2) {} // ATL-autostub
 	public void onRestoreInstanceState(android.os.Parcelable arg0) {} // ATL-autostub
@@ -661,4 +671,11 @@ public class TextView extends View {
 	public void setTextLocales(android.os.LocaleList arg0) {} // ATL-autostub
 	public void setTextScaleX(float arg0) {} // ATL-autostub
 	public void setUseBoundsForWidth(boolean arg0) {} // ATL-autostub
+
+	@Override
+	public void drawableStateChanged() {
+		super.drawableStateChanged();
+		if (colors != null && colors.isStateful())
+			native_setTextColor(colors.getColorForState(getDrawableState(), colors.getDefaultColor()));
+	}
 }

@@ -102,6 +102,8 @@ public class ViewGroup extends View implements ViewParent, ViewManager {
 
 		child.parent = this;
 		child.setLayoutParams(params);
+		if (child.isDuplicateParentStateEnabled())
+			child.refreshDrawableState();
 		if (index < 0)
 			index = children.size();
 		children.add(index, child);
@@ -467,6 +469,26 @@ public class ViewGroup extends View implements ViewParent, ViewManager {
 	protected void dispatchSetPressed(boolean pressed) {}
 
 	@Override
+	public void drawableStateChanged() {
+		super.drawableStateChanged();
+		for (View child : new ArrayList<View>(children))
+			if (child.isDuplicateParentStateEnabled())
+				child.refreshDrawableState();
+	}
+
+	@Override
+	protected void dispatchSetSelected(boolean selected) {
+		for (View child : new ArrayList<View>(children))
+			child.setSelected(selected);
+	}
+
+	@Override
+	protected void dispatchSetActivated(boolean activated) {
+		for (View child : new ArrayList<View>(children))
+			child.setActivated(activated);
+	}
+
+	@Override
 	public View findViewWithTag(Object tag) {
 		if (Objects.equals(tag, getTag()))
 			return this;
@@ -742,7 +764,6 @@ public class ViewGroup extends View implements ViewParent, ViewManager {
 	public void dispatchFreezeSelfOnly(android.util.SparseArray arg0) {} // ATL-autostub
 	public void dispatchRestoreInstanceState(android.util.SparseArray arg0) {} // ATL-autostub
 	public void dispatchThawSelfOnly(android.util.SparseArray arg0) {} // ATL-autostub
-	public void drawableStateChanged() {} // ATL-autostub
 	public void offsetRectIntoDescendantCoords(android.view.View arg0, android.graphics.Rect arg1) {} // ATL-autostub
 	public void onVisibilityAggregated(boolean arg0) {} // ATL-autostub
 	public void removeViews(int arg0, int arg1) {} // ATL-autostub

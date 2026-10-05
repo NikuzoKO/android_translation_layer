@@ -212,7 +212,19 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 			return "-";
 		if (d instanceof android.graphics.drawable.ColorDrawable)
 			return "#" + Integer.toHexString(((android.graphics.drawable.ColorDrawable)d).getColor());
-		return d.getClass().getSimpleName();
+		StringBuilder sb = new StringBuilder(d.getClass().getName());
+		android.graphics.Rect b = d.getBounds();
+		sb.append("<").append(b.left).append(",").append(b.top).append(",").append(b.right).append(",").append(b.bottom).append(">");
+		if (d instanceof android.graphics.drawable.LayerDrawable) {
+			android.graphics.drawable.LayerDrawable ld = (android.graphics.drawable.LayerDrawable)d;
+			sb.append("{");
+			for (int i = 0; i < ld.getNumberOfLayers(); i++)
+				sb.append(i > 0 ? " " : "").append(describeDrawable(ld.getDrawable(i)));
+			sb.append("}");
+		} else if (d instanceof android.graphics.drawable.DrawableWrapper) {
+			sb.append("{").append(describeDrawable(((android.graphics.drawable.DrawableWrapper)d).getDrawable())).append("}");
+		}
+		return sb.toString();
 	}
 
 	private void dumpViewTree(View view, int depth) {

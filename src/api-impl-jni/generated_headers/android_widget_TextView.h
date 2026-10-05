@@ -267,6 +267,22 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setLineLimit
 JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setCompoundDrawables
   (JNIEnv *, jobject, jlong, jlong, jlong, jlong, jlong);
 
+/*
+ * Class:     android_widget_TextView
+ * Method:    native_getLineCount
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_android_widget_TextView_native_1getLineCount
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     android_widget_TextView
+ * Method:    native_copyLayout
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_android_widget_TextView_native_1copyLayout
+  (JNIEnv *, jclass, jlong);
+
 #ifdef __cplusplus
 }
 #endif

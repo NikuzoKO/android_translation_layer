@@ -27,7 +27,6 @@ public abstract class AbsSeekBar extends ProgressBar {
 
 	public void setThumbTintList(ColorStateList tint) {}
 
-	public void drawableStateChanged() {} // ATL-autostub
 	public void setSplitTrack(boolean arg0) {} // ATL-autostub
 	public void setThumb(android.graphics.drawable.Drawable arg0) {} // ATL-autostub
 	public void setThumbOffset(int arg0) {} // ATL-autostub

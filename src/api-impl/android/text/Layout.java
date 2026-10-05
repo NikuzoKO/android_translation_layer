@@ -24,6 +24,16 @@ public class Layout {
 	private float spacing_add;
 	private Alignment align;
 
+	/* ATL: wraps an existing PangoLayout (taking ownership), e.g. a copy of a TextView's label layout */
+	public Layout(long nativeLayout, CharSequence text, TextPaint paint) {
+		this.text = text;
+		this.paint = paint;
+		this.spacing_mult = 1;
+		this.spacing_add = 0;
+		this.align = Alignment.ALIGN_NORMAL;
+		layout = nativeLayout;
+	}
+
 	protected Layout(CharSequence text, TextPaint paint, int width, Layout.Alignment align, float spacingMult, float spacingAdd) {
 		this.text = text;
 		this.paint = paint;
@@ -31,6 +41,14 @@ public class Layout {
 		this.spacing_add = spacingAdd;
 		this.align = align;
 		layout = native_constructor(text != null ? text.toString() : "", paint.paint, width);
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		if (layout != 0)
+			native_free(layout);
+		layout = 0;
+		super.finalize();
 	}
 
 	public int getLineCount() {

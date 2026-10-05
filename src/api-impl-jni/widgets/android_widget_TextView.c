@@ -151,3 +151,26 @@ JNIEXPORT void JNICALL Java_android_widget_TextView_native_1setLineLimit(JNIEnv 
 	gtk_label_set_lines(label, lines);
 	gtk_label_set_ellipsize(label, ellipsize_mode ? ellipsize_mode : PANGO_ELLIPSIZE_END);
 }
+
+/* the TextView's GtkLabel, NULL for subclasses built on other widgets (EditText) */
+static GtkLabel *box_find_label(GtkWidget *box)
+{
+	if (!box)
+		return NULL;
+	GtkWidget *label = gtk_widget_get_last_child(box);
+	if (label && !GTK_IS_LABEL(label))
+		label = gtk_widget_get_prev_sibling(label);
+	return label && GTK_IS_LABEL(label) ? GTK_LABEL(label) : NULL;
+}
+
+JNIEXPORT jlong JNICALL Java_android_widget_TextView_native_1copyLayout(JNIEnv *env, jclass clazz, jlong widget_ptr)
+{
+	GtkLabel *label = box_find_label(_PTR(widget_ptr));
+	return label ? _INTPTR(pango_layout_copy(gtk_label_get_layout(label))) : 0;
+}
+
+JNIEXPORT jint JNICALL Java_android_widget_TextView_native_1getLineCount(JNIEnv *env, jclass clazz, jlong widget_ptr)
+{
+	GtkLabel *label = box_find_label(_PTR(widget_ptr));
+	return label ? pango_layout_get_line_count(gtk_label_get_layout(label)) : 1;
+}

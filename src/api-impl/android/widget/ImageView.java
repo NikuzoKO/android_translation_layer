@@ -106,6 +106,8 @@ public class ImageView extends View {
 		this.drawable = drawable;
 		if (drawable != null) {
 			drawable.setCallback(this);
+			if (drawable.isStateful())
+				drawable.setState(getDrawableState());
 		}
 		native_setDrawable(widget, drawable != null ? drawable.paintable : 0);
 		applyColorFilter();
@@ -255,6 +257,9 @@ public class ImageView extends View {
 	}
 	public void drawableHotspotChanged(float arg0, float arg1) {} // ATL-autostub
 	public void drawableStateChanged() {
+		super.drawableStateChanged();
+		if (drawable != null && drawable.isStateful() && drawable.setState(getDrawableState()))
+			invalidate();
 		if (colorFilter == null && tintList != null && tintList.isStateful())
 			applyColorFilter();
 	}
