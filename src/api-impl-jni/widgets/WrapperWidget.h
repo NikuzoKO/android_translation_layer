@@ -24,6 +24,7 @@ struct _WrapperWidget {
 	gboolean intercepting_touch;
 	gboolean custom_dispatch_touch;
 	gboolean hover_exit_pending;
+	gboolean attached; // onAttachedToWindow sent, onDetachedFromWindow not yet
 	int hover_x;
 	int hover_y;
 };
@@ -33,6 +34,8 @@ struct _WrapperWidgetClass {
 };
 
 extern GtkWidget *currently_unmapping;
+
+gboolean wrapper_widget_is_attached(GtkWidget *widget);
 
 GtkWidget *wrapper_widget_new(void);
 void wrapper_widget_set_child(WrapperWidget *parent, GtkWidget *child);

@@ -220,7 +220,7 @@ public class SurfaceView extends View {
 		@Override
 		public Rect getSurfaceFrame() {
 			//		return mSurfaceFrame;
-			return new Rect(0, 0, 400, 400);
+			return new Rect(0, 0, SurfaceView.this.getWidth(), SurfaceView.this.getHeight());
 		}
 	};
 

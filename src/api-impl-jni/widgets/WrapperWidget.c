@@ -434,9 +434,28 @@ static gboolean on_key_released(GtkEventControllerKey *controller, guint keyval,
 	return ret;
 }
 
+/* Android attaches a view once when it enters a window and detaches it when it
+ * leaves; visibility changes (GONE/INVISIBLE, here: GTK unmap because the view
+ * or an ancestor got hidden) do not detach. Apps rely on that, e.g. WhatsApp's
+ * QR scanner quits its camera threads in onDetachedFromWindow and only starts
+ * them in onAttachedToWindow. */
+static void call_detached(WrapperWidget *wrapper)
+{
+	JNIEnv *env = get_jni_env();
+	wrapper->attached = FALSE;
+	currently_unmapping = wrapper->child;
+	(*env)->CallVoidMethod(env, wrapper->jobj, handle_cache.view.onDetachedFromWindow);
+	if ((*env)->ExceptionCheck(env))
+		(*env)->ExceptionDescribe(env);
+	currently_unmapping = NULL;
+}
+
 static void map_cb(WrapperWidget *wrapper, jmethodID method)
 {
 	JNIEnv *env = get_jni_env();
+	if (wrapper->attached)
+		return;
+	wrapper->attached = TRUE;
 	(*env)->CallVoidMethod(env, wrapper->jobj, method);
 	if ((*env)->ExceptionCheck(env))
 		(*env)->ExceptionDescribe(env);
@@ -444,14 +463,37 @@ static void map_cb(WrapperWidget *wrapper, jmethodID method)
 
 GtkWidget *currently_unmapping = NULL;
 
+/* unmapped because it or an ancestor below the window was hidden */
+static gboolean unmapped_by_hide(GtkWidget *widget)
+{
+	for (GtkWidget *w = widget; w; w = gtk_widget_get_parent(w)) {
+		if (GTK_IS_ROOT(w))
+			return FALSE;
+		if (!gtk_widget_get_visible(w) || !gtk_widget_get_child_visible(w))
+			return TRUE;
+	}
+	return FALSE;
+}
+
 static void unmap_cb(WrapperWidget *wrapper, jmethodID method)
 {
-	JNIEnv *env = get_jni_env();
-	currently_unmapping = wrapper->child;
-	(*env)->CallVoidMethod(env, wrapper->jobj, method);
-	if ((*env)->ExceptionCheck(env))
-		(*env)->ExceptionDescribe(env);
-	currently_unmapping = NULL;
+	if (wrapper->attached && !unmapped_by_hide(GTK_WIDGET(wrapper)))
+		call_detached(wrapper);
+}
+
+/* removed from the hierarchy while hidden: no unmap, but it gets unrealized */
+static void unrealize_cb(WrapperWidget *wrapper, gpointer user_data)
+{
+	if (wrapper->attached)
+		call_detached(wrapper);
+}
+
+gboolean wrapper_widget_is_attached(GtkWidget *widget)
+{
+	GtkWidget *parent = gtk_widget_get_parent(widget);
+	if (parent && WRAPPER_IS_WIDGET(parent))
+		return WRAPPER_WIDGET(parent)->attached;
+	return gtk_widget_get_mapped(widget);
 }
 
 void wrapper_widget_set_jobject(WrapperWidget *wrapper, JNIEnv *env, jobject jobj)
@@ -503,6 +545,7 @@ void wrapper_widget_set_jobject(WrapperWidget *wrapper, JNIEnv *env, jobject job
 	}
 	g_signal_connect(wrapper, "map", G_CALLBACK(map_cb), handle_cache.view.onAttachedToWindow);
 	g_signal_connect(wrapper, "unmap", G_CALLBACK(unmap_cb), handle_cache.view.onDetachedFromWindow);
+	g_signal_connect(wrapper, "unrealize", G_CALLBACK(unrealize_cb), NULL);
 }
 
 void wrapper_widget_set_layout_params(WrapperWidget *wrapper, int width, int height)

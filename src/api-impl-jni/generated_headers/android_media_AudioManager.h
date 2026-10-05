@@ -17,6 +17,12 @@ extern "C" {
 #define android_media_AudioManager_GET_DEVICES_OUTPUTS 2L
 #undef android_media_AudioManager_GET_DEVICES_ALL
 #define android_media_AudioManager_GET_DEVICES_ALL 3L
+#undef android_media_AudioManager_MODE_NORMAL
+#define android_media_AudioManager_MODE_NORMAL 0L
+#undef android_media_AudioManager_MODE_IN_CALL
+#define android_media_AudioManager_MODE_IN_CALL 2L
+#undef android_media_AudioManager_MODE_IN_COMMUNICATION
+#define android_media_AudioManager_MODE_IN_COMMUNICATION 3L
 /*
  * Class:     android_media_AudioManager
  * Method:    nativeSetStreamVolume

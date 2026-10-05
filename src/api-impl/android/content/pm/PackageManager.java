@@ -1897,6 +1897,12 @@ public class PackageManager {
 					return PERMISSION_GRANTED;
 				else
 					return PERMISSION_DENIED;
+			// cameras exist only when a frame helper is configured (see android.hardware.Camera)
+			case "android.permission.CAMERA":
+				if (System.getenv("ATL_CAMERA_CMD") != null)
+					return PERMISSION_GRANTED;
+				else
+					return PERMISSION_DENIED;
 			default:
 				System.out.println("PackageManager.checkPermission: >" + permName + "< not handled\n");
 				return PERMISSION_DENIED;
@@ -2207,6 +2213,11 @@ public class PackageManager {
 			case "android.hardware.telephony.messaging":
 			case "android.hardware.telephony.subscription":
 				return System.getenv("ATL_HAS_TELEPHONY") != null;
+			case FEATURE_CAMERA:
+			case FEATURE_CAMERA_ANY:
+			case FEATURE_CAMERA_FRONT:
+			case FEATURE_CAMERA_AUTOFOCUS:
+				return System.getenv("ATL_CAMERA_CMD") != null;
 			default:
 				Slog.e(TAG, "!!!!!!! hasSystemFeature: case >" + name + "< is not implemented yet");
 				return false;

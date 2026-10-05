@@ -250,6 +250,7 @@ srcs = [
 	'android/graphics/DashPathEffect.java',
 	'android/graphics/FontFamily.java',
 	'android/graphics/HardwareRenderer.java',
+	'android/graphics/ImageFormat.java',
 	'android/graphics/Insets.java',
 	'android/graphics/LightingColorFilter.java',
 	'android/graphics/LinearGradient.java',
