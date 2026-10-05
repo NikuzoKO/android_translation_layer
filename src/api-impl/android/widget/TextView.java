@@ -38,6 +38,7 @@ public class TextView extends View {
 	private int break_strategy = 0 /*BREAK_STRATEGY_SIMPLE*/;
 	private int hyphenation_frequency = 0 /*HYPHENATION_FREQUENCY_NONE*/;
 	private int gravity = Gravity.CENTER;
+	private Typeface typeface = Typeface.DEFAULT;
 
 	public TextView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -63,6 +64,9 @@ public class TextView extends View {
 				setHint(a.getText(com.android.internal.R.styleable.TextView_hint));
 			}
 
+			String fontFamily = null;
+			int textStyle = 0;
+			int fontWeight = -1;
 			int ap = a.getResourceId(com.android.internal.R.styleable.TextView_textAppearance, -1);
 			if (ap != -1) {
 				TypedArray aa = context.obtainStyledAttributes(ap, com.android.internal.R.styleable.TextAppearance);
@@ -72,6 +76,9 @@ public class TextView extends View {
 				if (aa.hasValue(com.android.internal.R.styleable.TextAppearance_textSize)) {
 					setTextSize(aa.getDimensionPixelSize(com.android.internal.R.styleable.TextAppearance_textSize, 10));
 				}
+				fontFamily = fontName(aa, com.android.internal.R.styleable.TextAppearance_fontFamily, fontFamily);
+				textStyle = aa.getInt(com.android.internal.R.styleable.TextAppearance_textStyle, textStyle);
+				fontWeight = aa.getInt(com.android.internal.R.styleable.TextAppearance_textFontWeight, fontWeight);
 				aa.recycle();
 			}
 			if (a.hasValue(com.android.internal.R.styleable.TextView_textColor)) {
@@ -81,9 +88,14 @@ public class TextView extends View {
 				setTextSize(a.getDimensionPixelSize(com.android.internal.R.styleable.TextView_textSize, 10));
 			}
 
-			if (a.hasValue(com.android.internal.R.styleable.TextView_textStyle)) {
-				int textStyle = a.getInt(com.android.internal.R.styleable.TextView_textStyle, 0);
-				setTypeface(getTypeface(), textStyle);
+			fontFamily = fontName(a, com.android.internal.R.styleable.TextView_fontFamily, fontFamily);
+			textStyle = a.getInt(com.android.internal.R.styleable.TextView_textStyle, textStyle);
+			fontWeight = a.getInt(com.android.internal.R.styleable.TextView_textFontWeight, fontWeight);
+			if (fontFamily != null || textStyle != 0 || fontWeight > 0) {
+				Typeface tf = Typeface.create(fontFamily, textStyle);
+				if (fontWeight > 0)
+					tf = Typeface.create(tf, fontWeight, (textStyle & Typeface.ITALIC) != 0);
+				setTypeface(tf);
 			}
 
 			if (a.hasValue(com.android.internal.R.styleable.TextView_textAllCaps)) {
@@ -166,26 +178,40 @@ public class TextView extends View {
 			native_setTextColor(colors.getDefaultColor()); // TODO: do this properly
 		}
 	}
-	public void setTypeface(Typeface tf, int style) {
-		String[] classesToRemove = {"ATL-font-bold", "ATL-font-italic"};
-		native_removeClasses(widget, classesToRemove);
-
-		switch (style) {
-			case Typeface.BOLD:
-				native_addClass(widget, "ATL-font-bold");
-				break;
-			case Typeface.ITALIC:
-				native_addClass(widget, "ATL-font-italic");
-				break;
-			case Typeface.BOLD_ITALIC:
-				native_addClass(widget, "ATL-font-bold");
-				native_addClass(widget, "ATL-font-italic");
-				break;
-			default:
-				break;
-		}
+	/* android:fontFamily is a family name or a font resource (its file name, e.g. res/font/roboto_medium.ttf;
+	   font XML families are named after their file too) */
+	private static String fontName(TypedArray a, int index, String fallback) {
+		if (!a.hasValue(index))
+			return fallback;
+		try {
+			String name = a.getString(index);
+			if (name != null)
+				return name;
+		} catch (Exception e) {}
+		return fallback;
 	}
-	public void setTypeface(Typeface tf) {}
+
+	private static final String[] FONT_CLASSES = {"ATL-font-bold", "ATL-font-italic", "ATL-font-serif", "ATL-font-monospace",
+		"ATL-font-w100", "ATL-font-w200", "ATL-font-w300", "ATL-font-w500", "ATL-font-w600", "ATL-font-w800", "ATL-font-w900"};
+
+	public void setTypeface(Typeface tf, int style) {
+		setTypeface(style > 0 || tf == null ? Typeface.create(tf, style) : tf);
+	}
+	public void setTypeface(Typeface tf) {
+		if (tf == null)
+			tf = Typeface.DEFAULT;
+		typeface = tf;
+		native_removeClasses(widget, FONT_CLASSES);
+		int weight = (tf.getWeight() + 50) / 100 * 100;
+		if (weight == 700)
+			native_addClass(widget, "ATL-font-bold");
+		else if (weight != 400)
+			native_addClass(widget, "ATL-font-w" + Math.max(100, Math.min(900, weight)));
+		if (tf.isItalic())
+			native_addClass(widget, "ATL-font-italic");
+		if (tf.getFamily() != null)
+			native_addClass(widget, "ATL-font-" + tf.getFamily());
+	}
 	public void setLineSpacing(float add, float mult) {}
 	public final void setLinksClickable(boolean whether) {}
 
@@ -259,7 +285,7 @@ public class TextView extends View {
 	public void setMinWidth(int minWidth) {}
 	public void setMaxWidth(int maxWidth) {}
 
-	public Typeface getTypeface() { return null; }
+	public Typeface getTypeface() { return typeface; }
 
 	public float getTextSize() { return 10; }
 

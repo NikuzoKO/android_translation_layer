@@ -5,6 +5,7 @@
 
 #include <jni.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "../defines.h"
 #include "../util.h"
@@ -396,13 +397,83 @@ void activity_window_start_hidden(void)
 	g_timeout_add_seconds(10, hide_after_start, NULL);
 }
 
+static void window_screenshot(void);
+
 static gboolean show_window_on_signal(gpointer user_data)
 {
+	char name[32];
+	snprintf(name, sizeof(name), "%d.shot", getpid());
+	char *request = g_build_filename(g_get_user_runtime_dir(), "atl", name, NULL);
+	gboolean shot = unlink(request) == 0;
+	g_free(request);
+	if (shot) {
+		window_screenshot();
+		return G_SOURCE_CONTINUE;
+	}
 	activity_window_show();
 	return G_SOURCE_CONTINUE;
 }
 
-/* `kill -USR1 <pid>` brings a background app to the front */
+/* saves the window as $XDG_RUNTIME_DIR/atl/<pid>.png (screencopy is black on some compositors,
+   this renders the widget tree itself); runs after a frame's paint, when the allocations are
+   current (between frames ATL views often have a resize queued and GTK won't snapshot them) */
+static void window_screenshot_after_paint(GdkFrameClock *clock, gpointer user_data)
+{
+	g_signal_handlers_disconnect_by_func(clock, window_screenshot_after_paint, user_data);
+	GtkWidget *widget = GTK_WIDGET(window);
+	int width = gtk_widget_get_width(widget);
+	int height = gtk_widget_get_height(widget);
+	double scale = gdk_surface_get_scale(gtk_native_get_surface(GTK_NATIVE(window)));
+	GtkSnapshot *snapshot = gtk_snapshot_new();
+	gtk_snapshot_scale(snapshot, scale, scale);
+	GTK_WIDGET_GET_CLASS(widget)->snapshot(widget, snapshot);
+	GskRenderNode *node = gtk_snapshot_free_to_node(snapshot);
+	char name[32];
+	snprintf(name, sizeof(name), "%d.png", getpid());
+	char *path = g_build_filename(g_get_user_runtime_dir(), "atl", name, NULL);
+	gboolean ok = FALSE;
+	if (node && width > 0 && height > 0) {
+		GskRenderer *renderer = gtk_native_get_renderer(GTK_NATIVE(window));
+		GdkTexture *texture = gsk_renderer_render_texture(renderer, node, &GRAPHENE_RECT_INIT(0, 0, width * scale, height * scale));
+		ok = gdk_texture_save_to_png(texture, path);
+		g_object_unref(texture);
+	}
+	if (node)
+		gsk_render_node_unref(node);
+	fprintf(stderr, "ATL: screenshot %s %s\n", path, ok ? "saved" : "FAILED");
+	g_free(path);
+}
+
+/* no frame within 1 s (the compositor sends no frame callbacks, e.g. the output isn't being
+   repainted): lay the window out here and snapshot anyway */
+static gboolean window_screenshot_timeout(gpointer user_data)
+{
+	GdkFrameClock *clock = gtk_widget_get_frame_clock(GTK_WIDGET(window));
+	if (!g_signal_handlers_disconnect_by_func(clock, window_screenshot_after_paint, NULL))
+		return G_SOURCE_REMOVE;
+	fprintf(stderr, "ATL: screenshot: no frame, forcing a layout\n");
+	GtkWidget *child = gtk_window_get_child(window);
+	if (child)
+		gtk_widget_allocate(child, gtk_widget_get_width(GTK_WIDGET(window)), gtk_widget_get_height(GTK_WIDGET(window)), -1, NULL);
+	g_signal_connect(clock, "after-paint", G_CALLBACK(window_screenshot_after_paint), NULL);
+	window_screenshot_after_paint(clock, NULL);
+	return G_SOURCE_REMOVE;
+}
+
+static void window_screenshot(void)
+{
+	GdkFrameClock *clock = gtk_widget_get_frame_clock(GTK_WIDGET(window));
+	if (!clock) {
+		fprintf(stderr, "ATL: screenshot FAILED: window not realized\n");
+		return;
+	}
+	g_signal_connect(clock, "after-paint", G_CALLBACK(window_screenshot_after_paint), NULL);
+	gtk_widget_queue_draw(GTK_WIDGET(window));
+	g_timeout_add(1000, window_screenshot_timeout, NULL);
+}
+
+/* `kill -USR1 <pid>` brings a background app to the front; with $XDG_RUNTIME_DIR/atl/<pid>.shot
+   present it takes a screenshot instead (and removes the file); other signals don't reach glib */
 void activity_window_show_on_sigusr1(void)
 {
 	g_unix_signal_add(SIGUSR1, show_window_on_signal, NULL);

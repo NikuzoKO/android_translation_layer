@@ -518,6 +518,11 @@ static void open(GtkApplication *app, GFile **files, gint nfiles, const gchar *h
 	if (getenv("ATL_FORCE_FULLSCREEN"))
 		gtk_window_fullscreen(GTK_WINDOW(window));
 
+	// Android's default font is Roboto, not the desktop's UI font ($ATL_FONT overrides it, "" keeps the desktop's)
+	const char *font = getenv("ATL_FONT") ? getenv("ATL_FONT") : "Roboto 10";
+	if (*font)
+		g_object_set(gtk_settings_get_default(), "gtk-font-name", font, NULL);
+
 	// Load default css stylesheet
 	GtkCssProvider *cssProvider = gtk_css_provider_new();
 	gtk_css_provider_load_from_resource(cssProvider, "/com/gitlab/android-translation-layer/android-translation-layer/default-stylesheet.css");

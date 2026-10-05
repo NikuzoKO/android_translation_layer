@@ -33,3 +33,20 @@
 	background-color: rgba(0,0,0,0);
 	background-image: none;
 }
+
+/* Typeface weights (bold above) and generic families */
+.ATL-font-w100 > * { font-weight: 100; }
+.ATL-font-w200 > * { font-weight: 200; }
+.ATL-font-w300 > * { font-weight: 300; }
+.ATL-font-w500 > * { font-weight: 500; }
+.ATL-font-w600 > * { font-weight: 600; }
+.ATL-font-w800 > * { font-weight: 800; }
+.ATL-font-w900 > * { font-weight: 900; }
+
+.ATL-font-serif > * {
+	font-family: serif;
+}
+
+.ATL-font-monospace > * {
+	font-family: monospace;
+}

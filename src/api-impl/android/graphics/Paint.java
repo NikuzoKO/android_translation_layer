@@ -18,6 +18,7 @@ public class Paint {
 	public static final int VERTICAL_TEXT_FLAG = (1 << 12);
 
 	public long paint; // native paint
+	private Typeface typeface;
 	private Xfermode xfermode;
 	private Shader shader;
 	private Align align = Align.CENTER;
@@ -34,6 +35,7 @@ public class Paint {
 
 	public Paint(Paint paint) {
 		this.paint = native_clone(paint.paint);
+		this.typeface = paint.typeface;
 	}
 
 	public void setColor(int color) {
@@ -71,6 +73,9 @@ public class Paint {
 	}
 
 	public Typeface setTypeface(Typeface typeface) {
+		this.typeface = typeface;
+		Typeface tf = typeface != null ? typeface : Typeface.DEFAULT;
+		native_set_typeface(paint, tf.getFamily(), tf.getWeight(), tf.isItalic());
 		return typeface;
 	}
 	public void getTextBounds(String text, int start, int end, Rect bounds) {
@@ -303,7 +308,7 @@ public class Paint {
 	}
 
 	public Typeface getTypeface() {
-		return new Typeface();
+		return typeface;
 	}
 
 	public void setTextAlign(Align align) {
@@ -346,6 +351,7 @@ public class Paint {
 	public void set(Paint paint) {
 		native_recycle(this.paint);
 		this.paint = native_clone(paint.paint);
+		this.typeface = paint.typeface;
 	}
 
 	public boolean isFilterBitmap() { return false; }
@@ -423,4 +429,5 @@ public class Paint {
 	public void getTextPath(java.lang.String arg0, int arg1, int arg2, float arg3, float arg4, android.graphics.Path arg5) {} // ATL-autostub
 	public void setFontFeatureSettings(java.lang.String arg0) {} // ATL-autostub
 	public void setTextLocale(java.util.Locale arg0) {} // ATL-autostub
+	private static native void native_set_typeface(long paint, String family, int weight, boolean italic);
 }

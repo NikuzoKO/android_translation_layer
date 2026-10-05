@@ -182,3 +182,17 @@ JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1text_1align(JNIE
 	struct AndroidPaint *paint = _PTR(paint_ptr);
 	paint->alignment = align;
 }
+
+JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1typeface(JNIEnv *env, jclass clazz, jlong paint_ptr, jstring family_jstr, jint weight, jboolean italic)
+{
+	struct AndroidPaint *paint = _PTR(paint_ptr);
+	if (family_jstr) {
+		const char *family = (*env)->GetStringUTFChars(env, family_jstr, NULL);
+		pango_font_description_set_family(paint->font, family);
+		(*env)->ReleaseStringUTFChars(env, family_jstr, family);
+	} else {
+		pango_font_description_unset_fields(paint->font, PANGO_FONT_MASK_FAMILY);
+	}
+	pango_font_description_set_weight(paint->font, weight);
+	pango_font_description_set_style(paint->font, italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+}

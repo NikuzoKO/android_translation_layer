@@ -193,6 +193,14 @@ JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1get_1text_1bounds
 JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1text_1align
   (JNIEnv *, jclass, jlong, jint);
 
+/*
+ * Class:     android_graphics_Paint
+ * Method:    native_set_typeface
+ * Signature: (JLjava/lang/String;IZ)V
+ */
+JNIEXPORT void JNICALL Java_android_graphics_Paint_native_1set_1typeface
+  (JNIEnv *, jclass, jlong, jstring, jint, jboolean);
+
 #ifdef __cplusplus
 }
 #endif
