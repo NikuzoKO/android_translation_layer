@@ -34,6 +34,7 @@ JNIEXPORT void JNICALL Java_android_view_ViewTreeObserver_native_1set_1have_1glo
 		/* this adds our callback before the existing handler, which means we effectively execute before the paint phase (after layout) */
 		signal_handle = g_signal_connect(G_OBJECT(clock), "paint", G_CALLBACK(on_global_layout_callback), _REF(this)); // FIXME: cleanup callback for _UNREF
 		_SET_LONG_FIELD(this, "onGlobalLayout_signal_handle", signal_handle);
+		gdk_frame_clock_request_phase(clock, GDK_FRAME_CLOCK_PHASE_PAINT);
 	} else if (!have_listeners && signal_handle) {
 		g_signal_handler_disconnect(G_OBJECT(clock), signal_handle);
 		_SET_LONG_FIELD(this, "onGlobalLayout_signal_handle", 0);

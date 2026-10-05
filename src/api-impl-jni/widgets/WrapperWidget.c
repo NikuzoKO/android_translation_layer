@@ -192,6 +192,7 @@ static void wrapper_widget_snapshot(GtkWidget *widget, GdkSnapshot *snapshot)
 	if (wrapper->draw_method) {
 		JNIEnv *env = get_jni_env();
 		_SET_LONG_FIELD(wrapper->canvas, "snapshot", _INTPTR(snapshot));
+		_SET_FLOAT_FIELD(wrapper->canvas, "device_scale", atl_device_scale());
 		(*env)->CallVoidMethod(env, wrapper->jobj, wrapper->draw_method, wrapper->canvas);
 		if ((*env)->ExceptionCheck(env))
 			(*env)->ExceptionDescribe(env);

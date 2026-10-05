@@ -367,3 +367,12 @@ const char *intent_actionname_from_type(int type)
 			return NULL;
 	}
 }
+
+float atl_device_scale(void)
+{
+	extern GtkWidget *window;
+	if (!window || !gtk_widget_get_realized(window))
+		return 1.f;
+	GdkSurface *surface = gtk_native_get_surface(GTK_NATIVE(window));
+	return surface ? gdk_surface_get_scale(surface) : 1.f;
+}

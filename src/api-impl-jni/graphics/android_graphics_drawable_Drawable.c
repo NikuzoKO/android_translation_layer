@@ -25,6 +25,7 @@ static void java_paintable_snapshot(GdkPaintable *gdk_paintable, GdkSnapshot *sn
 	jclass canvas_class = (*env)->FindClass(env, "android/atl/GskCanvas");
 	jmethodID canvas_constructor = _METHOD(canvas_class, "<init>", "(J)V");
 	jobject canvas = (*env)->NewObject(env, canvas_class, canvas_constructor, _INTPTR(snapshot));
+	_SET_FLOAT_FIELD(canvas, "device_scale", atl_device_scale());
 	(*env)->CallVoidMethod(env, paintable->drawable, handle_cache.drawable.setBounds, 0, 0, (int)width, (int)height);
 	(*env)->CallVoidMethod(env, paintable->drawable, handle_cache.drawable.draw, canvas);
 	if ((*env)->ExceptionCheck(env))

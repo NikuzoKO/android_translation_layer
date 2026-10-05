@@ -17,6 +17,11 @@ public class GskCanvas extends DisplayListCanvas {
 
 	private static Paint default_paint = new Paint();
 
+	/* scale of the surface this canvas ends up on: GTK applies it, but apps that rasterize
+	   themselves (androidx VectorDrawableCompat caches a bitmap sized by getMatrix()) need to
+	   see it or they render at half resolution on a 2x output. Only reported, never drawn. */
+	public float device_scale = 1f;
+
 	public GskCanvas(long snapshot) {
 		this.snapshot = snapshot;
 		state_stack.push(new Matrix());
@@ -76,6 +81,8 @@ public class GskCanvas extends DisplayListCanvas {
 	@Override
 	public void getMatrix(Matrix matrix) {
 		matrix.set(state_stack.peek());
+		if (device_scale != 1f)
+			matrix.postScale(device_scale, device_scale);
 	}
 
 	@Override

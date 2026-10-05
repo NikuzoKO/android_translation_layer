@@ -62,4 +62,7 @@ GVariant *intent_serialize(JNIEnv *env, jobject intent);
 jobject intent_deserialize(JNIEnv *env, GVariant *variant);
 const char *intent_actionname_from_type(int type);
 
+/* scale factor of the app window's surface (1 before it is realized) */
+float atl_device_scale(void);
+
 #endif

@@ -163,7 +163,7 @@ void set_up_handle_cache(JNIEnv *env)
 	handle_cache.iter_parcel.constructor = _METHOD(handle_cache.iter_parcel.class, "<init>", "(J)V");
 
 	handle_cache.view_tree_observer.class = _REF((*env)->FindClass(env, "android/view/ViewTreeObserver"));
-	handle_cache.view_tree_observer.dispatchOnGlobalLayout = _METHOD(handle_cache.view_tree_observer.class, "dispatchOnGlobalLayout", "()V");
+	handle_cache.view_tree_observer.dispatchOnGlobalLayout = _METHOD(handle_cache.view_tree_observer.class, "dispatchOnFrame", "()V");
 
 	handle_cache.time_picker.class = _REF((*env)->FindClass(env, "android/widget/TimePicker"));
 	handle_cache.time_picker.onTimeChange = _METHOD(handle_cache.time_picker.class, "onTimeChange", "()V");

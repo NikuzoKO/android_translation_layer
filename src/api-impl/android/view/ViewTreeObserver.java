@@ -340,9 +340,6 @@ public final class ViewTreeObserver {
 		}
 
 		if (observer.mOnGlobalLayoutListeners != null && observer.mOnGlobalLayoutListeners.size() > 0) {
-			if (mOnGlobalLayoutListeners == null || mOnGlobalLayoutListeners.size() == 0)
-				native_set_have_global_layout_listeners(true);
-
 			if (mOnGlobalLayoutListeners != null) {
 				mOnGlobalLayoutListeners.addAll(observer.mOnGlobalLayoutListeners);
 			} else {
@@ -357,6 +354,7 @@ public final class ViewTreeObserver {
 				mOnPreDrawListeners = observer.mOnPreDrawListeners;
 			}
 		}
+		updateFrameHook();
 
 		if (observer.mOnTouchModeChangeListeners != null) {
 			if (mOnTouchModeChangeListeners != null) {
@@ -502,11 +500,8 @@ public final class ViewTreeObserver {
 			mOnGlobalLayoutListeners = new CopyOnWriteArray<OnGlobalLayoutListener>();
 		}
 
-		if (mOnGlobalLayoutListeners.size() == 0) {
-			native_set_have_global_layout_listeners(true);
-		}
-
 		mOnGlobalLayoutListeners.add(listener);
+		updateFrameHook();
 	}
 
 	/**
@@ -540,9 +535,7 @@ public final class ViewTreeObserver {
 			return;
 		}
 		mOnGlobalLayoutListeners.remove(victim);
-
-		if (mOnGlobalLayoutListeners.size() == 0)
-			native_set_have_global_layout_listeners(false);
+		updateFrameHook();
 	}
 
 	/**
@@ -560,10 +553,11 @@ public final class ViewTreeObserver {
 		}
 
 		mOnPreDrawListeners.add(listener);
-
-		// FIXME haxx
-
-		listener.onPreDraw();
+		// without a window there are no frames to dispatch from: keep the old immediate call
+		if (window == 0)
+			listener.onPreDraw();
+		else
+			updateFrameHook();
 	}
 
 	/**
@@ -581,6 +575,7 @@ public final class ViewTreeObserver {
 			return;
 		}
 		mOnPreDrawListeners.remove(victim);
+		updateFrameHook();
 	}
 
 	/**
@@ -759,8 +754,9 @@ public final class ViewTreeObserver {
 	 */
 	private void kill() {
 		/* clear any callbacks */
-		if (mOnGlobalLayoutListeners != null && mOnGlobalLayoutListeners.size() > 0)
+		if (frameHook)
 			native_set_have_global_layout_listeners(false);
+		frameHook = false;
 		mAlive = false;
 	}
 
@@ -820,6 +816,25 @@ public final class ViewTreeObserver {
 	 * manually if you are forcing a layout on a View or a hierarchy of Views that are
 	 * not attached to a Window or in the GONE state.
 	 */
+	/* the native frame clock hook (before each paint) runs while there are global layout or
+	   pre-draw listeners */
+	private boolean frameHook = false;
+
+	private void updateFrameHook() {
+		boolean want = (mOnGlobalLayoutListeners != null && mOnGlobalLayoutListeners.size() > 0)
+		            || (mOnPreDrawListeners != null && mOnPreDrawListeners.size() > 0);
+		if (want != frameHook && window != 0) {
+			native_set_have_global_layout_listeners(want);
+			frameHook = want;
+		}
+	}
+
+	/* called by the frame clock hook: layout is done, drawing is about to start */
+	public final void dispatchOnFrame() {
+		dispatchOnGlobalLayout();
+		dispatchOnPreDraw();
+	}
+
 	public final void dispatchOnGlobalLayout() {
 		// NOTE: because of the use of CopyOnWriteArrayList, we *must* use an iterator to
 		// perform the dispatching. The iterator is a safe guard against listeners that
