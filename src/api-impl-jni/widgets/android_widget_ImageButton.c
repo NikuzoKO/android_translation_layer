@@ -12,6 +12,7 @@ JNIEXPORT jlong JNICALL Java_android_widget_ImageButton_native_1constructor(JNIE
 	GtkWidget *wrapper = g_object_ref(wrapper_widget_new());
 	GtkWidget *button = gtk_button_new();
 	GtkWidget *image = gtk_picture_new_for_resource("/org/gtk/libgtk/icons/16x16/status/image-missing.png"); // show "broken image" icon
+	gtk_picture_set_content_fit(GTK_PICTURE(image), GTK_CONTENT_FIT_SCALE_DOWN); // ImageButton defaults to scaleType center
 	gtk_button_set_child(GTK_BUTTON(button), image);
 	wrapper_widget_set_child(WRAPPER_WIDGET(wrapper), button);
 	wrapper_widget_consume_touch_events(WRAPPER_WIDGET(wrapper)); // Android button consumes touch events
@@ -48,4 +49,24 @@ JNIEXPORT void JNICALL Java_android_widget_ImageButton_native_1setDrawable(JNIEn
 	gtk_picture_set_paintable(picture, paintable);
 
 	gtk_widget_add_css_class(GTK_WIDGET(button), "ATL-no-border");
+}
+
+JNIEXPORT void JNICALL Java_android_widget_ImageButton_native_1setScaleType(JNIEnv *env, jobject this, jlong widget_ptr, jint scale_type)
+{
+	GtkPicture *picture = GTK_PICTURE(gtk_button_get_child(GTK_BUTTON(_PTR(widget_ptr))));
+	switch (scale_type) {
+		case 1: /* FIT_XY */
+			gtk_picture_set_content_fit(picture, GTK_CONTENT_FIT_FILL);
+			break;
+		case 3: /* FIT_CENTER */
+		case 7: /* CENTER_INSIDE */
+			gtk_picture_set_content_fit(picture, GTK_CONTENT_FIT_CONTAIN);
+			break;
+		case 5: /* CENTER */
+			gtk_picture_set_content_fit(picture, GTK_CONTENT_FIT_SCALE_DOWN);
+			break;
+		case 6: /* CENTER_CROP */
+			gtk_picture_set_content_fit(picture, GTK_CONTENT_FIT_COVER);
+			break;
+	}
 }

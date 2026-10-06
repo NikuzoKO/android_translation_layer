@@ -1450,6 +1450,7 @@ public class View implements Drawable.Callback {
 	private static native void nativeInvalidate(long widget);
 
 	protected native void native_setBackgroundColor(long widget, int color);
+	protected native void native_setCornerRadius(long widget, float radius);
 	public void setBackgroundColor(int color) {
 		background = new ColorDrawable(color);
 		native_setBackgroundColor(widget, color);
@@ -1747,6 +1748,8 @@ public class View implements Drawable.Callback {
 		boolean changed = oldWidth != width || oldHeight != height;
 		if (changed)
 			onSizeChanged(width, height, oldWidth, oldHeight);
+		if (changed && clipToOutline)
+			updateOutlineClip();
 		bottom = top + height;
 		right = left + width;
 		onLayout(changed, 0, 0, width, height);
@@ -2155,14 +2158,39 @@ public class View implements Drawable.Callback {
 
 	public boolean isNestedScrollingEnabled() { return false; }
 
-	public void setClipToOutline(boolean clipToOutline) {}
+	private boolean clipToOutline = false;
+	private ViewOutlineProvider outlineProvider = null;
+	private float outlineRadius = 0;
+
+	public void setClipToOutline(boolean clipToOutline) {
+		this.clipToOutline = clipToOutline;
+		updateOutlineClip();
+	}
 
 	public boolean hasTransientState() { return false; }
 
 	public final void cancelPendingInputEvents() {}
 
-	public ViewOutlineProvider getOutlineProvider() { return new ViewOutlineProvider(); }
-	public void setOutlineProvider(ViewOutlineProvider provider) {}
+	public ViewOutlineProvider getOutlineProvider() { return outlineProvider != null ? outlineProvider : new ViewOutlineProvider(); }
+	public void setOutlineProvider(ViewOutlineProvider provider) {
+		this.outlineProvider = provider;
+		updateOutlineClip();
+	}
+
+	/** Rounded-corner clip from the outline provider (only rounded rects/ovals; paths are not clipped). */
+	private void updateOutlineClip() {
+		float radius = 0;
+		if (clipToOutline && outlineProvider != null) {
+			android.graphics.Outline outline = new android.graphics.Outline();
+			outlineProvider.getOutline(this, outline);
+			if (outline.mMode == android.graphics.Outline.MODE_ROUND_RECT && outline.getRadius() > 0)
+				radius = outline.getRadius();
+		}
+		if (radius != outlineRadius && widget != 0) {
+			outlineRadius = radius;
+			native_setCornerRadius(widget, radius);
+		}
+	}
 
 	public void setStateListAnimator(StateListAnimator stateListAnimator) {
 		if (stateListAnimator != null && stateListAnimator.enabledAnimator != null) {
