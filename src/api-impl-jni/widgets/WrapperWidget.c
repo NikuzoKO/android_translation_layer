@@ -497,7 +497,8 @@ gboolean wrapper_widget_is_attached(GtkWidget *widget)
 	return gtk_widget_get_mapped(widget);
 }
 
-void wrapper_widget_set_jobject(WrapperWidget *wrapper, JNIEnv *env, jobject jobj)
+/* the Java object and its draw()/onDraw()/dispatchDraw() overrides, without the input handling */
+void wrapper_widget_set_jobject_drawing(WrapperWidget *wrapper, JNIEnv *env, jobject jobj)
 {
 	JavaVM *jvm;
 	(*env)->GetJavaVM(env, &jvm);
@@ -513,6 +514,11 @@ void wrapper_widget_set_jobject(WrapperWidget *wrapper, JNIEnv *env, jobject job
 		wrapper->canvas = _REF((*env)->NewObject(env, canvas_class, canvas_constructor, 0));
 		(*env)->DeleteLocalRef(env, canvas_class);
 	}
+}
+
+void wrapper_widget_set_jobject(WrapperWidget *wrapper, JNIEnv *env, jobject jobj)
+{
+	wrapper_widget_set_jobject_drawing(wrapper, env, jobj);
 
 	jmethodID performClick_method = _METHOD(_CLASS(jobj), "performClick", "()Z");
 	if (performClick_method != handle_cache.view.performClick) {

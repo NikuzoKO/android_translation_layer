@@ -50,3 +50,14 @@
 .ATL-font-monospace > * {
 	font-family: monospace;
 }
+
+/* multi-line EditText (GtkTextView): transparent like GtkText, hint overlay dimmed */
+textview.ATL-edittext,
+textview.ATL-edittext > text {
+	background-color: rgba(0,0,0,0);
+	background-image: none;
+}
+
+.ATL-edittext-hint {
+	opacity: 0.55;
+}

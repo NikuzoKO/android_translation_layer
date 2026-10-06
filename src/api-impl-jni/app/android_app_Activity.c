@@ -408,6 +408,17 @@ static gboolean show_window_on_signal(gpointer user_data)
 	g_free(request);
 	if (shot) {
 		window_screenshot();
+		/* and log the current view tree next to it (ATL_DUMP_VIEWS format) */
+		if (activity_current) {
+			JNIEnv *env = get_jni_env();
+			jclass activity_class = (*env)->FindClass(env, "android/app/Activity");
+			jmethodID dump = (*env)->GetMethodID(env, activity_class, "atlDumpViews", "()V");
+			if (dump)
+				(*env)->CallVoidMethod(env, activity_current, dump);
+			if ((*env)->ExceptionCheck(env))
+				(*env)->ExceptionDescribe(env);
+			(*env)->DeleteLocalRef(env, activity_class);
+		}
 		return G_SOURCE_CONTINUE;
 	}
 	activity_window_show();

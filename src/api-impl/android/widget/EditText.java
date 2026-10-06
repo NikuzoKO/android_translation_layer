@@ -21,7 +21,32 @@ public class EditText extends TextView {
 	}
 
 	@Override
-	protected native long native_constructor(Context context, AttributeSet attrs);
+	protected long native_constructor(Context context, AttributeSet attrs) {
+		return native_constructor_multiline(context, attrs, isMultiLine(context, attrs));
+	}
+
+	/* the native widget is chosen at construction (GtkText or a wrapping GtkTextView), so only the
+	   XML attributes count: inputType with textMultiLine, or maxLines/lines/minLines > 1 without singleLine */
+	private static boolean isMultiLine(Context context, AttributeSet attrs) {
+		if (attrs == null)
+			return false;
+		android.content.res.TypedArray a = context.obtainStyledAttributes(attrs, com.android.internal.R.styleable.TextView, 0, 0);
+		try {
+			if (a.getBoolean(com.android.internal.R.styleable.TextView_singleLine, false))
+				return false;
+			if (a.hasValue(com.android.internal.R.styleable.TextView_inputType))
+				return (a.getInt(com.android.internal.R.styleable.TextView_inputType, 0) & 0x20000 /* InputType.TYPE_TEXT_FLAG_MULTI_LINE */) != 0;
+			return a.getInt(com.android.internal.R.styleable.TextView_maxLines, 1) > 1
+			    || a.getInt(com.android.internal.R.styleable.TextView_lines, 1) > 1
+			    || a.getInt(com.android.internal.R.styleable.TextView_minLines, 1) > 1;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			a.recycle();
+		}
+	}
+
+	protected native long native_constructor_multiline(Context context, AttributeSet attrs, boolean multiline);
 	protected native String native_getText(long widget);
 	protected native void native_addTextChangedListener(long widget, TextWatcher watcher);
 	protected native void native_removeTextChangedListener(long widget, TextWatcher watcher);

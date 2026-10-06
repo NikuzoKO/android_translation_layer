@@ -213,11 +213,11 @@ extern "C" {
 #define android_widget_EditText_TEXT_DIRECTION_RTL 4L
 /*
  * Class:     android_widget_EditText
- * Method:    native_constructor
- * Signature: (Landroid/content/Context;Landroid/util/AttributeSet;)J
+ * Method:    native_constructor_multiline
+ * Signature: (Landroid/content/Context;Landroid/util/AttributeSet;Z)J
  */
-JNIEXPORT jlong JNICALL Java_android_widget_EditText_native_1constructor
-  (JNIEnv *, jobject, jobject, jobject);
+JNIEXPORT jlong JNICALL Java_android_widget_EditText_native_1constructor_1multiline
+  (JNIEnv *, jobject, jobject, jobject, jboolean);
 
 /*
  * Class:     android_widget_EditText

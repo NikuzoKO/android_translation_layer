@@ -207,6 +207,32 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		return;
 	}
 
+	/* called by atl-shot (SIGUSR1 + <pid>.shot) */
+	public void atlDumpViews() {
+		Slog.i(TAG, "ATL_DUMP_VIEWS " + getClass().getName());
+		dumpViewTree(getWindow().getDecorView(), 0);
+	}
+
+	/* the app-side fields of a framework subclass (debugging what an app's own onDraw/onMeasure see) */
+	private static void dumpAppFields(Object obj) {
+		for (Class<?> c = obj.getClass(); c != null && !c.getName().startsWith("android."); c = c.getSuperclass()) {
+			for (java.lang.reflect.Field f : c.getDeclaredFields()) {
+				if (java.lang.reflect.Modifier.isStatic(f.getModifiers()))
+					continue;
+				String value;
+				try {
+					f.setAccessible(true);
+					value = String.valueOf(f.get(obj));
+				} catch (Throwable t) {
+					value = "<" + t + ">";
+				}
+				if (value.length() > 80)
+					value = value.substring(0, 80) + "...";
+				Slog.i(TAG, "ATL_DUMP_VIEWS     field " + c.getName() + "." + f.getName() + " = " + value);
+			}
+		}
+	}
+
 	private static String describeDrawable(android.graphics.drawable.Drawable d) {
 		if (d == null)
 			return "-";
@@ -255,6 +281,8 @@ public class Activity extends ContextThemeWrapper implements Window.Callback, La
 		if (view.isSelected())
 			line.append(" selected");
 		Slog.i(TAG, line.toString());
+		if (view instanceof android.widget.EditText && System.getenv("ATL_DEBUG_HINT") != null)
+			dumpAppFields(view);
 		if (view instanceof ViewGroup) {
 			ViewGroup group = (ViewGroup)view;
 			for (int i = 0; i < group.getChildCount(); i++)
