@@ -820,24 +820,32 @@ JNIEXPORT void JNICALL Java_android_view_View_native_1setBackgroundColor(JNIEnv 
 /* clip to outline: rounded corners (+ children clipped to them) */
 JNIEXPORT void JNICALL Java_android_view_View_native_1setCornerRadius(JNIEnv *env, jobject this, jlong widget_ptr, jfloat radius)
 {
-	GtkWidget *widget = GTK_WIDGET(_PTR(widget_ptr));
-	GtkStyleContext *style_context = gtk_widget_get_style_context(widget);
+	GtkWidget *inner = GTK_WIDGET(_PTR(widget_ptr));
+	/* the inner widget carries the CSS background, the wrapper does the clipping: round both */
+	GtkWidget *targets[2] = {inner, gtk_widget_get_parent(inner)};
 
-	GtkCssProvider *old_provider = g_object_get_data(G_OBJECT(widget), "corner_style_provider");
-	if (old_provider)
-		gtk_style_context_remove_provider(style_context, GTK_STYLE_PROVIDER(old_provider));
-	g_object_set_data(G_OBJECT(widget), "corner_style_provider", NULL);
-	if (radius <= 0)
-		return;
+	for (int i = 0; i < 2; i++) {
+		GtkWidget *widget = targets[i];
+		if (!widget)
+			continue;
+		GtkStyleContext *style_context = gtk_widget_get_style_context(widget);
 
-	GtkCssProvider *css_provider = gtk_css_provider_new();
-	char *css_string = g_strdup_printf("* { border-radius: %dpx; }", (int)(radius + 0.5f));
-	gtk_css_provider_load_from_string(css_provider, css_string);
-	g_free(css_string);
+		GtkCssProvider *old_provider = g_object_get_data(G_OBJECT(widget), "corner_style_provider");
+		if (old_provider)
+			gtk_style_context_remove_provider(style_context, GTK_STYLE_PROVIDER(old_provider));
+		g_object_set_data(G_OBJECT(widget), "corner_style_provider", NULL);
+		if (radius <= 0)
+			continue;
 
-	gtk_style_context_add_provider(style_context, GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-	g_object_set_data(G_OBJECT(widget), "corner_style_provider", css_provider);
-	gtk_widget_set_overflow(widget, GTK_OVERFLOW_HIDDEN);
+		GtkCssProvider *css_provider = gtk_css_provider_new();
+		char *css_string = g_strdup_printf("* { border-radius: %dpx; }", (int)(radius + 0.5f));
+		gtk_css_provider_load_from_string(css_provider, css_string);
+		g_free(css_string);
+
+		gtk_style_context_add_provider(style_context, GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+		g_object_set_data(G_OBJECT(widget), "corner_style_provider", css_provider);
+		gtk_widget_set_overflow(widget, GTK_OVERFLOW_HIDDEN);
+	}
 }
 
 JNIEXPORT void JNICALL Java_android_view_View_native_1setBackgroundDrawable(JNIEnv *env, jobject this, jlong widget_ptr, jlong paintable_ptr)

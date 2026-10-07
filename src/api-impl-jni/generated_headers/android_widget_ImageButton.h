@@ -235,6 +235,14 @@ JNIEXPORT void JNICALL Java_android_widget_ImageButton_native_1setDrawable
 JNIEXPORT void JNICALL Java_android_widget_ImageButton_nativeSetOnClickListener
   (JNIEnv *, jobject, jlong);
 
+/*
+ * Class:     android_widget_ImageButton
+ * Method:    native_setScaleType
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_android_widget_ImageButton_native_1setScaleType
+  (JNIEnv *, jobject, jlong, jint);
+
 #ifdef __cplusplus
 }
 #endif

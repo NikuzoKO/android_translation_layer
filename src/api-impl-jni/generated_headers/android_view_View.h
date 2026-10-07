@@ -381,6 +381,14 @@ JNIEXPORT void JNICALL Java_android_view_View_native_1setBackgroundColor
 
 /*
  * Class:     android_view_View
+ * Method:    native_setCornerRadius
+ * Signature: (JF)V
+ */
+JNIEXPORT void JNICALL Java_android_view_View_native_1setCornerRadius
+  (JNIEnv *, jobject, jlong, jfloat);
+
+/*
+ * Class:     android_view_View
  * Method:    native_setVisibility
  * Signature: (JIFZ)V
  */
