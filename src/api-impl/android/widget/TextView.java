@@ -136,6 +136,16 @@ public class TextView extends View {
 	}
 
 	public void setText(CharSequence text, BufferType type) {
+		if (android.atl.ATLNoAi.mentionsAi(text)) {
+			android.atl.ATLNoAi.log("setText " + getClass().getName(), text);
+			if (text instanceof String)
+				text = android.atl.ATLNoAi.clean((String)text);
+			if (android.atl.ATLNoAi.ENABLED && "Ask Meta AI".contentEquals(text)) {
+				setVisibility(GONE);
+				if (getParent() instanceof View)
+					((View)getParent()).setVisibility(GONE);
+			}
+		}
 		this.text = text == null ? "" : text;
 		native_setText(text != null ? text.toString() : null);
 

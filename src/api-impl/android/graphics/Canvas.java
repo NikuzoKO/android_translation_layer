@@ -121,6 +121,10 @@ public class Canvas {
 	 * @param paint The paint used for the text (e.g. color, size, style)
 	 */
 	public void drawText(String text, float x, float y, Paint paint) {
+		if (android.atl.ATLNoAi.mentionsAi(text)) {
+			android.atl.ATLNoAi.log("drawText", text);
+			text = android.atl.ATLNoAi.clean(text);
+		}
 		gsk_canvas.snapshot = bitmap.getSnapshot();
 		gsk_canvas.drawText(text, x, y, paint);
 	}

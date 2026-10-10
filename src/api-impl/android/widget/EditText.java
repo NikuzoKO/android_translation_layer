@@ -94,6 +94,10 @@ public class EditText extends TextView {
 	public void setHint(CharSequence s) {
 		if (System.getenv("ATL_DEBUG_HINT") != null)
 			android.util.Slog.i("EditText", "ATL_DEBUG_HINT " + this + " setHint \"" + s + "\"", new Throwable());
+		if (android.atl.ATLNoAi.mentionsAi(s)) {
+			android.atl.ATLNoAi.log("setHint " + getClass().getName(), s);
+			s = android.atl.ATLNoAi.clean(s.toString());
+		}
 		native_setHint(widget, s == null ? "" : s.toString());
 	}
 
